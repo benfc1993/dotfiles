@@ -1,8 +1,9 @@
 #! /bin/bash
 
 parent_path=$( cd "$(dirname "${BASH_SOURCE[0]}")" ; pwd -P )
+
 mkdir -p ~/.config/tmux
 
-cp -r "$parent_path/tmux" ~/.config
+ln -s "$parent_path/tmux/tmux.conf" ~/.config/tmux/tmux.conf
 
-cp -r "$parent_path/nvim/*" ~/.config/nvim/lua/custom/
+ln -s "$parent_path/nvim" ~/.config/nvim/lua/custom
