@@ -1,4 +1,6 @@
 #! /bin/bash
 
-mkdir -pr ~/.config/tmux
-cp tmux.conf ~/.config/tmux
+mkdir -p ~/.config/tmux
+cp -r tmux ~/.config
+
+cp -r nvim/* ~/.config/nvim/lua/custom/
