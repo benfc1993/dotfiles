@@ -26,6 +26,27 @@ local plugins = {
     },
     lazy = false
   },
+  {
+    "nvim-tree/nvim-tree.lua",
+    opts = {
+      actions = {
+        open_file = {
+          quit_on_open = true
+        },
+      },
+      git = {
+        enable = true
+      },
+      renderer = {
+
+        icons = {
+          show = {
+            git = true
+          },
+        },
+      }
+    },
+  },
 }
 
 return plugins

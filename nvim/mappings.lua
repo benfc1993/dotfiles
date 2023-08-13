@@ -9,4 +9,10 @@ M.tmux = {
   }
 }
 
+M.LazyGit = {
+  n = {
+    ["<C-g>"] = { "<cmd> LazyGit<CR>", "Open Lazy git"},
+  }
+}
+
 return M
