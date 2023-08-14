@@ -47,7 +47,7 @@ M.ui = {theme = 'chadracula',
         local changed = (git_status.changed and git_status.changed ~= 0) and ("  " .. git_status.changed) or ""
         local removed = (git_status.removed and git_status.removed ~= 0) and ("  " .. git_status.removed) or ""
         local branch_name = " " .. git_status.head
-        local color = added and changed and removed and "%#branchModifiedHl#" or "%#branchCleanHl#"
+        local color = (added or changed or removed) and "%#branchModifiedHl#" or "%#branchCleanHl#"
 
         return "%#St_gitIcons#" .. color .. branch_name .. added .. changed .. removed
       end)()
