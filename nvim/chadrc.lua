@@ -17,8 +17,8 @@ M.ui = {theme = 'chadracula',
       -- end
 
       local git_status = vim.b.gitsigns_status_dict
-      local message =  git_status.changed  and "\u{1F601}" or "no chage"
-
+      local message =  (git_status.changed  and "\u{1F601}" or "no chage")
+      print(message)
       table.insert(
         modules,
         2,
