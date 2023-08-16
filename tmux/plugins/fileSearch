@@ -1,5 +1,5 @@
 #! /bin/bash
-read -e -p "base path:" basePath
+read -e -p "base path ~/" basePath
 basePath=${basePath%/}
 
 
@@ -8,12 +8,12 @@ if [ ! -d "$basePath" ]; then
 
 fi
 
-selected=$(find $basePath -mindepth 1 -maxdepth 1 \( -name node_modules -o -name .git \) -prune -o -type d -print | fzf-tmux -p)
+selected=$(find $basePath -mindepth 1 -maxdepth 1 \( -name node_modules -o -name .git -wholename $basePath \) -prune -o -type d -print | fzf-tmux -p)
 
 if [[ -z "$selected" ]]; 
 then 
   exit 0
 fi
 
-vimcd ~/$basePath/$selected
+vimcd ~/$selected
 
