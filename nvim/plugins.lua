@@ -4,6 +4,10 @@ local plugins = {
     lazy = false
   },
   {
+    "ThePrimeagen/harpoon",
+    lazy = false
+  },
+  {
     "neovim/nvim-lspconfig",
     config = function()
       require "plugins.configs.lspconfig"

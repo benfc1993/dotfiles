@@ -21,7 +21,7 @@ M.ui = {theme = 'chadracula',
         local branch_name = " " .. git_status.head
         local color = (added ~= "" or changed ~= "" or removed ~= "") and "%#branchModifiedHl#" or "%#branchCleanHl#"
 
-        return "%#St_gitIcons#" .. color .. branch_name .. added .. changed .. removed
+        return "%#St_gitIcons#" .. color .. branch_name .. added .. changed .. removed .. vim.b.gitsigns_status
       end)()
 
     end,
