@@ -1,7 +1,19 @@
 #! /bin/bash
-basePath=~/projects/personal
+read -e -p "base path:" basePath
+basePath=${basePath%/}
 
-selected=$(find $basePath \( -name node_modules -o -name .git \) -prune -o -name '*' -type d -maxdepth 1  -print | cut -d/ -f6- | fzf-tmux -p)
-# echo "$basePath/$selected"
-vimcd $basePath/$selected
-# exit 0
+
+if [ ! -d "$basePath" ]; then
+  exit 0
+
+fi
+
+selected=$(find $basePath -mindepth 1 -maxdepth 1 \( -name node_modules -o -name .git \) -prune -o -type d -print | fzf-tmux -p)
+
+if [[ -z "$selected" ]]; 
+then 
+  exit 0
+fi
+
+vimcd ~/$basePath/$selected
+
