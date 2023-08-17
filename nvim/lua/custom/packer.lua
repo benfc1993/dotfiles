@@ -44,5 +44,6 @@ return require('packer').startup(function(use)
 			{'L3MON4D3/LuaSnip'},     -- Required
 		}
 	}
+	use ({"akinsho/toggleterm.nvim", tag = '*'})
 	use('christoomey/vim-tmux-navigator')
 end)
