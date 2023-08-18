@@ -50,5 +50,9 @@ return require('packer').startup(function(use)
             require('Comment').setup()
         end
     })
+    use({
+        'nvim-lualine/lualine.nvim',
+        dependencies = { 'nvim-tree/nvim-web-devicons' }
+    })
     use('christoomey/vim-tmux-navigator')
 end)
