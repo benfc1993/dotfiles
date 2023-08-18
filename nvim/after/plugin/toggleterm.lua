@@ -32,7 +32,8 @@ require("toggleterm").setup({
     end,
     on_exit = function(terminal)
         print("Hello: " .. terminal.id)
-    end
+    end,
+    autochdir = true
 })
 
 local function set_terminal_mappings()
