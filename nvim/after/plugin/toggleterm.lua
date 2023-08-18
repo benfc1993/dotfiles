@@ -16,7 +16,6 @@ local create_new_term = function()
     if t == 1 then
         vim.cmd('ToggleTerm')
     else
-        -- toggle_terms()
         vim.api.nvim_input('<esc>')
         vim.cmd(t .. 'ToggleTerm')
         vim.api.nvim_input('i')
@@ -27,7 +26,9 @@ vim.keymap.set({ 'n', 't' }, '<M-\\>', create_new_term, {})
 
 require("toggleterm").setup({
     on_open = function(terminal)
-        print('open: ' .. terminal.id)
+        if terminal.__state.mode == 'n' then
+            vim.api.nvim_input('i')
+        end
     end,
     on_exit = function(terminal)
         print("Hello: " .. terminal.id)
