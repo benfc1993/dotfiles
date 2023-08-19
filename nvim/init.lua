@@ -1,5 +1,13 @@
 require("custom")
 
+vim.api.nvim_create_autocmd("User", {
+    group = vim.api.nvim_create_augroup("MyGroup", { clear = true }),
+    pattern = "PackerComplete",
+    callback = function()
+        ColorMyPencils()
+        vim.cmd('q')
+    end
+})
 vim.api.nvim_create_autocmd({ 'BufWritePre' }, {
     pattern = "*",
     callback = function()
