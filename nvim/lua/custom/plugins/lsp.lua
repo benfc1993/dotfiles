@@ -1,16 +1,15 @@
 local lsp = require('lsp-zero').preset({
+    name = 'recommended',
     manage_nvim_cmp = {
         set_extra_mappings = true,
     }
 })
 
 lsp.on_attach(function(client, bufnr)
-    -- see :help lsp-zero-keybindings
-    -- to learn the available actions
     lsp.default_keymaps({ buffer = bufnr })
     local opts = { buffer = bufnr, remap = false }
 
-    for k, v in pairs(client.config.filetypes)
+    for _, v in pairs(client.config.filetypes)
     do
         if v == "java" then
             vim.keymap.set('n', '<leader>t', Create_class_test)
@@ -34,9 +33,9 @@ vim.keymap.set("n", "<leader>/", function() require("Comment.api").toggle.linewi
 vim.keymap.set("v", "<leader>/", "<ESC><cmd>lua require('Comment.api').toggle.linewise(vim.fn.visualmode())<CR>")
 
 lsp.buffer_autoformat()
--- When you don't have mason.nvim installed
--- You'll need to list the servers installed in your system
-lsp.setup_servers({ 'tsserver', 'eslint' })
+
+require('lspconfig').lua_ls.setup(lsp.nvim_lua_ls())
+lsp.setup()
 
 local cmp = require('cmp')
 local cmp_select = { behavior = cmp.SelectBehavior.Select }
@@ -44,9 +43,6 @@ local cmp_mappings = lsp.defaults.cmp_mappings({
     ['<C-p>'] = cmp.mapping.select_prev_item(cmp_select),
     ['<C-n>'] = cmp.mapping.select_next_item(cmp_select),
     ['<Tab>'] = cmp.mapping.confirm({ select = true }),
-    -- ['<C-Space>'] = cmp.mapping(cmp.mapping.complete({
-    --     reason = cmp.ContextReason.Auto,
-    -- }), { "i", "c" })
 })
 
 lsp.setup_nvim_cmp({
@@ -55,8 +51,8 @@ lsp.setup_nvim_cmp({
     completion = {
         completeopt = 'menu,menuone,noinsert'
     },
+    sources = {
+        { name = 'nvim_lsp' },
+        { name = 'nvim_lua' },
+    },
 })
-
--- (Optional) Configure lua language server for neovim
-require('lspconfig').lua_ls.setup(lsp.nvim_lua_ls())
-lsp.setup()

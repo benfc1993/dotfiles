@@ -1,13 +1,3 @@
---local augroup = vim.api.nvim_create_augroup("packerGroup", { clear = true })
---vim.api.nvim_create_autocmd( "PackerComplete" , {
---    group = augroup,
---    pattern = '*',
---    callback = function()
---        require("custom.after.plugin.colors").ColorMyPencils()
---    end
---
---})
---
 local ensure_packer = function()
     local fn = vim.fn
     local install_path = fn.stdpath('data') .. '/site/pack/packer/start/packer.nvim'
@@ -25,9 +15,6 @@ ensure_packer()
 -- Only required if you have packer configured as `opt`
 vim.cmd [[packadd packer.nvim]]
 
-
-
-
 require('packer').startup(function(use)
     -- Packer can manage itself
     use 'wbthomason/packer.nvim'
@@ -43,9 +30,6 @@ require('packer').startup(function(use)
     use({
         'Mofiqul/dracula.nvim',
         as = 'dracula',
-        config = function()
-            vim.cmd('colorscheme dracula')
-        end
     })
     use({
         "kdheepak/lazygit.nvim",
@@ -75,11 +59,12 @@ require('packer').startup(function(use)
             require('Comment').setup()
         end
     })
+    use { 'nvim-tree/nvim-web-devicons' }
     use({
         'nvim-lualine/lualine.nvim',
         dependencies = { 'nvim-tree/nvim-web-devicons' }
     })
     use('christoomey/vim-tmux-navigator')
-
+    use("bluz71/vim-nightfly-colors")
     require('packer').sync()
 end)

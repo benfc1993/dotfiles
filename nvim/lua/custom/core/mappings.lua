@@ -10,8 +10,8 @@ nmap("<C-j>", "<cmd>TmuxNavigateDown<CR>")
 nmap("<C-k>", "<cmd>TmuxNavigateUp<CR>")
 nmap("<C-l>", "<cmd>TmuxNavigateRight<CR>")
 
-nmap("<C-]>", "<cmd>bp<CR>")
-nmap("<C-[>", "<cmd>bn<CR>")
+nmap("<C-[>", "<cmd>bp<CR>")
+nmap("<C-]>", "<cmd>bn<CR>")
 
 vmap("J", ":m '>+1<CR>gv=gv")
 vmap("K", ":m '<-2<CR>gv=gv")
