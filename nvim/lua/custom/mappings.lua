@@ -41,8 +41,8 @@ nmap("<C-J>", "<cmd>cprev<CR>zz")
 nmap("<leader>k", "<cmd>lnext<CR>zz")
 nmap("<leader>j", "<cmd>lprev<CR>zz")
 
-nmap("<leader>s", [[:%s/\<<C-r><C-w>\>/<C-r><C-w>/gI<Left><Left><Left>]])
-vmap("<C-r>", "hy:%s/<C-r>h//gc<left><left><left>", "Replace selection globally")
+nmap("<leader>r", [[:%s/\<<C-r><C-w>\>/<C-r><C-w>/gI<Left><Left><Left>]])
+vmap("<leader>r", [["hy:%s/<C-r>h/<C-r>h/gI<left><left><left>]], "Replace selection globally")
 nmap("<leader>x", "<cmd>!chmod +x %<CR>", { silent = true })
 
 nmap("<leader>vpp", "<cmd>e ~/.config/nvim/lua/custom/packer.lua<CR>");
