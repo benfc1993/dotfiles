@@ -1,3 +1,4 @@
+require("custom.utils")
 require("custom.packer")
 require("custom.set")
 require("custom.mappings")

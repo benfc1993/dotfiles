@@ -1,51 +1,52 @@
-vim.keymap.set("n", "<leader>n", vim.cmd.Ex)
+nmap("<leader>n", vim.cmd.Ex)
 
 -- TODO: replace with correct cmd
-vim.keymap.set("n", "<C-h>", "<cmd>TmuxNavigateLeft<CR>")
-vim.keymap.set("n", "<C-j>", "<cmd>TmuxNavigateDown<CR>")
-vim.keymap.set("n", "<C-k>", "<cmd>TmuxNavigateUp<CR>")
-vim.keymap.set("n", "<C-l>", "<cmd>TmuxNavigateRight<CR>")
+nmap("<C-h>", "<cmd>TmuxNavigateLeft<CR>")
+nmap("<C-j>", "<cmd>TmuxNavigateDown<CR>")
+nmap("<C-k>", "<cmd>TmuxNavigateUp<CR>")
+nmap("<C-l>", "<cmd>TmuxNavigateRight<CR>")
 
-vim.keymap.set("n", "<C-]>", "<cmd>bp<CR>")
-vim.keymap.set("n", "<C-[>", "<cmd>bn<CR>")
+nmap("<C-]>", "<cmd>bp<CR>")
+nmap("<C-[>", "<cmd>bn<CR>")
 
-vim.keymap.set("v", "J", ":m '>+1<CR>gv=gv")
-vim.keymap.set("v", "K", ":m '<-2<CR>gv=gv")
+vmap("J", ":m '>+1<CR>gv=gv")
+vmap("K", ":m '<-2<CR>gv=gv")
 
 
-vim.keymap.set("n", "J", "mzJ`z")
-vim.keymap.set("n", "<C-d>", "<C-d>zz")
-vim.keymap.set("n", "<C-u>", "<C-u>zz")
-vim.keymap.set("n", "n", "nzzzv")
-vim.keymap.set("n", "N", "Nzzzv")
+nmap("J", "mzJ`z")
+nmap("<C-d>", "<C-d>zz")
+nmap("<C-u>", "<C-u>zz")
+nmap("n", "nzzzv")
+nmap("N", "Nzzzv")
 
 -- greatest remap ever
 vim.keymap.set("x", "<leader>p", [["_dP]])
 
 -- next greatest remap ever : asbjornHaland
 vim.keymap.set({ "n", "v" }, "<leader>y", [["+y]])
-vim.keymap.set("n", "<leader>Y", [["+Y]])
-vim.keymap.set("n", "<leader>p", [["+p]])
+nmap("<leader>Y", [["+Y]])
+nmap("<leader>p", [["+p]])
 
 vim.keymap.set({ "n", "v" }, "<leader>d", [["_d]])
 
 -- This is going to get me cancelled
 vim.keymap.set("i", "<C-c>", "<Esc>")
 
-vim.keymap.set("n", "Q", "<nop>")
-vim.keymap.set("n", "<C-f>", "<cmd>silent !tmux neww fileSearch<CR>")
-vim.keymap.set("n", "<leader>f", vim.lsp.buf.format)
+nmap("Q", "<nop>")
+nmap("<C-f>", "<cmd>silent !tmux neww fileSearch<CR>")
+nmap("<leader>f", vim.lsp.buf.format)
 
-vim.keymap.set("n", "<C-K>", "<cmd>cnext<CR>zz")
-vim.keymap.set("n", "<C-J>", "<cmd>cprev<CR>zz")
-vim.keymap.set("n", "<leader>k", "<cmd>lnext<CR>zz")
-vim.keymap.set("n", "<leader>j", "<cmd>lprev<CR>zz")
+nmap("<C-K>", "<cmd>cnext<CR>zz")
+nmap("<C-J>", "<cmd>cprev<CR>zz")
+nmap("<leader>k", "<cmd>lnext<CR>zz")
+nmap("<leader>j", "<cmd>lprev<CR>zz")
 
-vim.keymap.set("n", "<leader>s", [[:%s/\<<C-r><C-w>\>/<C-r><C-w>/gI<Left><Left><Left>]])
-vim.keymap.set("n", "<leader>x", "<cmd>!chmod +x %<CR>", { silent = true })
+nmap("<leader>s", [[:%s/\<<C-r><C-w>\>/<C-r><C-w>/gI<Left><Left><Left>]])
+vmap("<C-r>", "hy:%s/<C-r>h//gc<left><left><left>", "Replace selection globally")
+nmap("<leader>x", "<cmd>!chmod +x %<CR>", { silent = true })
 
-vim.keymap.set("n", "<leader>vpp", "<cmd>e ~/.config/nvim/lua/custom/packer.lua<CR>");
+nmap("<leader>vpp", "<cmd>e ~/.config/nvim/lua/custom/packer.lua<CR>");
 
-vim.keymap.set("n", "<leader><leader>", function()
+nmap("<leader><leader>", function()
     vim.cmd("so")
 end)
