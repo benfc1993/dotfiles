@@ -1,3 +1,7 @@
+vim.keymap.set("n", "<Space>", "<Nop>", { silent = true, remap = false })
+
+vim.g.mapleader = " "
+
 nmap("<leader>n", vim.cmd.Ex)
 
 -- TODO: replace with correct cmd
