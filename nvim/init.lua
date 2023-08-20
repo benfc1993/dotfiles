@@ -1,11 +1,13 @@
 require("custom")
 require("colorScheme")
 
+ColorMyPencils()
+
 vim.api.nvim_create_autocmd("User", {
     group = vim.api.nvim_create_augroup("PackerGroup", { clear = true }),
     pattern = "PackerComplete",
     callback = function()
-        ColorMyPencils()
+        vim.schedule(ColorMyPencils)
         vim.cmd('q')
     end
 })
@@ -23,7 +25,7 @@ vim.api.nvim_create_autocmd("ColorScheme", {
 
         if file == nil then return "" end
         print("writing file")
-        file:write('vim.cmd.colorscheme("' .. match .. '")')
+        file:write('SelectedColorScheme = "' .. match .. '"')
         file:close()
     end
 })

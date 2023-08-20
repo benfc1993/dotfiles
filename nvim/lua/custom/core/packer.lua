@@ -9,7 +9,7 @@ local ensure_packer = function()
     return false
 end
 
-ensure_packer()
+local bootstrap_packer = ensure_packer()
 -- This file can be loaded by calling `lua require('plugins')` from your init.vim
 
 -- Only required if you have packer configured as `opt`
@@ -19,6 +19,12 @@ require('packer').startup(function(use)
     -- Packer can manage itself
     use 'wbthomason/packer.nvim'
 
+    use({
+        'christoomey/vim-tmux-navigator',
+        config = function()
+            vim.g.tmux_navigator_no_mappings = 1
+        end
+    })
     use {
         'nvim-telescope/telescope.nvim', tag = '0.1.2',
         -- or                            , branch = '0.1.x',
@@ -27,10 +33,6 @@ require('packer').startup(function(use)
     use('nvim-treesitter/nvim-treesitter', { run = ':TSUpdate' })
     use('theprimeagen/harpoon')
     use('mbbill/undotree')
-    use({
-        'Mofiqul/dracula.nvim',
-        as = 'dracula',
-    })
     use({
         "kdheepak/lazygit.nvim",
         -- optional for floating window border decoration
@@ -47,10 +49,14 @@ require('packer').startup(function(use)
             { 'williamboman/mason-lspconfig.nvim' }, -- Optional
 
             -- Autocompletion
+            { 'folke/neodev.nvim', },
             { 'hrsh7th/nvim-cmp' },     -- Required
             { 'hrsh7th/cmp-nvim-lsp' }, -- Required
-            { 'L3MON4D3/LuaSnip' },     -- Required
-        }
+            { 'hrsh7th/cmp-buffer' },
+            { 'saadparwaiz1/cmp_luasnip' },
+            { 'L3MON4D3/LuaSnip' }, -- Required
+
+        },
     }
     use({ "akinsho/toggleterm.nvim", tag = '*' })
     use({
@@ -60,11 +66,20 @@ require('packer').startup(function(use)
         end
     })
     use { 'nvim-tree/nvim-web-devicons' }
+    use('nvim-tree/nvim-tree.lua')
     use({
         'nvim-lualine/lualine.nvim',
         dependencies = { 'nvim-tree/nvim-web-devicons' }
     })
-    use('christoomey/vim-tmux-navigator')
+    -- Themes
+    use({
+        'Mofiqul/dracula.nvim',
+        as = 'dracula',
+    })
     use("bluz71/vim-nightfly-colors")
-    require('packer').sync()
+    use("ellisonleao/gruvbox.nvim")
+
+    if vim.fn.getcwd(0):find('configs/nvim') or bootstrap_packer then
+        require('packer').sync()
+    end
 end)

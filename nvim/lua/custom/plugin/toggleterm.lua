@@ -9,7 +9,7 @@ local toggle_terms = function()
     end
 end
 
-vim.keymap.set('n', '<C-\\>', toggle_terms, {})
+nmap('<M-Bslash>', toggle_terms, '[ToggleTerm]: toggle')
 
 local create_new_term = function()
     t = t + 1
@@ -22,24 +22,20 @@ local create_new_term = function()
     end
 end
 
-vim.keymap.set({ 'n', 't' }, '<M-\\>', create_new_term, {})
+vim.keymap.set({ 'n', 't' }, '<C-M-Bslash>', create_new_term, {})
 
 require("toggleterm").setup({
-    on_open = function(terminal)
-        if terminal.__state.mode == 'n' then
-            vim.api.nvim_input('i')
-        end
-    end,
     on_exit = function(terminal)
         print("Hello: " .. terminal.id)
     end,
-    autochdir = true
+    autochdir = true,
+    persist_mode = false
 })
 
 local function set_terminal_mappings()
     local opts = {}
     vim.keymap.set('t', '<esc>', [[<C-\><C-n>]], opts)
-    vim.keymap.set('t', '<C-\\>', '<cmd>ToggleTermToggleAll<CR>', opts)
+    vim.keymap.set('t', '<M-Bslash>', '<cmd>ToggleTermToggleAll<CR>', opts)
     vim.keymap.set('t', '<C-h>', [[<Cmd>wincmd h<CR>]], opts)
     vim.keymap.set('t', '<C-j>', [[<Cmd>wincmd j<CR>]], opts)
     vim.keymap.set('t', '<C-k>', [[<Cmd>wincmd k<CR>]], opts)

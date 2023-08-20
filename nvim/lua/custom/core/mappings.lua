@@ -2,9 +2,10 @@ vim.keymap.set("n", "<Space>", "<Nop>", { silent = true, remap = false })
 
 vim.g.mapleader = " "
 
-nmap("<leader>n", vim.cmd.Ex)
+nmap("<leader>n", '<cmd>NvimTreeToggle<CR>', 'Toggle nvim tree')
 
 -- TODO: replace with correct cmd
+vim.keymap.del('n', '<C-l>')
 nmap("<C-h>", "<cmd>TmuxNavigateLeft<CR>")
 nmap("<C-j>", "<cmd>TmuxNavigateDown<CR>")
 nmap("<C-k>", "<cmd>TmuxNavigateUp<CR>")
@@ -40,8 +41,8 @@ nmap("Q", "<nop>")
 nmap("<C-f>", "<cmd>silent !tmux neww fileSearch<CR>")
 nmap("<leader>f", vim.lsp.buf.format)
 
-nmap("<C-K>", "<cmd>cnext<CR>zz")
-nmap("<C-J>", "<cmd>cprev<CR>zz")
+nmap("<C-S-K>", "<cmd>cnext<CR>zz")
+nmap("<C-S-J>", "<cmd>cprev<CR>zz")
 nmap("<leader>k", "<cmd>lnext<CR>zz")
 nmap("<leader>j", "<cmd>lprev<CR>zz")
 

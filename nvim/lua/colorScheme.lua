@@ -1,1 +1,1 @@
-vim.cmd.colorscheme("nightfly")
+SelectedColorScheme = "gruvbox"

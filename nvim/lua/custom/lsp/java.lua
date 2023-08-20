@@ -1,6 +1,8 @@
+local M = {}
+
 local ts_utils = require 'nvim-treesitter.ts_utils'
 
-function Create_class_test()
+local create_class_test = function()
     local current_node = ts_utils.get_node_at_cursor(0, true)
     if not current_node then return "" end
 
@@ -36,7 +38,7 @@ function Create_class_test()
 
     local endIndex, _ = string.find(filePath, ".java", 0, true)
     local _, startIndex = string.find(filePath, "java/", 0, true)
-    print(endIndex)
+
     local packageName = string.sub(filePath, startIndex + 1, endIndex - 2 - class_name:len()):gsub(
         "/",
         ".")
@@ -54,3 +56,9 @@ function Create_class_test()
     end
     vim.cmd('e ' .. testPath)
 end
+
+M.attach = function()
+    nmap('<leader>t', create_class_test, '[java] create class test')
+end
+
+return M
