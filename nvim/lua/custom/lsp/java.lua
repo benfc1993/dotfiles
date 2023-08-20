@@ -33,7 +33,7 @@ local create_class_test = function()
 
 
     local filePath = vim.fn.expand("%:~:.")
-    local testPath = string.gsub(filePath, "/(.-)/", "/test/", 1):gsub(class_name .. ".java",
+    local testPath = string.gsub(filePath, "/main/", "/test/", 1):gsub(class_name .. ".java",
         class_name .. "Test.java")
 
     local endIndex, _ = string.find(filePath, ".java", 0, true)
@@ -47,7 +47,7 @@ local create_class_test = function()
         local TestFile = io.open(testPath, 'w')
 
         if not TestFile then
-            print('Can\'t create file'); return 'File Error';
+            print('Can\'t create file at: ' .. testPath); return 'File Error';
         end
 
         TestFile:write('package ' .. packageName .. ';\n\npublic class ' .. class_name .. 'Test {\n}')

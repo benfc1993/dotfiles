@@ -9,7 +9,10 @@ local Languages = {
 }
 
 M.attach = function(language)
-    Languages[language]()
+    if Languages[language] then
+        Languages[language]()
+        print(language .. ' services attached')
+    end
 end
 
 return M
