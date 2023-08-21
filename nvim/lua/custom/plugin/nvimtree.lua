@@ -20,10 +20,14 @@ require("nvim-tree").setup({
     },
     view = {
         float = {
-            enable = true
+            enable = true,
+            open_win_config = {
+                width = vim.api.nvim_win_get_width(0) - 10,
+                height = vim.api.nvim_win_get_height(0) - 10,
+                row = 5,
+                col = 5
+            }
         },
-        width = 30,
-        side = 'right',
     },
     renderer = {
         group_empty = true,
