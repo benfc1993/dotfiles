@@ -3,6 +3,7 @@
         "vim",
         "nmap",
         "nrmap",
-        "vmap"
+        "vmap",
+        "signs"
     ]
 }

@@ -79,7 +79,7 @@ require('packer').startup(function(use)
     use("bluz71/vim-nightfly-colors")
     use("ellisonleao/gruvbox.nvim")
 
-    if vim.fn.getcwd(0):find('configs') or bootstrap_packer then
+    if bootstrap_packer then
         require('packer').sync()
     end
 end)
