@@ -7,9 +7,9 @@ local languages = {
 }
 
 M.attach = function(language)
+    if not languages[language] then return end
     if attached_lang == language then return end
     attached_lang = language
-
     local runner_group = vim.api.nvim_create_augroup('testRunnerGroup', { clear = true })
 
     vim.api.nvim_create_user_command('AutoRun', function()

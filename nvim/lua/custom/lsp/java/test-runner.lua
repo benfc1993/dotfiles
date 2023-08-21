@@ -47,18 +47,16 @@ local add_test = function(test_line, status, reason)
     local i = 0
     for w in string.gmatch(test_line, "%S+") do
         if i == 0 then
-            file = w:gsub('%.', '/')
+            file = w:gsub('%.', '/'):match(".+/(.*)[%.]?.*$")
         elseif i == 2 then
             method = w:gsub('%A', '')
         end
         i = i + 1
     end
 
-
-
     tests[file] = {
         status = status,
-        file = "src/test/java/" .. file .. '.java',
+        file = "java/" .. file .. ".java",
         method = method,
         reason = reason
     }
@@ -119,7 +117,6 @@ M.render_test_marks = function(file_path)
     clear_marks(bufnr)
     table.insert(renderedBufs, bufnr)
     local test = tests[file_name]
-
     if not test then return end
 
     local failed = {}
