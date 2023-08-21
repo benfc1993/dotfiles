@@ -125,10 +125,11 @@ M.render_test_marks = function(file_path)
 
     if test.status ~= 'failed' then
         local text = { test.status == 'passed' and "✓" or "⊘" }
-        vim.api.nvim_buf_set_extmark(bufnr, ns, line, 0, { virt_text = { text } })
+        local color = test.status == 'passed' and 'DiagnosticOk' or 'DiagnosticWarn'
+        vim.api.nvim_buf_set_extmark(bufnr, ns, line, 0, { virt_text = { text }, hl_group = color })
     else
         local text = { "✗" }
-        vim.api.nvim_buf_set_extmark(bufnr, ns, line, 0, { virt_text = { text } })
+        vim.api.nvim_buf_set_extmark(bufnr, ns, line, 0, { virt_text = { text }, hl_group = 'DiagnosticError' })
         local message = test.reason and table.concat(test.reason, ',') or "Test failed"
 
         table.insert(failed, {

@@ -16,6 +16,10 @@ M.attach = function(language)
         languages[language].create_watcher(runner_group)
     end, {})
 
+    nmap('<S-F5>', function()
+        vim.cmd('AutoRun')
+        languages[language].render_test_marks(vim.fn.expand("%:p"))
+    end, '[LSP] run test runner')
 
     vim.api.nvim_create_autocmd({ 'BufWinEnter' }, {
         group = runner_group,

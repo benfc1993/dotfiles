@@ -8,12 +8,12 @@ end
 
 M.run = function(terminal)
     local toggleTerm = require("toggleterm")
-    toggleTerm.exec('gradlew run', terminal.id)
+    toggleTerm.exec('./gradlew run', terminal.id)
 end
 
 M.test = function(terminal)
     local toggleTerm = require("toggleterm")
-    toggleTerm.exec('gradlew test', terminal.id)
+    toggleTerm.exec('./gradlew test', terminal.id)
 end
 
 return M
