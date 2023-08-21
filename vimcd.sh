@@ -4,5 +4,7 @@ if [[ -d $1 ]];
   then
     cd $1 && nvim .
   else
-    nvim $1
+cd "$(dirname "$1")"
+echo pwd 
+nvim $(basename "$1")
 fi

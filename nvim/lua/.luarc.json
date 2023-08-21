@@ -1,0 +1,8 @@
+{
+    "diagnostics.globals": [
+        "vim",
+        "nmap",
+        "nrmap",
+        "vmap"
+    ]
+}

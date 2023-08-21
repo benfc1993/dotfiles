@@ -2,13 +2,16 @@ require("custom")
 require("colorScheme")
 
 ColorMyPencils()
-
 vim.api.nvim_create_autocmd("User", {
     group = vim.api.nvim_create_augroup("PackerGroup", { clear = true }),
     pattern = "PackerComplete",
     callback = function()
         vim.schedule(ColorMyPencils)
-        vim.cmd('q')
+        local packer_bufnr = vim.api.nvim_get_current_buf()
+        if not vim.api.nvim_list_bufs()[1] then
+            vim.api.nvim_create_buf(false, true)
+        end
+        vim.api.nvim_buf_delete(packer_bufnr, { force = true })
     end
 })
 

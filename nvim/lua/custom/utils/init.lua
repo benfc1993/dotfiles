@@ -1,1 +1,1 @@
-require("custom.utils.keyBindHelper")
+require("custom.utils.keybindhelper")

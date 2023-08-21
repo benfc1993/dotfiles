@@ -1,8 +1,9 @@
 #! /bin/bash
-
 parent_path=$( cd "$(dirname "${BASH_SOURCE[0]}")" ; pwd -P )
 
-rm -rf /usr.local/bin.vimcd
+rm -f ~/.config/nvim
+sudo rm -rf /usr/local/bin/vimcd
 
-cd "$parent_path/nvim" && ln -s $(pwd) ~/.config/nvim
+sudo ln -s "$parent_path/vimcd.sh" /usr/local/bin/vimcd
+ln -s "$parent_path/nvim" ~/.config/nvim
 

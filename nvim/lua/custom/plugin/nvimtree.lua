@@ -11,7 +11,17 @@ vim.opt.termguicolors = true
 -- OR setup with some options
 require("nvim-tree").setup({
     sort_by = "case_sensitive",
+    hijack_unnamed_buffer_when_opening = true,
+    reload_on_bufenter = true,
+    respect_buf_cwd = true,
+    update_focused_file = {
+        enable = true,
+        update_root = true,
+    },
     view = {
+        float = {
+            enable = true
+        },
         width = 30,
         side = 'right',
     },
@@ -25,5 +35,16 @@ require("nvim-tree").setup({
         open_file = {
             quit_on_open = true
         }
+    },
+    diagnostics = {
+        enable = true,
+        show_on_dirs = true,
+        severity = {
+            min = vim.diagnostic.severity.WARN,
+            max = vim.diagnostic.severity.ERROR
+        }
+    },
+    modified = {
+        enable = true
     }
 })

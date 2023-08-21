@@ -25,9 +25,6 @@ end
 vim.keymap.set({ 'n', 't' }, '<C-M-Bslash>', create_new_term, {})
 
 require("toggleterm").setup({
-    on_exit = function(terminal)
-        print("Hello: " .. terminal.id)
-    end,
     autochdir = true,
     persist_mode = false
 })
