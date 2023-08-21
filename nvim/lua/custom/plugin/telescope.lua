@@ -1,4 +1,3 @@
-vim.print("telescope loaded")
 local builtin = require('telescope.builtin')
 nmap('<leader>ff', builtin.find_files, "Find files")
 nmap('<leader>fg', builtin.git_files, "Find files in git repo")

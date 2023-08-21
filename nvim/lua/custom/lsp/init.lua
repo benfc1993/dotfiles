@@ -11,7 +11,7 @@ local Languages = {
 M.attach = function(language)
     if Languages[language] then
         Languages[language]()
-        print(language .. ' services attached')
+        vim.print(language .. ' services attached')
     end
 end
 

@@ -2,7 +2,7 @@ local M = {}
 
 local ts_utils = require 'nvim-treesitter.ts_utils'
 
-local create_class_test = function()
+M.create_class_test = function()
     local current_node = ts_utils.get_node_at_cursor(0, true)
     if not current_node then return "" end
 
@@ -55,10 +55,6 @@ local create_class_test = function()
         TestFile:close()
     end
     vim.cmd('e ' .. testPath)
-end
-
-M.attach = function()
-    nmap('<leader>t', create_class_test, '[java] create class test')
 end
 
 return M
