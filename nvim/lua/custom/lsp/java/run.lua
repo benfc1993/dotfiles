@@ -7,14 +7,13 @@ M.create_terminal = function()
 end
 
 M.run = function(terminal)
-    vim.print(terminal.job_id)
     local toggleTerm = require("toggleterm")
-    toggleTerm.exec('gradle run', terminal.id)
+    toggleTerm.exec('gradlew run', terminal.id)
 end
 
 M.test = function(terminal)
     local toggleTerm = require("toggleterm")
-    toggleTerm.exec('gradle test', terminal.id)
+    toggleTerm.exec('gradlew test', terminal.id)
 end
 
 return M

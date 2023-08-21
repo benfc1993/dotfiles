@@ -27,7 +27,6 @@ vim.api.nvim_create_autocmd("ColorScheme", {
         end
 
         if file == nil then return "" end
-        print("writing file")
         file:write('SelectedColorScheme = "' .. match .. '"')
         file:close()
     end

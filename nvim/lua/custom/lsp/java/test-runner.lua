@@ -1,5 +1,7 @@
 local M = {}
 
+M.pattern = '*.java'
+
 local ns = vim.api.nvim_create_namespace('javaTest')
 
 local test_function_query_string = [[
@@ -9,6 +11,9 @@ local test_function_query_string = [[
 (#eq? @name "%s")
 )
 ]]
+
+local tests = {}
+local renderedBufs = {}
 
 local find_buffer_by_name = function(name)
     for _, buf in ipairs(vim.api.nvim_list_bufs()) do
@@ -37,64 +42,58 @@ local find_test_line = function(bufnr, name)
 end
 
 
-local add_test = function(test_line, status, tests_table, reason)
+local add_test = function(test_line, status, reason)
     local file, method
     local i = 0
     for w in string.gmatch(test_line, "%S+") do
         if i == 0 then
             file = w:gsub('%.', '/')
         elseif i == 2 then
-            method = w
+            method = w:gsub('%A', '')
         end
         i = i + 1
     end
 
-    local bufnr = find_buffer_by_name(file)
-
-    local line = bufnr == -1 and -1 or find_test_line(bufnr, method)
 
 
-    table.insert(tests_table, {
+    tests[file] = {
         status = status,
-        bufnr = bufnr,
-        line = line,
         file = "src/test/java/" .. file .. '.java',
         method = method,
         reason = reason
-    })
+    }
 end
 
-local parse_output = function(data, tests)
+local parse_output = function(data)
     if not data then return end
     local valid_lines = {}
     local testInfoReached = false
     for _, line in pairs(data) do
         if testInfoReached then
             testInfoReached = line:find('actionable tasks') == nil
-            if testInfoReached then
+            if testInfoReached and line ~= "" then
                 table.insert(valid_lines, line)
             end
         else
-            testInfoReached = line:match('> Task :app:test%A?')
+            testInfoReached = line:match('> Task :app:test%A+') or line:match('> Task :app:test$')
         end
     end
-
     local held_line = nil
     local description_lines = {}
 
     local function try_add_fail_test()
         if held_line ~= nil then
-            add_test(held_line, 'failed', tests, description_lines)
+            add_test(held_line, 'failed', description_lines)
         end
         held_line = nil
     end
 
     for _, validLine in pairs(valid_lines) do
         if validLine:find("PASSED") then
-            add_test(validLine, 'passed', tests)
+            add_test(validLine, 'passed')
             try_add_fail_test()
         elseif validLine:find("SKIPPED") then
-            add_test(validLine, 'skipped', tests)
+            add_test(validLine, 'skipped')
             try_add_fail_test()
         elseif validLine:find("FAILED") then
             try_add_fail_test()
@@ -104,55 +103,71 @@ local parse_output = function(data, tests)
             table.insert(description_lines, trimed_line)
         end
     end
+    try_add_fail_test()
 end
 
-local create_watcher = function()
+local clear_marks = function(bufnr)
+    vim.api.nvim_buf_clear_namespace(bufnr, ns, 0, -1)
+    vim.diagnostic.reset(ns, bufnr)
+end
+
+M.render_test_marks = function(file_path)
+    local file_name = file_path:match(".+/(.*)[%.]+.*$")
+    local bufnr = find_buffer_by_name(file_name)
+
+    if bufnr == -1 then return end
+    clear_marks(bufnr)
+    table.insert(renderedBufs, bufnr)
+    local test = tests[file_name]
+
+    if not test then return end
+
+    local failed = {}
+
+    local line = find_test_line(bufnr, test.method)
+
+    if test.status ~= 'failed' then
+        local text = { test.status == 'passed' and "✓" or "⊘" }
+        vim.api.nvim_buf_set_extmark(bufnr, ns, line, 0, { virt_text = { text } })
+    else
+        local text = { "✗" }
+        vim.api.nvim_buf_set_extmark(bufnr, ns, line, 0, { virt_text = { text } })
+        local message = test.reason and table.concat(test.reason, ',') or "Test failed"
+
+        table.insert(failed, {
+            bufnr = bufnr,
+            lnum = line,
+            col = 0,
+            severity = vim.diagnostic.severity.ERROR,
+            source = "java-test",
+            message = message,
+            user_data = {},
+        })
+    end
+    vim.diagnostic.set(ns, bufnr, failed, {})
+end
+
+M.create_watcher = function(runner_group)
     vim.api.nvim_create_autocmd('BufWritePost', {
-        group = vim.api.nvim_create_augroup('javaWatcher', { clear = true }),
+        group = runner_group,
         pattern = "*.java",
         callback = function()
-            local tests = {}
-            vim.fn.jobstart({ 'gradle', 'test' }, {
+            tests = {}
+            vim.fn.jobstart({ './gradlew', 'test' }, {
                 stdout_buffered = true,
-                on_stdout = function(_, data) parse_output(data, tests) end,
-                on_stderr = function(_, data) parse_output(data, tests) end,
+                on_stdout = function(_, data) parse_output(data) end,
+                on_stderr = function(_, data) parse_output(data) end,
                 on_exit = function()
-                    local failed = {}
+                    for _, bufnr in pairs(renderedBufs) do
+                        clear_marks(bufnr)
+                    end
                     for _, test in pairs(tests) do
-                        if test.bufnr == -1 or test.line == -1 then
-                            goto continue
-                        end
-                        vim.api.nvim_buf_clear_namespace(test.bufnr, ns, 0, -1)
-                        if test.status ~= 'failed' then
-                            local text = { test.status == 'passed' and "✓" or "⊘" }
-                            vim.api.nvim_buf_set_extmark(test.bufnr, ns, test.line, 0, { virt_text = { text } })
-                        else
-                            local text = { "✗" }
-                            vim.api.nvim_buf_set_extmark(test.bufnr, ns, test.line, 0, { virt_text = { text } })
-                            local message = test.reason and table.concat(test.reason, ',') or "Test failed"
-                            table.insert(failed, {
-                                bufnr = test.bufnr,
-                                lnum = test.line,
-                                col = 0,
-                                severity = vim.diagnostic.severity.ERROR,
-                                source = "go-test",
-                                message = message,
-                                user_data = {},
-                            })
-                        end
-                        vim.diagnostic.set(ns, test.bufnr, failed, {})
-                        ::continue::
+                        M.render_test_marks(test.file)
                     end
                 end
             })
         end
     })
-end
-
-M.setup = function()
-    vim.api.nvim_create_user_command('AutoRun', function()
-        create_watcher()
-    end, {})
 end
 
 return M
