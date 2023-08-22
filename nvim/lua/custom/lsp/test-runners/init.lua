@@ -2,6 +2,8 @@ local M = {}
 
 local attached_lang = nil
 
+--- lsp test runner languages
+--- @type {[string]: {pattern: string, create_watcher: fun(group: number), mark_tests: fun(bufnr: number)}}>
 local languages = {
     java = require("custom.lsp.java.test-runner")
 }
@@ -27,7 +29,7 @@ M.attach = function(language)
         languages[language].render_test_marks(vim.fn.expand("%:p"))
     end, '[LSP] run test runner')
 
-    vim.api.nvim_create_autocmd({ 'BufWinEnter' }, {
+    vim.api.nvim_create_autocmd({ 'BufWinEnter', 'InsertLeave' }, {
         group = runner_group,
         pattern = languages[language].pattern,
         callback = function()

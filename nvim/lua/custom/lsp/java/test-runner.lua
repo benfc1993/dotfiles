@@ -17,7 +17,8 @@ local test_marker_query_string = [[(
     (modifiers
     (marker_annotation name: (identifier) @name)
     )
-    name: (identifier) @function-name)
+    (identifier) @method_name
+    ) @method
 (#eq? @name "%s")
 )]]
 
@@ -56,7 +57,7 @@ local add_test = function(test_line, status, reason)
     local i = 0
     for w in string.gmatch(test_line, "%S+") do
         if i == 0 then
-            file = w:gsub('%.', '/'):match(".+/(.*)[%.]?.*$")
+            file = w:find('%A+') and w:gsub('%.', '/'):match(".+/(.*)[%.]?.*$") or w
         elseif i == 2 then
             method = w:gsub('%A', '')
         end
@@ -68,13 +69,14 @@ local add_test = function(test_line, status, reason)
     if not tests[file] then tests[file] = {} end
     tests[file][method] = {
         status = status,
-        file = "java/" .. file .. ".java",
+        file = file,
         method = method,
         reason = reason
     }
 end
 
 local parse_output = function(data)
+    print(vim.inspect(data))
     if not data then return end
     local valid_lines = {}
     local testInfoReached = false
@@ -129,7 +131,6 @@ M.render_test_marks = function(file_name)
 
     if bufnr == -1 then return end
     clear_marks(bufnr)
-    table.insert(renderedBufs, bufnr)
     local file_tests = tests[file_name]
     local failed = {}
     if not file_tests then return end
@@ -169,49 +170,53 @@ M.mark_tests = function(bufnr)
     local tree = parser:parse()[1]
     local root = tree:root()
 
-    for _, node in query:iter_captures(root, bufnr, 0, -1) do
-        if node:parent():type() == "method_declaration" then
-            local range = { node:range() }
-            signs.add_symbol(signs.symbols.flask, range[1] + 1, 'javaTestSymbols', bufnr)
+
+    for pattern, match in query:iter_matches(root, bufnr, 0, -1) do
+        local range, method_name, declaration_line
+        for id, node in pairs(match) do
+            local capture_name = query.captures[id]
+            if capture_name == "method_name" then
+                method_name = vim.treesitter.get_node_text(node, bufnr)
+                local r = { node:range() }
+                declaration_line = r[1]
+            elseif capture_name == "method" then
+                range = { node:range() }
+            end
         end
+        if not renderedBufs[bufnr] then renderedBufs[bufnr] = {} end
+
+        renderedBufs[bufnr][method_name] = {
+            range = { range[1] + 1, range[3] + 1 },
+            declaration_line = declaration_line,
+            method_name = method_name
+        }
+        signs.add_symbol(signs.symbols.flask, declaration_line, 'javaTestSymbols', bufnr)
     end
+    vim.print(vim.inspect(renderedBufs))
 end
 
 M.run_single_test = function(bufnr, lnum)
-    local formatted = string.format([[(
-    (method_declaration
-    name: (identifier) @name) @method  )]])
-    local query = vim.treesitter.query.parse("java", formatted)
-    local parser = vim.treesitter.get_parser(bufnr, "java", {})
-    local tree = parser:parse()[1]
-    local root = tree:root()
+    local methods = renderedBufs[bufnr]
 
-    local method_name = nil
-    local containing_method = false
-    local method_line = -1
-    for id, node in query:iter_captures(root, bufnr, 0, -1) do
-        local range = { node:range() }
-
-        if id == 2 and range[1] < lnum and range[3] > lnum then
-            containing_method = true
-            method_line = range[1] + 1
-        end
-
-        if id == 1 and containing_method then
-            method_name = vim.treesitter.get_node_text(node, bufnr)
-            break
-        end
+    if not methods then return end
+    vim.print(vim.inspect(methods))
+    local method = nil
+    for _, m in pairs(methods) do
+        if m.range[1] > lnum or m.range[2] < lnum then goto continue end
+        method = m
+        ::continue::
     end
 
-    if not containing_method then return end
+    if not method then return end
 
-    clear_marks(bufnr, method_line)
+
+    clear_marks(bufnr, method.declaration_line)
     local text = { "◉" }
     local color = 'DiagnosticWarn'
-    vim.api.nvim_buf_set_extmark(bufnr, ns, method_line, 0, { virt_text = { text }, hl_group = color })
+    vim.api.nvim_buf_set_extmark(bufnr, ns, method.declaration_line, 0, { virt_text = { text }, hl_group = color })
 
-    local pattern = '*' .. method_name
-    vim.fn.jobstart({ './gradlew', 'test', '--tests', pattern }, {
+    local pattern = '*' .. method.method_name
+    vim.fn.jobstart({ './gradlew', 'cleanTest', 'test', '--tests', pattern }, {
         stdout_buffered = true,
         on_stdout = function(_, data) parse_output(data) end,
         on_stderr = function(_, data) parse_output(data) end,
@@ -228,7 +233,7 @@ M.create_watcher = function(runner_group)
         group = runner_group,
         pattern = "*.java",
         callback = function()
-            for _, bufnr in pairs(renderedBufs) do
+            for bufnr, _ in pairs(renderedBufs) do
                 clear_marks(bufnr)
             end
 
