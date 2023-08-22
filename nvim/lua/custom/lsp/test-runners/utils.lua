@@ -46,12 +46,12 @@ M.render_test_marks = function(file_name)
         local line = renderedBufs[bufnr][test.method].declaration_line
 
         if test.status ~= 'failed' then
-            local text = { test.status == 'passed' and "✓" or "⊘" }
             local color = test.status == 'passed' and 'DiagnosticOk' or 'DiagnosticWarn'
-            vim.api.nvim_buf_set_extmark(bufnr, ns, line, 0, { virt_text = { text }, hl_group = color })
+            local text = { test.status == 'passed' and "✓" or "⊘", color }
+            vim.api.nvim_buf_set_extmark(bufnr, ns, line, 0, { virt_text = { text } })
         else
-            local text = { "✗" }
-            vim.api.nvim_buf_set_extmark(bufnr, ns, line, 0, { virt_text = { text }, hl_group = 'DiagnosticError' })
+            local text = { "✗", 'DiagnosticError' }
+            vim.api.nvim_buf_set_extmark(bufnr, ns, line, 0, { virt_text = { text } })
             local message = test.reason and table.concat(test.reason, ',') or "Test failed"
 
             table.insert(failed, {
@@ -118,9 +118,8 @@ M.run_single_test = function(bufnr, lnum)
 
 
     clear_marks(bufnr, method.declaration_line)
-    local text = { "◉" }
-    local color = 'DiagnosticWarn'
-    vim.api.nvim_buf_set_extmark(bufnr, ns, method.declaration_line, 0, { virt_text = { text }, hl_group = color })
+    local text = { "◉", 'DiagnosticWarn' }
+    vim.api.nvim_buf_set_extmark(bufnr, ns, method.declaration_line, 0, { virt_text = { text } })
 
     local command = single_test_command(method.method_name)
     vim.fn.jobstart(command, {
