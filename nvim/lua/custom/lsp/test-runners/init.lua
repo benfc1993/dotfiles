@@ -5,7 +5,8 @@ local attached_lang = nil
 --- lsp test runner languages
 --- @type {[string]: {pattern: string,create_test_runner: fun(group: number)}}>
 local languages = {
-    java = require("custom.lsp.java.test-runner")
+    java = require("custom.lsp.java.test-runner"),
+    typescript = require("custom.lsp.typescript.test-runner")
 }
 
 local test_runner = require('custom.lsp.test-runners.utils')

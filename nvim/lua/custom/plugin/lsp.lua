@@ -14,7 +14,12 @@ lsp.on_attach(function(client, bufnr)
         require("custom.lsp").attach(v)
     end
 
-    vim.keymap.set("n", "gd", function() vim.lsp.buf.definition() end, opts)
+    local function on_list(options)
+        vim.fn.setqflist({}, ' ', options)
+        vim.api.nvim_command('cfirst')
+    end
+
+    vim.keymap.set("n", "gd", function() vim.lsp.buf.definition({ reuse_win = true, on_list = on_list }) end, opts)
     vim.keymap.set("n", "K", function() vim.lsp.buf.hover() end, opts)
     vim.keymap.set("n", "<leader>vws", function() vim.lsp.buf.workspace_symbol('') end, opts)
     vim.keymap.set("n", "<leader>vf", function() vim.diagnostic.open_float() end, opts)
@@ -33,7 +38,10 @@ lsp.buffer_autoformat()
 
 require('neodev').setup()
 
-require('lspconfig').lua_ls.setup(lsp.nvim_lua_ls())
+local lspconfig = require('lspconfig')
+
+lspconfig.lua_ls.setup(lsp.nvim_lua_ls())
+
 lsp.setup()
 
 local luasnip = require 'luasnip'

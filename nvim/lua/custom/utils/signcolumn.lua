@@ -1,3 +1,4 @@
+---@diagnostic disable: duplicate-set-field
 signs = {}
 
 function ReturnHighlightTerm(group, term)
@@ -5,16 +6,18 @@ function ReturnHighlightTerm(group, term)
     return output:match(term .. '=(.*)%s*')
 end
 
-local signcolumnbg = ReturnHighlightTerm('SignColumn', 'guibg')
+signs.setup = function()
+    local signcolumnbg = ReturnHighlightTerm('SignColumn', 'guibg') or 'NONE'
 
-vim.cmd('hi! signsredhl guifg=red guibg=' .. signcolumnbg)
-vim.cmd('hi signsgreenhl guifg=SeaGreen guibg=' .. signcolumnbg)
-vim.cmd('hi! signsbluehl gui=bold guifg=SlateBlue guibg=' .. signcolumnbg)
-vim.cmd('hi! signsyellowhl guifg=yellow guibg=' .. signcolumnbg)
+    vim.cmd('hi! signsredhl guifg=red guibg=' .. signcolumnbg)
+    vim.cmd('hi signsgreenhl guifg=SeaGreen guibg=' .. signcolumnbg)
+    vim.cmd('hi! signsbluehl gui=bold guifg=SlateBlue guibg=' .. signcolumnbg)
+    vim.cmd('hi! signsyellowhl guifg=yellow guibg=' .. signcolumnbg)
 
-vim.fn.sign_define('tick', { text = " \u{2714}", texthl = 'signsgreenhl' })
-vim.fn.sign_define('cross', { text = " \u{26CC}", texthl = 'signsredhl' })
-vim.fn.sign_define('flask', { text = "T\u{27A4}", texthl = 'signsbluehl' })
+    vim.fn.sign_define('tick', { text = " \u{2714}", texthl = 'signsgreenhl' })
+    vim.fn.sign_define('cross', { text = " \u{26CC}", texthl = 'signsredhl' })
+    vim.fn.sign_define('flask', { text = "\u{27A4}", texthl = 'signsbluehl' })
+end
 
 signs.symbols = {
     tick = {

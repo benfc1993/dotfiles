@@ -71,6 +71,7 @@ require('packer').startup(function(use)
         'nvim-lualine/lualine.nvim',
         dependencies = { 'nvim-tree/nvim-web-devicons' }
     })
+    use('tpope/vim-obsession')
     -- Themes
     use({
         'Mofiqul/dracula.nvim',

@@ -34,23 +34,22 @@ end
 M.render_test_marks = function(file_name)
     file_name = file_name:find('%A+') and file_name:match(".+/(.*)[%.]+.*$") or file_name
     local bufnr = find_buffer_by_name(file_name)
-    vim.print(file_name)
+
     if bufnr == -1 then return end
     clear_marks(bufnr)
     local file_tests = tests[file_name]
     local failed = {}
     if not file_tests then return end
-    vim.print(vim.inspect(renderedBufs))
 
     for _, test in pairs(file_tests) do
         local line = renderedBufs[bufnr][test.method].declaration_line
 
         if test.status ~= 'failed' then
             local color = test.status == 'passed' and 'DiagnosticOk' or 'DiagnosticWarn'
-            local text = { test.status == 'passed' and "✓" or "⊘", color }
+            local text = { test.status == 'passed' and "\u{25A0} PASSED" or "\u{25A0} SKIPPED", color }
             vim.api.nvim_buf_set_extmark(bufnr, ns, line, 0, { virt_text = { text } })
         else
-            local text = { "✗", 'DiagnosticError' }
+            local text = { "\u{25A0} FAILED", 'DiagnosticError' }
             vim.api.nvim_buf_set_extmark(bufnr, ns, line, 0, { virt_text = { text } })
             local message = test.reason and table.concat(test.reason, ',') or "Test failed"
 
@@ -71,7 +70,7 @@ M.render_test_marks = function(file_name)
 end
 
 M.mark_tests = function(bufnr)
-    local formatted = string.format(test_marker_query_string, 'Test')
+    local formatted = string.format(test_marker_query_string)
     local query = vim.treesitter.query.parse(test_language, formatted)
     local parser = vim.treesitter.get_parser(bufnr, test_language, {})
     local tree = parser:parse()[1]
@@ -85,7 +84,7 @@ M.mark_tests = function(bufnr)
             if capture_name == "method_name" then
                 method_name = vim.treesitter.get_node_text(node, bufnr)
                 local r = { node:range() }
-                declaration_line = r[1]
+                declaration_line = r[1] + 1
             elseif capture_name == "method" then
                 range = { node:range() }
             end
@@ -99,14 +98,13 @@ M.mark_tests = function(bufnr)
         }
         signs.add_symbol(signs.symbols.flask, declaration_line, test_language .. 'TestSymbols', bufnr)
     end
-    vim.print(vim.inspect(renderedBufs))
 end
 
 M.run_single_test = function(bufnr, lnum)
     local methods = renderedBufs[bufnr]
 
     if not methods then return end
-    vim.print(vim.inspect(methods))
+
     local method = nil
     for _, m in pairs(methods) do
         if m.range[1] > lnum or m.range[2] < lnum then goto continue end

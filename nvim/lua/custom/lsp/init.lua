@@ -7,14 +7,17 @@ local Languages = {
         java.attach()
     end,
     lua = function()
-    end
+    end,
+    typescript = function()
+    end,
 }
 
 M.attach = function(language)
-    require("custom.lsp.test-runners").attach(language)
+    language = language:match("(_.)%A+") or language
     if Languages[language] then
+        require("custom.lsp.test-runners").attach(language)
         Languages[language]()
-        vim.print(language .. ' services attached')
+        print(language .. ' services attached')
     end
 end
 

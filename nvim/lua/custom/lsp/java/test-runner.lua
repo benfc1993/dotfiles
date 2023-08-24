@@ -1,6 +1,6 @@
 local M = {}
 
-M.pattern = '*.java'
+M.pattern = '*Test.java'
 
 local test_marker_query_string = [[(
 (method_declaration
@@ -9,7 +9,7 @@ local test_marker_query_string = [[(
     )
     (identifier) @method_name
     ) @method
-(#eq? @name "%s")
+(#eq? @name Test)
 )]]
 
 local add_test = function(tests, test_line, status, reason)
@@ -36,7 +36,6 @@ local add_test = function(tests, test_line, status, reason)
 end
 
 local parse_output = function(tests, data)
-    print(vim.inspect(data))
     if not data then return end
     local valid_lines = {}
     local testInfoReached = false
