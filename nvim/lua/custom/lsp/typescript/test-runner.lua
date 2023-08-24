@@ -5,11 +5,12 @@ M.pattern = '*.test.ts'
 local test_marker_query_string = [[(
 (expression_statement
     (call_expression
-    function: (identifier) @name
+    function: [ (identifier) @name
+        (member_expression
+        object: (identifier) @name)]
     arguments: (arguments (string (string_fragment) @method_name))
     )
 ) @method
-
 (#eq? @name it)
 )]]
 
@@ -34,9 +35,8 @@ local parse_output = function(tests, data)
         for _, test in pairs(testFile.assertionResults) do
             local reason = {}
             for _, details in pairs(test.failureDetails) do
-                table.insert(reason, details.message)
+                table.insert(reason, details.matcherResult.message)
             end
-
             local method = test.title
 
             if not tests[file] then tests[file] = {} end
@@ -48,6 +48,7 @@ local parse_output = function(tests, data)
             }
         end
     end
+    print(vim.inspect(tests))
 end
 
 M.create_test_runner = function(runner_group)

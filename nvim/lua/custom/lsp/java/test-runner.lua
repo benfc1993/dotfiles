@@ -7,7 +7,7 @@ local test_marker_query_string = [[(
     (modifiers
     (marker_annotation name: (identifier) @name)
     )
-    (identifier) @method_name
+    name: (identifier) @method_name
     ) @method
 (#eq? @name Test)
 )]]
@@ -41,12 +41,12 @@ local parse_output = function(tests, data)
     local testInfoReached = false
     for _, line in pairs(data) do
         if testInfoReached then
-            testInfoReached = line:find('actionable tasks') == nil
+            testInfoReached = line:find('actionable tasks') == nil and line:find('Deprecated Gradle') == nil
             if testInfoReached and line ~= "" then
                 table.insert(valid_lines, line)
             end
         else
-            testInfoReached = line:match('> Task :app:test%A+') or line:match('> Task :app:test$')
+            testInfoReached = line:match('> Task .*:test%A+') or line:match('> Task .*:test$')
         end
     end
     local held_line = nil

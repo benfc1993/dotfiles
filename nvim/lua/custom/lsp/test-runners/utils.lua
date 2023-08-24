@@ -84,7 +84,7 @@ M.mark_tests = function(bufnr)
             if capture_name == "method_name" then
                 method_name = vim.treesitter.get_node_text(node, bufnr)
                 local r = { node:range() }
-                declaration_line = r[1] + 1
+                declaration_line = r[1]
             elseif capture_name == "method" then
                 range = { node:range() }
             end
@@ -96,7 +96,7 @@ M.mark_tests = function(bufnr)
             declaration_line = declaration_line,
             method_name = method_name
         }
-        signs.add_symbol(signs.symbols.flask, declaration_line, test_language .. 'TestSymbols', bufnr)
+        signs.add_symbol(signs.symbols.flask, declaration_line + 1, test_language .. 'TestSymbols', bufnr)
     end
 end
 
@@ -150,8 +150,12 @@ M.create_test_runner = function(runner_group, language, pattern, parser, test_qu
         group = runner_group,
         pattern = pattern,
         callback = function()
-            for bufnr, _ in pairs(renderedBufs) do
+            for bufnr, renderedBuf in pairs(renderedBufs) do
                 clear_marks(bufnr)
+                for _, test in pairs(renderedBuf) do
+                    local text = { "◉", 'DiagnosticWarn' }
+                    vim.api.nvim_buf_set_extmark(bufnr, ns, test.declaration_line, 0, { virt_text = { text } })
+                end
             end
 
             vim.fn.jobstart(test_command, {
@@ -159,7 +163,7 @@ M.create_test_runner = function(runner_group, language, pattern, parser, test_qu
                 on_stdout = function(_, data) parse_output(tests, data) end,
                 on_stderr = function(_, data) parse_output(tests, data) end,
                 on_exit = function()
-                    for file, _ in pairs(tests) do
+                    for file, fileTests in pairs(tests) do
                         M.render_test_marks(file)
                     end
                 end
@@ -176,5 +180,4 @@ M.create_test_runner = function(runner_group, language, pattern, parser, test_qu
         end
     })
 end
-
 return M
