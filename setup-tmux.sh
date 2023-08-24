@@ -19,6 +19,9 @@ if [[ ! -d ~/.tmux/plugins/tpm ]]; then
     git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
 fi
 
+if [[ ! $(dpkg-query -l fzf) ]]; then
+    sudo apt install fzf
+fi
 
 rm -rf ~/.config/tmux
 sudo rm -rf /usr/local/bin/fileSearch
@@ -28,14 +31,21 @@ mkdir -p ~/.config/tmux
 
 ln -s "$parent_path/tmux/tmux.conf" ~/.config/tmux/tmux.conf
 
+mkdir ~/.config/tmux/custom
+
+# Plugins
 chmod a+u "$parent_path/tmux/plugins/fileSearch" 
 sudo ln -s "$parent_path/tmux/plugins/fileSearch" /usr/local/bin/fileSearch 
+
+chmod +x "$parent_path/tmux/plugins/cheatsheet/cheatsheet.sh"
+ln -s "$parent_path/tmux/plugins/cheatsheet" ~/.config/tmux/custom/cheatsheet
+
+chmod a+u "$parent_path/tmux/plugins/v-session.sh"
+sudo ln -s "$parent_path/tmux/plugins/v-session.sh" /usr/local/bin/v-session
 
 chmod a+u "$parent_path/vimcd.sh" 
 sudo ln -s "$parent_path/vimcd.sh" /usr/local/bin/vimcd
 
-ln -s "$parent_path/tmux/cheatsheet.md" ~/.config/tmux/cheatsheet.md
-ln -s "$parent_path/tmux/cheatsheet.sh" ~/.config/tmux/cheatsheet
 
 tmux source ~/.config/tmux/tmux.conf
 
