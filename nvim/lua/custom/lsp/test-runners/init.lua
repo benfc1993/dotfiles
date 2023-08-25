@@ -21,10 +21,12 @@ M.attach = function(language)
 
     test_runner.mark_tests(vim.api.nvim_get_current_buf())
 
+    nmap('<F6>', test_runner.run_all_tests, '[TR] run all tests')
+
     nmap('<S-F6>', function()
         local r, _ = unpack(vim.api.nvim_win_get_cursor(0))
         test_runner.run_single_test(vim.api.nvim_get_current_buf(), r)
-    end, '[LSP] run sing test')
+    end, '[TR] run sing test')
 
     vim.api.nvim_create_autocmd({ 'BufWinEnter', 'InsertLeave' }, {
         group = runner_group,

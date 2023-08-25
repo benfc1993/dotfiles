@@ -31,7 +31,10 @@ local parse_output = function(tests, data)
     if not decoded_data then return end
 
     for _, testFile in pairs(decoded_data.testResults) do
-        local file = testFile.name:match(".+/(.*)[%.]+.*$")
+        local file = testFile.name:match(".+/(.*)[%.].*$")
+
+        if not tests[file] then tests[file] = {} end
+
         for _, test in pairs(testFile.assertionResults) do
             local reason = {}
             for _, details in pairs(test.failureDetails) do
@@ -39,7 +42,6 @@ local parse_output = function(tests, data)
             end
             local method = test.title
 
-            if not tests[file] then tests[file] = {} end
             tests[file][method] = {
                 status = test.status,
                 file = file,

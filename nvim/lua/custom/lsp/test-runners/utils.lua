@@ -1,7 +1,9 @@
 local M = {}
+local U = {}
 
 local ns = vim.api.nvim_create_namespace('test-runner')
 
+--- @type {[string]: {[string]: {file: string, method: string, status: 'passed' | 'failed' | 'skipped', reason: string[]}}}
 local tests = {}
 local renderedBufs = {}
 local test_marker_query_string = nil
@@ -11,6 +13,7 @@ local test_language = ''
 
 --- @type fun(tests: {}, data: {}): {[string]: {status: 'passed' | 'failed' | 'skipped', file: string, method: string, reason: string[]}}
 local parse_output = nil
+local all_test_command = {}
 
 local find_buffer_by_name = function(name)
     for _, buf in ipairs(vim.api.nvim_list_bufs()) do
@@ -37,11 +40,13 @@ M.render_test_marks = function(file_name)
 
     if bufnr == -1 then return end
     clear_marks(bufnr)
+
     local file_tests = tests[file_name]
     local failed = {}
     if not file_tests then return end
 
-    for _, test in pairs(file_tests) do
+    for key, test in pairs(file_tests) do
+        if key == "error" then goto continue end
         local line = renderedBufs[bufnr][test.method].declaration_line
 
         if test.status ~= 'failed' then
@@ -63,6 +68,7 @@ M.render_test_marks = function(file_name)
                 user_data = {},
             })
         end
+        ::continue::
     end
 
 
@@ -120,16 +126,35 @@ M.run_single_test = function(bufnr, lnum)
     vim.api.nvim_buf_set_extmark(bufnr, ns, method.declaration_line, 0, { virt_text = { text } })
 
     local command = single_test_command(method.method_name)
-    vim.fn.jobstart(command, {
-        stdout_buffered = true,
-        on_stdout = function(_, data) parse_output(tests, data) end,
-        on_stderr = function(_, data) parse_output(tests, data) end,
-        on_exit = function()
-            for file, _ in pairs(tests) do
-                M.render_test_marks(file)
-            end
+    vim.fn.jobstart(command, U.job_opts)
+end
+
+M.run_all_tests = function()
+    for bufnr, renderedBuf in pairs(renderedBufs) do
+        clear_marks(bufnr)
+        for _, test in pairs(renderedBuf) do
+            local text = { "◉", 'DiagnosticWarn' }
+            vim.api.nvim_buf_set_extmark(bufnr, ns, test.declaration_line, 0, { virt_text = { text } })
         end
-    })
+    end
+
+    vim.fn.jobstart(all_test_command, U.job_opts)
+end
+
+local function create_terminal()
+    U.output_file = '/tmp/jest-output'
+    U.termWrapperBufnr = -1
+end
+
+local function open_terminal()
+    if U.termWrapperBufnr > -1 then vim.cmd('silent! bunload ' .. U.termWrapperBufnr) end
+    vim.cmd('set shell=/bin/zsh')
+    vim.cmd('setlocal splitbelow')
+    vim.cmd('split term:// cat /tmp/jest-output')
+    vim.cmd('resize 20 | setlocal signcolumn=no')
+
+    U.termWrapperBufnr = vim.api.nvim_get_current_buf()
+    vim.cmd('wincmd k')
 end
 
 --- create a test runner
@@ -138,36 +163,53 @@ end
 --- @param pattern string
 --- @param parser fun(tests: {}, data: {}): {[string]: {status: 'passed' | 'failed' | 'skipped', file: string, method: string, reason: string[]}}
 --- @param test_query string
---- @param test_command string[]
+--- @param all_test_cmd string[]
 --- @param single_test_cmd fun(method_name: string): string[]
-M.create_test_runner = function(runner_group, language, pattern, parser, test_query, test_command, single_test_cmd)
+M.create_test_runner = function(runner_group, language, pattern, parser, test_query, all_test_cmd, single_test_cmd)
     parse_output = parser
     test_language = language
     single_test_command = single_test_cmd
     test_marker_query_string = test_query
+    all_test_command = all_test_cmd
 
+    create_terminal()
+    U.errors = {}
+    U.enabled = false
+    U.job_opts = {
+        stdout_buffered = true,
+        on_stdout = function(_, data)
+            parse_output(tests, data)
+            for _, line in pairs(data) do
+                if line ~= '' then
+                    table.insert(U.errors, line)
+                end
+            end
+        end,
+        on_stderr = function(_, data)
+            for _, line in pairs(data) do
+                if line ~= '' then
+                    table.insert(U.errors, line)
+                end
+            end
+        end,
+        on_exit = function()
+            for file, _ in pairs(tests) do
+                M.render_test_marks(file)
+            end
+            io.open(U.output_file, 'w+'):close()
+            for _, line in pairs(U.errors) do
+                vim.fn.execute('! echo -e "' .. line .. '" >> ' .. U.output_file, 'silent')
+            end
+            open_terminal()
+            U.errors = {}
+        end
+    }
     vim.api.nvim_create_autocmd('BufWritePost', {
         group = runner_group,
         pattern = pattern,
         callback = function()
-            for bufnr, renderedBuf in pairs(renderedBufs) do
-                clear_marks(bufnr)
-                for _, test in pairs(renderedBuf) do
-                    local text = { "◉", 'DiagnosticWarn' }
-                    vim.api.nvim_buf_set_extmark(bufnr, ns, test.declaration_line, 0, { virt_text = { text } })
-                end
-            end
-
-            vim.fn.jobstart(test_command, {
-                stdout_buffered = true,
-                on_stdout = function(_, data) parse_output(tests, data) end,
-                on_stderr = function(_, data) parse_output(tests, data) end,
-                on_exit = function()
-                    for file, fileTests in pairs(tests) do
-                        M.render_test_marks(file)
-                    end
-                end
-            })
+            if not U.enabled then return end
+            M.run_all_tests()
         end
     })
 
@@ -179,5 +221,14 @@ M.create_test_runner = function(runner_group, language, pattern, parser, test_qu
             renderedBufs[bufnr] = nil
         end
     })
+
+    vim.api.nvim_create_user_command('TREnable', function()
+        U.enabled = true
+    end
+    , {})
+    vim.api.nvim_create_user_command('TRDisable', function()
+        U.enabled = false
+    end
+    , {})
 end
 return M
