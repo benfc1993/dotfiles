@@ -127,7 +127,7 @@ M.run_single_test = function(bufnr, lnum)
 
     U.errors = {}
     local command = single_test_command(method.method_name)
-    vim.fn.jobstart(command, U.job_opts)
+    U.run_job(command)
 end
 
 M.run_all_tests = function()
@@ -139,7 +139,7 @@ M.run_all_tests = function()
         end
     end
     U.errors = {}
-    vim.fn.jobstart(all_test_command, U.job_opts)
+    U.run_job(all_test_command)
 end
 
 local function create_terminal()
@@ -154,7 +154,7 @@ local function open_terminal()
     vim.cmd('set shell=/bin/zsh')
     vim.cmd('setlocal splitbelow')
     vim.cmd('split term:// cat /tmp/jest-output')
-    vim.cmd('resize 20 | setlocal signcolumn=no')
+    vim.cmd('resize 20 | setlocal signcolumn=no | setlocal nu! | setlocal rnu! | setlocal cursorline!')
 
     U.termWrapperBufnr = vim.api.nvim_get_current_buf()
     vim.cmd('wincmd k')
@@ -178,34 +178,36 @@ M.create_test_runner = function(runner_group, language, pattern, parser, test_qu
     create_terminal()
     U.errors = {}
     U.enabled = false
-    U.job_opts = {
-        stdout_buffered = true,
-        on_stdout = function(_, data)
-            parse_output(tests, data)
-            for _, line in pairs(data) do
-                if line ~= '' then
-                    table.insert(U.errors, line)
-                end
-            end
-        end,
-        on_stderr = function(_, data)
-            for _, line in pairs(data) do
-                if line ~= '' then
-                    table.insert(U.errors, line)
-                end
-            end
-        end,
-        on_exit = function()
-            for file, _ in pairs(tests) do
-                M.render_test_marks(file)
-            end
-            io.open(U.output_file, 'w+'):close()
-            for _, line in pairs(U.errors) do
-                vim.fn.execute('! echo -e "' .. line .. '" >> ' .. U.output_file, 'silent')
-            end
-            open_terminal()
+    local terminal = nil
+    U.run_job = function(command)
+        if terminal then
+            terminal:close()
         end
-    }
+        local toggleTerm = require("toggleterm.terminal").Terminal
+        terminal = toggleTerm:new({
+            hidden = U.show_terminal,
+            close_on_exit = false,
+            auto_scroll = true,
+            cmd = table.concat(command, ' '),
+            persist_mode = true,
+            on_open = function() vim.cmd('setlocal cursorline! | wincmd k | stopinsert') end,
+            on_stdout = function(_, _, data)
+                parse_output(tests, data)
+            end,
+            on_stderr = function(_, _, data)
+            end,
+            on_exit = function()
+                for file, _ in pairs(tests) do
+                    M.render_test_marks(file)
+                end
+            end
+        })
+        if U.show_terminal then
+            terminal:open()
+        else
+            terminal:spawn()
+        end
+    end
     vim.api.nvim_create_autocmd('BufWritePost', {
         group = runner_group,
         pattern = pattern,
@@ -232,13 +234,9 @@ M.create_test_runner = function(runner_group, language, pattern, parser, test_qu
         U.enabled = false
     end
     , {})
+
     vim.api.nvim_create_user_command('TROutput', function()
         U.show_terminal = not U.show_terminal
-        if U.show_terminal then
-            open_terminal()
-        else
-            if U.termWrapperBufnr > -1 then vim.cmd('silent! bunload ' .. U.termWrapperBufnr) end
-        end
     end, {})
 end
 return M

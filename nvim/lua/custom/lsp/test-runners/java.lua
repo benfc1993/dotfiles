@@ -79,7 +79,7 @@ end
 
 M.create_test_runner = function(runner_group)
     local single_test_command = function(method_name)
-        local pattern = '*' .. method_name
+        local pattern = '"*' .. method_name .. '"'
         return { './gradlew', 'cleanTest', 'test', '--tests', pattern }
     end
     require("custom.lsp.test-runners.utils").create_test_runner(runner_group, 'java', "*.java", parse_output,

@@ -16,12 +16,15 @@ local test_marker_query_string = [[(
 
 
 local parse_output = function(tests, data)
+    print(vim.inspect(data))
     if not data then return end
     local json_data = nil
     for _, line in ipairs(data) do
-        json_data = line:match("^{(.*)}$")
+        json_data = line:match("^{(.*)}\r$")
         if json_data then break end
     end
+
+    print(vim.inspect(json_data))
 
     if not json_data then return end
     json_data = '{' .. json_data .. '}'
@@ -50,12 +53,11 @@ local parse_output = function(tests, data)
             }
         end
     end
-    print(vim.inspect(tests))
 end
 
 M.create_test_runner = function(runner_group)
     local single_test_command = function(method_name)
-        local pattern = method_name
+        local pattern = "'" .. method_name .. "'"
         return { 'yarn', 'test', '--json', '-t', pattern }
     end
     require("custom.lsp.test-runners.utils").create_test_runner(runner_group, 'typescript', "*.ts", parse_output,

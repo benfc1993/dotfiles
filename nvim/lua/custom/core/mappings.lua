@@ -4,18 +4,19 @@ vim.g.mapleader = " "
 
 nmap("<leader>n", '<cmd>NvimTreeToggle<CR>', 'Toggle nvim tree')
 vim.keymap.set('n', '<esc>', '<nop>', { silent = true, remap = false })
--- TODO: replace with correct cmd
 nmap("<C-h>", "<cmd>TmuxNavigateLeft<CR>")
 nmap("<C-j>", "<cmd>TmuxNavigateDown<CR>")
 nmap("<C-k>", "<cmd>TmuxNavigateUp<CR>")
 nmap("<C-l>", "<cmd>TmuxNavigateRight<CR>")
 
-nmap("<C-[>", "<cmd>bp<CR>")
-nmap("<C-]>", "<cmd>bn<CR>")
+nmap("<C-RIGHT>", "<cmd>bn<CR>")
+nmap("<C-LEFT>", "<cmd>bp<CR>")
 
 vmap("J", ":m '>+1<CR>gv=gv")
 vmap("K", ":m '<-2<CR>gv=gv")
 
+nmap('<leader>vs', ':vsp <CR> | :wincmd l <CR>', 'split vertically')
+nmap('<leader>hs', ':sp <CR> | :wincmd j <CR>', 'split horizontally')
 
 nmap("J", "mzJ`z")
 nmap("<C-d>", "<C-d>zz")
