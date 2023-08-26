@@ -18,7 +18,10 @@ vim.cmd [[packadd packer.nvim]]
 require('packer').startup(function(use)
     -- Packer can manage itself
     use 'wbthomason/packer.nvim'
-
+    use {
+        "startup-nvim/startup.nvim",
+        requires = { "nvim-telescope/telescope.nvim", "nvim-lua/plenary.nvim" }
+    }
     use({
         'christoomey/vim-tmux-navigator',
         config = function()
@@ -52,10 +55,11 @@ require('packer').startup(function(use)
             { 'folke/neodev.nvim', },
             { 'hrsh7th/nvim-cmp' },     -- Required
             { 'hrsh7th/cmp-nvim-lsp' }, -- Required
+            -- { 'hrsh7th/cmp-nvim-lua' },
+            { 'hrsh7th/cmp-path' },
             { 'hrsh7th/cmp-buffer' },
             { 'saadparwaiz1/cmp_luasnip' },
             { 'L3MON4D3/LuaSnip' }, -- Required
-
         },
     }
     use({ "akinsho/toggleterm.nvim", tag = '*' })

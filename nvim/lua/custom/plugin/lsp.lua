@@ -41,7 +41,6 @@ require('neodev').setup()
 local lspconfig = require('lspconfig')
 
 lspconfig.lua_ls.setup(lsp.nvim_lua_ls())
-
 lsp.setup()
 
 local luasnip = require 'luasnip'
@@ -55,8 +54,8 @@ local cmp_mappings = {
     ['<C-d>'] = cmp.mapping.scroll_docs(-4),
     ['<C-f>'] = cmp.mapping.scroll_docs(4),
     ['<CR>'] = cmp.mapping.confirm {
-        behavior = cmp.ConfirmBehavior.Replace,
-        select = true,
+        behavior = cmp.ConfirmBehavior.Insert,
+        select = false,
     },
     ['<Tab>'] = cmp.mapping(function(fallback)
         if cmp.visible() then
@@ -81,7 +80,10 @@ local cmp_mappings = {
 
 cmp.setup({
     mapping = cmp_mappings,
-    preselect = 'item',
+    performance = {
+        max_view_entries = 5
+    },
+    preselect = cmp.PreselectMode.None,
     snippet = {
         expand = function(args)
             luasnip.lsp_expand(args.body)
@@ -91,10 +93,22 @@ cmp.setup({
         completeopt = 'menu,menuone,noinsert'
     },
     sources = cmp.config.sources({
-        { name = 'luasnip' },
-        { name = 'nvim_lsp' },
-        { name = 'nvim_lua' },
-    }, {
-        { name = 'buffer' },
+        { name = 'path' },
+        { name = 'nvim_lsp', keyword_length = 1 },
+        { name = 'luasnip',  keyword_length = 2 },
+        {
+            name = 'buffer',
+            entry_filter = function(entry)
+                return require('cmp.types').lsp.CompletionItemKind[entry:get_kind()] ~= 'Text'
+            end
+        },
     }),
+    view = {
+        docs = {
+            auto_open = true
+        }
+    },
+    experimental = {
+        ghost_text = false
+    },
 })

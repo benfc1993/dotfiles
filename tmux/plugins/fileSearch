@@ -7,25 +7,22 @@
 #  exit 0
 #fi
 
-selected=$(find ~/projects ~/ -mindepth 1 -maxdepth 1 \( -name node_modules -o -name .git \) -prune -o -type d | fzf)
+language=$(ls ~/projects | fzf)
 
-if [[ -z "$selected" ]]; 
+if [[ -z "$language" ]]; 
 then 
   exit 0
 fi
 
-selected_name=$(basename "$selected" | tr . _)
+selected_name=$(ls ~/projects/$language | fzf )
+
+selected_dir=~/projects/$language/$selected_name
 tmux_running=$(pgrep tmux)
 
 if [[ -z $TMUX ]] && -[[ -z $tmux_running ]]; then
-    tmux new-session -s $selected_name -c $selected
+    tmux new-session -s $selected_name -c $selected_dir
     exit 0
 fi
 
-if ! tmux has-session -t=$selected_name 2> /dev/null; then
-    tmux new-session -ds $selected_name -c $selected
-fi
-
-tmux send-keys -t $selected_name "vim ." ENTER 
-tmux switch-client -t $selected_name
+tmux neww -c $selected_dir -n $selected_dir -S 'nvim'
 
