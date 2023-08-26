@@ -28,6 +28,8 @@ M.attach = function(language)
         test_runner.run_single_test(vim.api.nvim_get_current_buf(), r)
     end, '[TR] run sing test')
 
+    nmap('<leader>tr', '<cmd>TROutput<CR>', '[TR] show test output')
+
     vim.api.nvim_create_autocmd({ 'BufWinEnter', 'InsertLeave' }, {
         group = runner_group,
         pattern = languages[language].pattern,

@@ -125,6 +125,7 @@ M.run_single_test = function(bufnr, lnum)
     local text = { "◉", 'DiagnosticWarn' }
     vim.api.nvim_buf_set_extmark(bufnr, ns, method.declaration_line, 0, { virt_text = { text } })
 
+    U.errors = {}
     local command = single_test_command(method.method_name)
     vim.fn.jobstart(command, U.job_opts)
 end
@@ -137,16 +138,18 @@ M.run_all_tests = function()
             vim.api.nvim_buf_set_extmark(bufnr, ns, test.declaration_line, 0, { virt_text = { text } })
         end
     end
-
+    U.errors = {}
     vim.fn.jobstart(all_test_command, U.job_opts)
 end
 
 local function create_terminal()
     U.output_file = '/tmp/jest-output'
     U.termWrapperBufnr = -1
+    U.show_terminal = false
 end
 
 local function open_terminal()
+    if not U.show_terminal then return end
     if U.termWrapperBufnr > -1 then vim.cmd('silent! bunload ' .. U.termWrapperBufnr) end
     vim.cmd('set shell=/bin/zsh')
     vim.cmd('setlocal splitbelow')
@@ -201,7 +204,6 @@ M.create_test_runner = function(runner_group, language, pattern, parser, test_qu
                 vim.fn.execute('! echo -e "' .. line .. '" >> ' .. U.output_file, 'silent')
             end
             open_terminal()
-            U.errors = {}
         end
     }
     vim.api.nvim_create_autocmd('BufWritePost', {
@@ -230,5 +232,13 @@ M.create_test_runner = function(runner_group, language, pattern, parser, test_qu
         U.enabled = false
     end
     , {})
+    vim.api.nvim_create_user_command('TROutput', function()
+        U.show_terminal = not U.show_terminal
+        if U.show_terminal then
+            open_terminal()
+        else
+            if U.termWrapperBufnr > -1 then vim.cmd('silent! bunload ' .. U.termWrapperBufnr) end
+        end
+    end, {})
 end
 return M

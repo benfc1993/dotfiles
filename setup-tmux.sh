@@ -50,4 +50,4 @@ sudo ln -s "$parent_path/vimcd.sh" /usr/local/bin/vimcd
 tmux source ~/.config/tmux/tmux.conf
 
 
-./.tmux/plugins/tpm/bindings/install_plugins
+~/.tmux/plugins/tpm/bindings/install_plugins
