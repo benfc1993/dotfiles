@@ -1,6 +1,5 @@
 #! /bin/bash
 
-
 selected_session=$(ls ~/.vim/sessions | fzf-tmux -p)
 if $selected_session; then 
 echo "exit" > ~/test.txt

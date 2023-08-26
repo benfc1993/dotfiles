@@ -31,7 +31,7 @@ local settings = {
             { " Find File", "Telescope find_files", "<leader>ff" },
             { " Find Word", "Telescope live_grep", "<leader>fs" },
             { " File Browser", "NvimTreeOpen", "<leader>n" },
-            { " Colorschemes", "Telescope colorscheme", "<leader>th" },
+            { " Colorschemes", "Telescope colorscheme enable_preview=true", "<leader>th" },
         },
         highlight = "String",
         default_color = "",
@@ -72,3 +72,4 @@ local settings = {
 }
 
 require "startup".setup(settings)
+-- vim.cmd('Startup display')
