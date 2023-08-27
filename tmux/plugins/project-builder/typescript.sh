@@ -1,3 +1,7 @@
+#!/bin/bash
+
+echo $PATH
+
 echo "typescript builder $1"
 
 mkdir $1
@@ -26,9 +30,13 @@ npx npm-add-script \
 
 mkdir src
 touch src/index.ts
+
 echo "export const main = () => 'Hello world!'" >> src/index.ts
 echo "" >> src/index.ts
 echo "console.log(main())" >> src/index.ts
 
 echo "import { main } from '.'" >> src/index.test.ts
 echo "it('should return a welcome message', () => expect(main()).toBe('Hello world!'))" >> src/index.test.ts
+
+nvim $1
+

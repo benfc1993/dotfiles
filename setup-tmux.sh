@@ -31,6 +31,7 @@ mkdir -p ~/.config/tmux
 
 ln -s "$parent_path/tmux/tmux.conf" ~/.config/tmux/tmux.conf
 
+rm -rf ~/.config/tmux/custom
 mkdir ~/.config/tmux/custom
 
 # Plugins
@@ -46,6 +47,8 @@ sudo ln -s "$parent_path/tmux/plugins/v-session.sh" /usr/local/bin/v-session
 chmod a+u "$parent_path/vimcd.sh" 
 sudo ln -s "$parent_path/vimcd.sh" /usr/local/bin/vimcd
 
+chmod +x "$parent_path/tmux/plugins/project-builder/project-builder.sh"
+ln -s "$parent_path/tmux/plugins/project-builder" ~/.config/tmux/custom/project-builder
 
 tmux source ~/.config/tmux/tmux.conf
 

@@ -30,7 +30,7 @@ local run_command = function(command)
         auto_scroll = true,
         cmd = command,
         persist_mode = true,
-        on_open = function() vim.cmd('wincmd k') end
+        on_open = function() vim.cmd('setlocal cursorline! | wincmd k | stopinsert') end
     })
     terminal:open()
 end
