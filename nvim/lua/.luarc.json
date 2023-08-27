@@ -4,6 +4,7 @@
         "nmap",
         "nrmap",
         "vmap",
-        "signs"
+        "signs",
+        "imap"
     ]
 }
