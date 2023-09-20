@@ -2,7 +2,7 @@
 
 parent_path=$( cd "$(dirname "${BASH_SOURCE[0]}")" ; pwd -P )
 
-if [[ ! $(dpkg-query -l glow)  ]]; then
+if [[ ! $(which glow)  ]]; then
     echo "installing dependancies"
     sudo mkdir -p /etc/apt/keyrings
     curl -fsSL https://repo.charm.sh/apt/gpg.key | sudo gpg --dearmor -o /etc/apt/keyrings/charm.gpg
@@ -10,7 +10,7 @@ if [[ ! $(dpkg-query -l glow)  ]]; then
     sudo apt update && sudo apt install glow
 fi
 
-if [[ ! $(dpkg-query -l tmux) ]]; then
+if [[ ! $(which tmux) ]]; then
     sudo apt update;
     sudo apt install tmux
 fi
@@ -19,7 +19,7 @@ if [[ ! -d ~/.tmux/plugins/tpm ]]; then
     git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
 fi
 
-if [[ ! $(dpkg-query -l fzf) ]]; then
+if [[ ! $(which fzf) ]]; then
     sudo apt install fzf
 fi
 
