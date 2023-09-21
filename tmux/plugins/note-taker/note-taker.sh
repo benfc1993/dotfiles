@@ -1,16 +1,20 @@
-#!/bin/zsh
+#!/bin/bash
 
 script_path=$( cd "$(dirname "${BASH_SOURCE[0]}")" ; pwd -P )
 
-while getopts ":nlavd" option; do
-  case $option in
+options=`echo "a - add line,e - edit note,n - new note,l - list notes,v - view note,or - open note right,ol - open note left,d - delete note" | tr ',' '\n'`
+
+selected_option=`printf "$options" | fzf-tmux -p -w 40% --layout reverse --header "Note Taker" | awk '{print $1}'`
+
+
+  case $selected_option in
     n)
         tmux display-popup -h 5 -E "$script_path/create.sh" 
         exit 0
       ;;
     l)
         cd ~/.note-taker/notes
-        file_name=$(fzf-tmux -p -w 60% -h 80% --layout reverse --header "Current note: $(cat ~/.note-taker/current.txt)" --preview 'glow {}')
+        file_name=`ls | fzf-tmux -p -w 60% -h 80% --layout reverse --header "Current note: $(cat ~/.note-taker/current.txt)" --preview 'glow {}'`
         if [ -z $file_name ];
         then
             exit 0
@@ -29,7 +33,7 @@ while getopts ":nlavd" option; do
         ;;
     d)
         cd ~/.note-taker/notes
-        file_name=$(fzf-tmux -p -w 60% -h 80% --layout reverse --header "Select note to delete" --preview 'glow {}')
+        file_name=`ls | fzf-tmux -p -w 60% -h 80% --layout reverse --header "Select note to delete" --preview 'glow {}'`
         if [ -z $file_name ];
         then
             exit 0
@@ -38,13 +42,22 @@ while getopts ":nlavd" option; do
             exit 0
         fi
         ;;
-    *)
-      echo "Usage: note-taker [-n create new note | -l list all notes | -a add line to current note | -v view current note] [-d directory_name]"
-      exit 1
-      ;;
-  esac
-done
+    e)
 
-echo "Usage: note-taker [-n create new note | -l list all notes | -a add line to current note | -v view current note] [-d directory_name]"
-exit 1
+        tmux display-popup -h 80% -E "nvim ~/.note-taker/notes/$(cat ~/.note-taker/current.txt)"
+        exit 0
+        ;;
+    or)
+        tmux split-window -hf -p 31 "nvim ~/.note-taker/notes/$(cat ~/.note-taker/current.txt)" 
+        exit 0
+        ;;
+    ol)
+        tmux split-window -hbf -p 30 "nvim ~/.note-taker/notes/$(cat ~/.note-taker/current.txt)" 
+        exit 0
+        ;;
+    *)
+        exit 0
+        ;;
+  esac
+
 
