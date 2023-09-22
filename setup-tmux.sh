@@ -50,6 +50,9 @@ sudo ln -s "$parent_path/vimcd.sh" /usr/local/bin/vimcd
 chmod +x "$parent_path/tmux/plugins/project-builder/project-builder.sh"
 ln -s "$parent_path/tmux/plugins/project-builder" ~/.config/tmux/custom/project-builder
 
+chmod a+u "$parent_path/tmux/plugins/cht.sh"
+sudo ln -s "$parent_path/tmux/plugins/cht.sh" /usr/local/bin/cht.sh
+
 tmux source ~/.config/tmux/tmux.conf
 
 
