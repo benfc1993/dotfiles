@@ -25,7 +25,7 @@ nmap("<C-d>", "<C-d>zz")
 nrmap("<C-u>", "<C-u>zz")
 nmap("n", "nzzzv")
 nmap("N", "Nzzzv")
-
+nmap("<CR>", ":nohl<cr>")
 -- greatest remap ever
 vim.keymap.set("x", "<leader>p", [["_dP]])
 

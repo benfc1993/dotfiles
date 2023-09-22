@@ -49,10 +49,11 @@ luasnip.config.setup()
 local cmp = require('cmp')
 local cmp_select = { behavior = cmp.SelectBehavior.Select }
 local cmp_mappings = {
+    ['<C-h>'] = cmp.mapping.complete(),
     ['<C-p>'] = cmp.mapping.select_prev_item(cmp_select),
     ['<C-n>'] = cmp.mapping.select_next_item(cmp_select),
-    ['<C-d>'] = cmp.mapping.scroll_docs(-4),
-    ['<C-f>'] = cmp.mapping.scroll_docs(4),
+    ['<C-k>'] = cmp.mapping.scroll_docs(-4),
+    ['<C-j>'] = cmp.mapping.scroll_docs(4),
     ['<CR>'] = cmp.mapping.confirm {
         behavior = cmp.ConfirmBehavior.Insert,
         select = false,
@@ -79,10 +80,10 @@ local cmp_mappings = {
 }
 
 cmp.setup({
-    mapping = cmp_mappings,
-    performance = {
-        max_view_entries = 5
-    },
+    mapping = cmp.mapping.preset.insert(cmp_mappings),
+    -- performance = {
+    --     max_view_entries = 10
+    -- },
     preselect = cmp.PreselectMode.None,
     snippet = {
         expand = function(args)
