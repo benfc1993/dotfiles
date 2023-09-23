@@ -1,11 +1,19 @@
 #!/bin/bash
+wd=$1
 
-echo $PATH
+read -p "project-name:" name
 
-echo "typescript builder $1"
+echo "$name"
 
-mkdir $1
-cd $1
+if [[ -z "$name" ]];
+then
+    exit 0 
+fi
+
+echo "typescript builder $name"
+full_path="$wd/$name"
+mkdir $full_path
+cd $full_path
 
 npm init -y
 
@@ -38,5 +46,11 @@ echo "console.log(main())" >> src/index.ts
 echo "import { main } from '.'" >> src/index.test.ts
 echo "it('should return a welcome message', () => expect(main()).toBe('Hello world!'))" >> src/index.test.ts
 
-nvim $1
+echo "{" >> .prettierrc
+echo "	\"tabWidth\": 4," >> .prettierrc
+echo "	\"useTabs\": false," >> .prettierrc
+echo "	\"semi\": false," >> .prettierrc
+echo "	\"singleQuote\": true" >> .prettierrc
+echo "}" >> .prettierrc
+
 

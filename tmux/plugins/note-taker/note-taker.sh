@@ -28,7 +28,7 @@ selected_option=`printf "$options" | fzf-tmux -p -w 40% --layout reverse --heade
         exit 0
         ;;
     v)
-        tmux display-popup -h 80% -E "glow ~/.note-taker/notes/$(cat ~/.note-taker/current.txt); read -n 1 -s -r -p 'Press any key to exit'"
+        tmux display-popup -h 80% -E "glow ~/.note-taker/notes/$(cat ~/.note-taker/current.txt); read -n 1 -p 'Press any key to exit'"
         exit 0
         ;;
     d)
