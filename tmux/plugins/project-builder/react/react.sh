@@ -37,7 +37,11 @@ cp "$script_path/App.tsx" ./src/App.tsx
 
 cp "$script_path/App.test.tsx" ./src/App.test.tsx
 
-npm i -D ts-node jest ts-jest jest-environment-jsdom jest-svg-transformer identity-obj-proxy @types/jest @babel/preset-env @babel/preset-react @testing-library/jest-dom @testing-library/react
+rm -rf ./vite.config.ts
+cp "$script_path/vite.config.ts" ./vite.config.ts
+
+
+npm i -D ts-node jest ts-jest jest-environment-jsdom jest-svg-transformer identity-obj-proxy @types/jest @babel/preset-typescript @babel/preset-env @babel/preset-react @testing-library/jest-dom @testing-library/react
 
 npx npm-add-script \
 -k "test" \
