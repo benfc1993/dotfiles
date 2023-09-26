@@ -37,7 +37,7 @@ cp "$script_path/App.tsx" ./src/App.ts
 
 cp "$script_path/App.test.tsx" ./src/App.test.ts
 
-npm i -D ts-node jest ts-jest jest-environment-jsdom jest-svg-transformer identity-obj-proxy @babel/preset-env @babel/preset-react @testing-library/jest-dom @testing-library/react
+npm i -D ts-node jest ts-jest jest-environment-jsdom jest-svg-transformer identity-obj-proxy @types/jest @babel/preset-env @babel/preset-react @testing-library/jest-dom @testing-library/react
 
 npx npm-add-script \
 -k "test" \
