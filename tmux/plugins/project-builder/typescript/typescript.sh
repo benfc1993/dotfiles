@@ -17,8 +17,8 @@ cd $full_path
 
 npm init -y
 
-yarn add -D typescript ts-node ts-node-dev jest ts-jest @types/jest @types/node esbuild
-yarn ts-jest config:init
+npm i -D typescript ts-node ts-node-dev jest ts-jest @types/jest @types/node esbuild
+npx ts-jest config:init
 tsc --init
 
 npx npm-add-script \
@@ -29,6 +29,11 @@ npx npm-add-script \
 npx npm-add-script \
 -k "test" \
 -v "jest" \
+--force
+
+npx npm-add-script \
+-k "test-watch" \
+-v "jest --watchAll" \
 --force
 
 npx npm-add-script \
@@ -50,7 +55,8 @@ echo "{" >> .prettierrc
 echo "	\"tabWidth\": 4," >> .prettierrc
 echo "	\"useTabs\": false," >> .prettierrc
 echo "	\"semi\": false," >> .prettierrc
-echo "	\"singleQuote\": true" >> .prettierrc
+echo "	\"singleQuote\": true", >> .prettierrc
+echo "	\"trailingComma\": \"none\"" >> .prettierrc
 echo "}" >> .prettierrc
 
-
+read -n 1 -p "Typescript project $name created, press any key to exit."

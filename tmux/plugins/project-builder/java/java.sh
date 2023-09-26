@@ -25,3 +25,4 @@ echo "tasks.withType(Test).configureEach {" >> app/build.gradle
 echo "  outputs.upToDateWhen { false }" >> app/build.gradle
 echo "}" >> app/build.gradle
 
+read -n 1 -p "Java project $name created, press any key to exit."

@@ -2,9 +2,19 @@
 
 script_path=$( cd "$(dirname "${BASH_SOURCE[0]}")" ; pwd -P )
 
-options=`echo "a - add line,e - edit note,n - new note,l - list notes,v - view note,or - open note right,ol - open note left,d - delete note" | tr ',' '\n'`
+note_taker_dir=~/.note-taker
 
-selected_option=`printf "$options" | fzf-tmux -p -w 40% --layout reverse --header "Note Taker" | awk '{print $1}'`
+if [ ! -f $note_taker_dir/notes_dir.txt ];
+then
+    tmux display-popup -h 5 -E "$script_path/change-note-dir.sh"
+
+fi
+
+notes_dir=$(cat $note_taker_dir/notes_dir.txt)
+
+options=`echo "a - add line,e - edit note,n - new note,l - list notes,v - view note,or - open note right,ol - open note left,d - delete note,cd - change note directory" | tr ',' '\n'`
+
+selected_option=`printf "$options" | fzf-tmux -p -w 40% --layout reverse --header "Note Taker: $notes_dir" | awk '{print $1}'`
 
 
   case $selected_option in
@@ -13,8 +23,8 @@ selected_option=`printf "$options" | fzf-tmux -p -w 40% --layout reverse --heade
         exit 0
       ;;
     l)
-        cd ~/.note-taker/notes
-        file_name=`ls | fzf-tmux -p -w 60% -h 80% --layout reverse --header "Current note: $(cat ~/.note-taker/current.txt)" --preview 'glow {}'`
+        cd $notes_dir
+        file_name=`fdfind "" $notes_dir -e md | fzf-tmux -p -w 60% -h 80% --layout reverse --header "Current note: $(cat ~/.note-taker/current.txt)" --preview 'glow {}'`
         if [ -z $file_name ];
         then
             exit 0
@@ -28,31 +38,39 @@ selected_option=`printf "$options" | fzf-tmux -p -w 40% --layout reverse --heade
         exit 0
         ;;
     v)
-        tmux display-popup -h 80% -E "glow ~/.note-taker/notes/$(cat ~/.note-taker/current.txt); read -n 1 -p 'Press any key to exit'"
-        exit 0
+        file=$(cat ~/.note-taker/current.txt)
+        tmux display-popup -h 90% -E "glow \"${file}\";read -p 'press ENTER to quit' t;"
         ;;
     d)
-        cd ~/.note-taker/notes
+        cd $notes_dir 
         file_name=`ls | fzf-tmux -p -w 60% -h 80% --layout reverse --header "Select note to delete" --preview 'glow {}'`
         if [ -z $file_name ];
         then
             exit 0
         else
-            rm -rf ~/.note-taker/notes/$file_name
+            rm -rf $notes_dir/$file_name
             exit 0
         fi
         ;;
     e)
+        file=$(cat ~/.note-taker/current.txt)
 
-        tmux display-popup -h 80% -E "nvim ~/.note-taker/notes/$(cat ~/.note-taker/current.txt)"
+        tmux display-popup -h 80% -E "nvim \"${file}\""
         exit 0
         ;;
     or)
-        tmux split-window -hf -p 31 "nvim ~/.note-taker/notes/$(cat ~/.note-taker/current.txt)" 
+
+        file=$(cat ~/.note-taker/current.txt)
+        tmux split-window -hf -p 31 "nvim \"${file}\""
         exit 0
         ;;
     ol)
-        tmux split-window -hbf -p 30 "nvim ~/.note-taker/notes/$(cat ~/.note-taker/current.txt)" 
+        file=$(cat ~/.note-taker/current.txt)
+        tmux split-window -hbf -p 30 "nvim \"${file}\""
+        exit 0
+        ;;
+    cd)
+        tmux display-popup -h 5 -E "$script_path/change-note-dir.sh"
         exit 0
         ;;
     *)

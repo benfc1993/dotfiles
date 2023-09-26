@@ -13,14 +13,18 @@ if &shortmess =~ 'A'
 else
   set shortmess=aoO
 endif
-badd +109 configs/tmux/plugins/cheatsheet/cheatsheet.md
+badd +113 configs/tmux/plugins/cheatsheet/cheatsheet.md
 badd +58 configs/tmux/tmux.conf
 badd +1 configs/nvim/lua/custom/plugin/obsession.lua
 badd +1 configs/tmux/plugins/v-session.sh
+badd +42 configs/tmux/plugins/note-taker/note-taker.sh
+badd +55 configs/setup-tmux.sh
+badd +6 configs/tmux/plugins/note-taker/change-note-dir.sh
+badd +1 configs/nvim/lua/custom/lsp/java/test-runner.lua
 argglobal
 %argdel
 $argadd configs
-edit configs/tmux/plugins/cheatsheet/cheatsheet.md
+edit configs/tmux/plugins/note-taker/change-note-dir.sh
 let s:save_splitbelow = &splitbelow
 let s:save_splitright = &splitright
 set splitbelow splitright
@@ -37,8 +41,10 @@ set winminheight=0
 set winheight=1
 set winminwidth=0
 set winwidth=1
-wincmd =
+exe 'vert 1resize ' . ((&columns * 73 + 65) / 131)
+exe 'vert 2resize ' . ((&columns * 57 + 65) / 131)
 argglobal
+balt configs/tmux/plugins/cheatsheet/cheatsheet.md
 setlocal fdm=manual
 setlocal fde=0
 setlocal fmr={{{,}}}
@@ -49,20 +55,20 @@ setlocal fdn=20
 setlocal fen
 silent! normal! zE
 let &fdl = &fdl
-let s:l = 113 - ((41 * winheight(0) + 21) / 43)
+let s:l = 6 - ((5 * winheight(0) + 21) / 43)
 if s:l < 1 | let s:l = 1 | endif
 keepjumps exe s:l
 normal! zt
-keepjumps 113
-normal! 025|
+keepjumps 6
+normal! 06|
 lcd ~/configs
 wincmd w
 argglobal
-if bufexists(fnamemodify("~/configs/tmux/tmux.conf", ":p")) | buffer ~/configs/tmux/tmux.conf | else | edit ~/configs/tmux/tmux.conf | endif
+if bufexists(fnamemodify("~/configs/tmux/plugins/note-taker/note-taker.sh", ":p")) | buffer ~/configs/tmux/plugins/note-taker/note-taker.sh | else | edit ~/configs/tmux/plugins/note-taker/note-taker.sh | endif
 if &buftype ==# 'terminal'
-  silent file ~/configs/tmux/tmux.conf
+  silent file ~/configs/tmux/plugins/note-taker/note-taker.sh
 endif
-balt ~/configs/tmux/plugins/v-session.sh
+balt ~/configs/nvim/lua/custom/lsp/java/test-runner.lua
 setlocal fdm=manual
 setlocal fde=0
 setlocal fmr={{{,}}}
@@ -73,16 +79,17 @@ setlocal fdn=20
 setlocal fen
 silent! normal! zE
 let &fdl = &fdl
-let s:l = 58 - ((42 * winheight(0) + 21) / 43)
+let s:l = 43 - ((33 * winheight(0) + 21) / 43)
 if s:l < 1 | let s:l = 1 | endif
 keepjumps exe s:l
 normal! zt
-keepjumps 58
-normal! 0
+keepjumps 43
+normal! 010|
 lcd ~/configs
 wincmd w
 2wincmd w
-wincmd =
+exe 'vert 1resize ' . ((&columns * 73 + 65) / 131)
+exe 'vert 2resize ' . ((&columns * 57 + 65) / 131)
 tabnext 1
 if exists('s:wipebuf') && len(win_findbuf(s:wipebuf)) == 0 && getbufvar(s:wipebuf, '&buftype') isnot# 'terminal'
   silent exe 'bwipe ' . s:wipebuf
@@ -98,7 +105,6 @@ if filereadable(s:sx)
 endif
 let &g:so = s:so_save | let &g:siso = s:siso_save
 set hlsearch
-nohlsearch
 let g:this_session = v:this_session
 let g:this_obsession = v:this_session
 doautoall SessionLoadPost

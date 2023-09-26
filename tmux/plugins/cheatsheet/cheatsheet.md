@@ -100,3 +100,15 @@ tmux kill-session -t sessionname
 | /           	| search |
 | _           	| list paste buffers |
 | q           	| quit |
+
+## Plugins
+
+| binding  | description        |
+|:---------|:-------------------|
+| F2 | sessions list |
+| Alt + s   | file search |
+| Alt + t | toolkit |
+| F1        | tmux bindings help |
+| Leader + N | project builder |
+| CTRL + n | note taker |
+
