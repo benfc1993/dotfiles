@@ -32,10 +32,10 @@ cp "$script_path/setupTests.ts" ./setupTests.ts
 
 cp "$script_path/.babelrc" ./.babelrc
 
-rm -f ./src/App.ts
-cp "$script_path/App.tsx" ./src/App.ts
+rm -f ./src/App.tsx
+cp "$script_path/App.tsx" ./src/App.tsx
 
-cp "$script_path/App.test.tsx" ./src/App.test.ts
+cp "$script_path/App.test.tsx" ./src/App.test.tsx
 
 npm i -D ts-node jest ts-jest jest-environment-jsdom jest-svg-transformer identity-obj-proxy @types/jest @babel/preset-env @babel/preset-react @testing-library/jest-dom @testing-library/react
 
