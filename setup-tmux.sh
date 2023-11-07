@@ -1,26 +1,38 @@
 #! /usr/bin/env bash
 
 parent_path=$( cd "$(dirname "${BASH_SOURCE[0]}")" ; pwd -P )
+if [[ "$OSTYPE" == "darwin"* ]]; then
+    if [[ ! $(which glow) ]]; then 
+        brew install glow;
+    fi
 
-if [[ ! $(which glow)  ]]; then
-    echo "installing dependancies"
-    sudo mkdir -p /etc/apt/keyrings
-    curl -fsSL https://repo.charm.sh/apt/gpg.key | sudo gpg --dearmor -o /etc/apt/keyrings/charm.gpg
-    echo "deb [signed-by=/etc/apt/keyrings/charm.gpg] https://repo.charm.sh/apt/ * *" | sudo tee /etc/apt/sources.list.d/charm.list
-    sudo apt update && sudo apt install glow
-fi
+    if [[ ! $(which fd) ]]; then
+        brew install fd;
+    fi
 
-if [[ ! $(which tmux) ]]; then
-    sudo apt update;
-    sudo apt install tmux
-fi
+else
+    if [[ ! $(which glow)  ]]; then
+        echo "installing dependancies"
+        sudo mkdir -p /etc/apt/keyrings
+        curl -fsSL https://repo.charm.sh/apt/gpg.key | sudo gpg --dearmor -o /etc/apt/keyrings/charm.gpg
+        echo "deb [signed-by=/etc/apt/keyrings/charm.gpg] https://repo.charm.sh/apt/ * *" | sudo tee /etc/apt/sources.list.d/charm.list
+        sudo apt update && sudo apt install glow
+    fi
 
-if [[ ! -d ~/.tmux/plugins/tpm ]]; then
-    git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
-fi
+    if [[ ! $(which tmux) ]]; then
+        sudo apt update;
+        sudo apt install tmux
+    fi
 
-if [[ ! $(which fzf) ]]; then
-    sudo apt install fzf
+
+    if [[ ! -d ~/.tmux/plugins/tpm ]]; then
+        git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
+    fi
+
+    if [[ ! $(which fzf) ]]; then
+        sudo apt install fzf
+    fi
+
 fi
 
 rm -rf ~/.config/tmux
