@@ -13,6 +13,7 @@ nmap("<C-RIGHT>", "<cmd>bn<CR>")
 nmap("<C-LEFT>", "<cmd>bp<CR>")
 
 imap("jk", "<cmd>stopinsert<CR>")
+imap("jkl", "<cmd>stopinsert<CR><cmd>w<CR>")
 
 vmap("J", ":m '>+1<CR>gv=gv")
 vmap("K", ":m '<-2<CR>gv=gv")
