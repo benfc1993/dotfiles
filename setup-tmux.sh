@@ -10,6 +10,18 @@ if [[ "$OSTYPE" == "darwin"* ]]; then
         brew install fd;
     fi
 
+    if [[ ! $(which tmux) ]]; then
+      brew install tmux;
+    fi
+
+    if [[ ! -d ~/.tmux/plugins/tpm ]]; then
+        git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
+    fi
+
+    if [[ ! $(which fzf) ]]; then
+        brew install fzf
+    fi
+
 else
     if [[ ! $(which glow)  ]]; then
         echo "installing dependancies"

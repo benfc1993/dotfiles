@@ -8,7 +8,7 @@ nmap("<C-h>", "<cmd>TmuxNavigateLeft<CR>")
 nmap("<C-j>", "<cmd>TmuxNavigateDown<CR>")
 nmap("<C-k>", "<cmd>TmuxNavigateUp<CR>")
 nmap("<C-l>", "<cmd>TmuxNavigateRight<CR>")
-
+nmap("jk", "<cmd>w<CR>", 'Save from normal mode')
 nmap("<C-RIGHT>", "<cmd>bn<CR>")
 nmap("<C-LEFT>", "<cmd>bp<CR>")
 

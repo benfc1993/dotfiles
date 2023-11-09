@@ -26,7 +26,7 @@ lsp.on_attach(function(client, bufnr)
     vim.keymap.set("n", "[d", function() vim.diagnostic.goto_next() end, opts)
     vim.keymap.set("n", "d]", function() vim.diagnostic.goto_prev() end, opts)
     vim.keymap.set("n", [[<C-_>]], function() vim.lsp.buf.code_action() end, opts)
-    vim.keymap.set("n", "<leader>vrr", function() vim.lsp.buf.references() end, opts)
+    vim.keymap.set("n", "F2", function() vim.lsp.buf.references() end, opts)
     vim.keymap.set("n", "<leader>vrn", function() vim.lsp.buf.rename() end, opts)
     vim.keymap.set("n", "<leader>h", function() vim.lsp.buf.signature_help() end, opts)
 end)
@@ -41,6 +41,22 @@ require('neodev').setup()
 local lspconfig = require('lspconfig')
 
 lspconfig.lua_ls.setup(lsp.nvim_lua_ls())
+lspconfig.tsserver.setup({
+    settings = {
+        completions = {
+            completeFunctionCalls = true
+        }
+    }
+
+})
+local capabilities = require('cmp_nvim_lsp').default_capabilities()
+local servers = { 'tsserver' }
+for _, lsp in ipairs(servers) do
+    lspconfig[lsp].setup {
+        -- on_attach = my_custom_on_attach,
+        capabilities = capabilities,
+    }
+end
 lsp.setup()
 
 local luasnip = require 'luasnip'
@@ -59,8 +75,14 @@ local cmp_mappings = {
         select = false,
     },
     ['<Tab>'] = cmp.mapping(function(fallback)
-        if cmp.visible() then
+        print(cmp.get_selected_entry() == nil)
+        if cmp.get_selected_entry() == nil then
             cmp.select_next_item()
+        elseif cmp.visible() then
+            cmp.confirm {
+                behavior = cmp.ConfirmBehavior.Insert,
+                select = false,
+            }
         elseif luasnip.expand_or_locally_jumpable() then
             luasnip.expand_or_jump()
         else

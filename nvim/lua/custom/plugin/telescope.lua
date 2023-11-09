@@ -1,5 +1,6 @@
 local builtin = require('telescope.builtin')
 nmap('<leader>ff', builtin.find_files, "Find files")
+nmap('<leader>b', builtin.buffers, "Find existing buffers")
 nmap('<leader>fg', builtin.git_files, "Find files in git repo")
 nmap('<leader>fs', builtin.live_grep, "find strings")
 nmap('<leader>fh', builtin.help_tags, "Search help")
