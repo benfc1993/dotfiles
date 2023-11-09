@@ -2,7 +2,8 @@ local builtin = require('telescope.builtin')
 nmap('<leader>ff', builtin.find_files, "Find files")
 nmap('<leader>b', builtin.buffers, "Find existing buffers")
 nmap('<leader>fg', builtin.git_files, "Find files in git repo")
-nmap('<leader>fs', builtin.live_grep, "find strings")
+nmap('<leader>fa', builtin.live_grep, "find strings in all files")
+nmap('<leader>fs', builtin.current_buffer_fuzzy_find, "find string in file")
 nmap('<leader>fh', builtin.help_tags, "Search help")
 nmap('<leader>fk', builtin.keymaps, "Search key mappings")
 nmap('<leader>th', function()
@@ -18,7 +19,8 @@ require('telescope').setup({
             "node_modules/",
             "target/",
             "build/",
-            "gradle/"
+            "gradle/",
+            "dist"
         }
     }
 })
