@@ -65,40 +65,16 @@ luasnip.config.setup()
 local cmp = require('cmp')
 local cmp_select = { behavior = cmp.SelectBehavior.Select }
 local cmp_mappings = {
-    ['<C-h>'] = cmp.mapping.complete(),
+    ['<C-Space>'] = cmp.mapping.complete(),
     ['<C-p>'] = cmp.mapping.select_prev_item(cmp_select),
     ['<C-n>'] = cmp.mapping.select_next_item(cmp_select),
     ['<C-k>'] = cmp.mapping.scroll_docs(-4),
     ['<C-j>'] = cmp.mapping.scroll_docs(4),
-    ['<CR>'] = cmp.mapping.confirm {
+    ['<Tab>'] = cmp.mapping.confirm {
         behavior = cmp.ConfirmBehavior.Insert,
         select = false,
+        select = true,
     },
-    ['<Tab>'] = cmp.mapping(function(fallback)
-        print(cmp.get_selected_entry() == nil)
-        if cmp.get_selected_entry() == nil then
-            cmp.select_next_item()
-        elseif cmp.visible() then
-            cmp.confirm {
-                behavior = cmp.ConfirmBehavior.Insert,
-                select = false,
-            }
-        elseif luasnip.expand_or_locally_jumpable() then
-            luasnip.expand_or_jump()
-        else
-            fallback()
-        end
-    end, { 'i', 's' }),
-    ['<S-Tab>'] = cmp.mapping(function(fallback)
-        if cmp.visible() then
-            cmp.select_prev_item()
-        elseif luasnip.locally_jumpable(-1) then
-            luasnip.jump(-1)
-        else
-            fallback()
-        end
-    end, { 'i', 's' }),
-
 }
 
 cmp.setup({
@@ -106,14 +82,14 @@ cmp.setup({
     -- performance = {
     --     max_view_entries = 10
     -- },
-    preselect = cmp.PreselectMode.None,
+    preselect = cmp.PreselectMode.Item,
     snippet = {
         expand = function(args)
             luasnip.lsp_expand(args.body)
         end,
     },
     completion = {
-        completeopt = 'menu,menuone,preview,noinsert,noselect'
+        completeopt = 'menu,menuone,preview,noinsert'
     },
     sources = cmp.config.sources({
         { name = 'path' },

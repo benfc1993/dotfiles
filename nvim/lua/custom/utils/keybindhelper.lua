@@ -14,6 +14,10 @@ imap = function(keys, func, desc)
     vim.keymap.set('i', keys, func, { desc = desc })
 end
 
+tmap = function(keys, func, desc)
+    vim.keymap.set('t', keys, func, { desc = desc })
+end
+
 local M = {}
 
 return M

@@ -12,8 +12,12 @@ nmap("jk", "<cmd>w<CR>", 'Save from normal mode')
 nmap("<C-RIGHT>", "<cmd>bn<CR>")
 nmap("<C-LEFT>", "<cmd>bp<CR>")
 
-imap("jk", "<cmd>stopinsert<CR>")
-imap("jkl", "<cmd>stopinsert<CR><cmd>w<CR>")
+nmap("<C-w>", "<cmd>bw<CR>", "Close buffer")
+
+imap("jk", "<cmd>stopinsert<CR>", "Stop insert Insert")
+imap("jkl", "<cmd>stopinsert<CR><cmd>w<CR>", "Stop insert and write Insert")
+
+tmap("jk", "<cmd>stopinsert<CR>", "Exit insert Terminal")
 
 vmap("J", ":m '>+1<CR>gv=gv")
 vmap("K", ":m '<-2<CR>gv=gv")
