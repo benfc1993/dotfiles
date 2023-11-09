@@ -62,6 +62,9 @@ require('packer').startup(function(use)
             { 'L3MON4D3/LuaSnip' }, -- Required
         },
     }
+    use('neovim/nvim-lspconfig')
+    use('jose-elias-alvarez/null-ls.nvim')
+    use('MunifTanjim/prettier.nvim')
     use({ "akinsho/toggleterm.nvim", tag = '*' })
     use({
         'numToStr/Comment.nvim',

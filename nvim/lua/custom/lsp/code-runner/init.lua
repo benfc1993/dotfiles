@@ -45,8 +45,6 @@ M.attach = function(language)
         '[CodeRunner] call run command in terminal')
     nmap('<S-F5>', function() run_command(language_code_runner.build) end,
         '[CodeRunner] call build command in terminal')
-
-    print(language .. ' code runner services attached')
 end
 
 return M
