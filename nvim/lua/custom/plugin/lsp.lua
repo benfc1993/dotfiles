@@ -20,7 +20,7 @@ lsp.on_attach(function(client, bufnr)
     end
 
     vim.keymap.set("n", "gd", function() vim.lsp.buf.definition({ reuse_win = true, on_list = on_list }) end, opts)
-    vim.keymap.set("n", "<C-Space>", function() vim.lsp.buf.hover() end, opts)
+    vim.keymap.set("n", "<leader><CR>", function() vim.lsp.buf.hover() end, opts)
     vim.keymap.set("n", "<leader>vws", function() vim.lsp.buf.workspace_symbol('') end, opts)
     vim.keymap.set("n", "<leader>vf", function() vim.diagnostic.open_float() end, opts)
     vim.keymap.set("n", "[d", function() vim.diagnostic.goto_next() end, opts)
@@ -65,11 +65,11 @@ luasnip.config.setup()
 local cmp = require('cmp')
 local cmp_select = { behavior = cmp.SelectBehavior.Select }
 local cmp_mappings = {
-    ['<C-Space>'] = cmp.mapping.complete(),
-    ['<C-p>'] = cmp.mapping.select_prev_item(cmp_select),
-    ['<C-n>'] = cmp.mapping.select_next_item(cmp_select),
-    ['<C-k>'] = cmp.mapping.scroll_docs(-4),
-    ['<C-j>'] = cmp.mapping.scroll_docs(4),
+    ['<Space><CR>'] = cmp.mapping.complete(),
+    ['<C-k>'] = cmp.mapping.select_prev_item(cmp_select),
+    ['<C-j>'] = cmp.mapping.select_next_item(cmp_select),
+    ['<C-u>'] = cmp.mapping.scroll_docs(-4),
+    ['<C-d>'] = cmp.mapping.scroll_docs(4),
     ['<Tab>'] = cmp.mapping.confirm {
         behavior = cmp.ConfirmBehavior.Insert,
         select = true,
