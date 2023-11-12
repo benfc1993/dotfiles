@@ -14,6 +14,7 @@ cmkd()
 }
 
 # git worktree commands
+alias gwl="git worktree list"
 gwa()
 {
     git worktree add $1
