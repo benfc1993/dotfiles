@@ -24,6 +24,8 @@ tmux kill-session -t sessionname
 
 ### key bindings	
 
+Leader = C-t
+
 | binding  | description        |
 |:---------|:-------------------|
 | Leader $ |  	rename session  | 
@@ -105,7 +107,8 @@ tmux kill-session -t sessionname
 
 | binding  | description        |
 |:---------|:-------------------|
-| F2 | sessions list |
+| C-f       | search in /home   |
+| Leader F2 | sessions list |
 | Alt + s   | file search |
 | Alt + t | toolkit |
 | F1        | tmux bindings help |
