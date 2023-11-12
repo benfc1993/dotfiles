@@ -84,7 +84,8 @@ chmod a+x "$parent_path/tmux/plugins/keys/keys.sh"
 sudo ln -s "$parent_path/tmux/plugins/keys/keys.sh" /usr/local/bin/keys
 ln -s "$parent_path/tmux/plugins/keys/redox-layout.png" ~/.config/tmux/custom/redox-layout.png
 
-tmux source ~/.config/tmux/tmux.conf
+ln -s "$parent_path/tmux/zshalias" ~/.config/zshalias
 
+tmux source ~/.config/tmux/tmux.conf
 
 ~/.tmux/plugins/tpm/bindings/install_plugins

@@ -4,6 +4,9 @@ vim.g.mapleader = " "
 
 nmap("<leader>n", '<cmd>NvimTreeToggle<CR>', 'Toggle nvim tree')
 vim.keymap.set('n', '<esc>', '<nop>', { silent = true, remap = false })
+
+nmap(';', ':')
+
 nmap("<C-h>", "<cmd>TmuxNavigateLeft<CR>")
 nmap("<C-j>", "<cmd>TmuxNavigateDown<CR>")
 nmap("<C-k>", "<cmd>TmuxNavigateUp<CR>")

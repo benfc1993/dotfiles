@@ -1,0 +1,38 @@
+vim() {
+    if [[ -f "${1}" ]]; then
+        nvim $1
+    else
+        cd "${1:-.}";
+        nvim $1
+    fi
+}
+# alias vim=nvim_dir()
+cmkd()
+{
+    mkdir -p -- "$1" &&
+    cd -- "$1"
+}
+
+# git worktree commands
+gwa()
+{
+    git worktree add $1
+}
+
+gwd()
+{
+    git worktree remove $1
+}
+
+gwc()
+{
+    if git rev-parse --git-dir > /dev/null 2>&1; then
+        branch=$(git worktree list | fzf-tmux -p)
+        if [[ ! -z "$branch" ]]; then
+            cd $(echo "$branch" | cut -d ' ' -f1)
+        fi
+    else
+       echo "Not in a git repo"
+    fi
+
+}
