@@ -45,7 +45,7 @@ vim.keymap.set({ "n", "v" }, "<leader>d", [["_d]])
 vim.keymap.set("i", "<C-c>", "<Esc>")
 
 nmap("Q", "<nop>")
-nmap("<C-f>", "<cmd>silent !tmux neww fileSearch<CR>")
+nmap("<C-f>", "<cmd>silent !tmux neww fileSearch<CR>", "Fuzzy find project dirs")
 nmap("<leader>f", vim.lsp.buf.format)
 
 nmap("<C-S-K>", "<cmd>cnext<CR>zz")
