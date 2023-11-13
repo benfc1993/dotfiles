@@ -67,10 +67,10 @@ local cmp_select = { behavior = cmp.SelectBehavior.Select }
 local cmp_mappings = {
     ['<Space><CR>'] = cmp.mapping.complete(),
     ['<C-k>'] = cmp.mapping.select_prev_item(cmp_select),
-    ['<C-j>'] = cmp.mapping.select_next_item(cmp_select),
+    ['<Tab>'] = cmp.mapping.select_next_item(cmp_select),
     ['<C-u>'] = cmp.mapping.scroll_docs(-4),
     ['<C-d>'] = cmp.mapping.scroll_docs(4),
-    ['<Tab>'] = cmp.mapping.confirm {
+    ['<CR>'] = cmp.mapping.confirm {
         behavior = cmp.ConfirmBehavior.Insert,
         select = true,
     },
