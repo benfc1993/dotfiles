@@ -3,7 +3,7 @@ vim() {
         nvim $1
     else
         cd "${1:-.}";
-        nvim $1
+        nvim 
     fi
 }
 # alias vim=nvim_dir()
