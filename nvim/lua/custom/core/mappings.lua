@@ -25,8 +25,8 @@ nmap("ss", "<cmd>w<CR>", 'Save from normal mode')
 vmap("J", ":m '>+1<CR>gv=gv")
 vmap("K", ":m '<-2<CR>gv=gv")
 
-nmap('<leader>vs', ':vsp <CR> | :wincmd l <CR>', 'split vertically')
-nmap('<leader>hs', ':sp <CR> | :wincmd j <CR>', 'split horizontally')
+nmap('<leader>hs', ':vsp <CR> | :wincmd l <CR>', 'split vertically')
+nmap('<leader>vs', ':sp <CR> | :wincmd j <CR>', 'split horizontally')
 
 nmap("J", "mzJ`z")
 nmap("<C-d>", "<C-d>zz")
