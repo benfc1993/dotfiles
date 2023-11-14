@@ -80,6 +80,9 @@ sudo ln -s "$parent_path/tmux/plugins/note-taker" ~/.config/tmux/custom/note-tak
 chmod a+u "$parent_path/tmux/plugins/cht.sh"
 sudo ln -s "$parent_path/tmux/plugins/cht.sh" /usr/local/bin/cht.sh
 
+chmod a+u "$parent_path/tmux/plugins/all-search.sh"
+sudo ln -s "$parent_path/tmux/plugins/all-search.sh" /usr/local/bin/all-search
+
 chmod a+x "$parent_path/tmux/plugins/keys/keys.sh"
 sudo ln -s "$parent_path/tmux/plugins/keys/keys.sh" /usr/local/bin/keys
 ln -s "$parent_path/tmux/plugins/keys/redox-layout.png" ~/.config/tmux/custom/redox-layout.png
