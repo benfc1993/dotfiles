@@ -20,8 +20,10 @@ nmap("<C-w>", "<cmd>bw<CR>", "Close buffer")
 imap("jk", "<cmd>stopinsert<CR>", "Stop insert Insert")
 imap("jkl", "<cmd>stopinsert<CR><cmd>w<CR>", "Stop insert and write Insert")
 
+vmap('jk', 'v', 'Exit visual mode')
 tmap("jk", "<cmd>stopinsert<CR>", "Exit insert Terminal")
-nmap("ss", "<cmd>w<CR>", 'Save from normal mode')
+nmap('jkl', "<cmd>w<CR>", 'Save from normal mode')
+vmap('jkl', '<cmd>w<CR>', 'Save from visual mode')
 
 vmap("J", ":m '>+1<CR>gv=gv")
 vmap("K", ":m '<-2<CR>gv=gv")
