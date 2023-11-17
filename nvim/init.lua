@@ -2,19 +2,26 @@ require("custom")
 require("colorScheme")
 
 ColorMyPencils()
-vim.api.nvim_create_autocmd("User", {
-    group = vim.api.nvim_create_augroup("PackerGroup", { clear = true }),
-    pattern = "PackerComplete",
-    callback = function()
-        vim.schedule(ColorMyPencils)
-        local packer_bufnr = vim.api.nvim_get_current_buf()
-        if not vim.api.nvim_list_bufs()[1] then
-            vim.api.nvim_create_buf(false, true)
-        end
-        vim.api.nvim_buf_delete(packer_bufnr, { force = true })
-    end
-})
 
+vim.schedule(ColorMyPencils)
+local nvim_bufnr = vim.api.nvim_get_current_buf()
+
+vim.api.nvim_buf_delete(nvim_bufnr, { force = true })
+require('startup').display()
+
+-- vim.api.nvim_create_autocmd("User", {
+--     group = vim.api.nvim_create_augroup("PackerGroup", { clear = true }),
+--     pattern = "PackerComplete",
+--     callback = function()
+--         vim.schedule(ColorMyPencils)
+--         local packer_bufnr = vim.api.nvim_get_current_buf()
+--         if not vim.api.nvim_list_bufs()[1] then
+--             vim.api.nvim_create_buf(false, true)
+--         end
+--         vim.api.nvim_buf_delete(packer_bufnr, { force = true })
+--     end
+-- })
+--
 
 vim.api.nvim_create_autocmd("ColorScheme", {
     group = vim.api.nvim_create_augroup("colorSchemeGroup", { clear = true }),
@@ -52,3 +59,13 @@ vim.api.nvim_create_autocmd({ 'BufWritePost' }, {
         end)
     end
 })
+
+-- vim.api.nvim_create_autocmd({ 'BufUnload' }, {
+--     group = vim.api.nvim_create_augroup("UnloadGroup", { clear = true }),
+--     pattern = "*",
+--     callback = function()
+--         if not vim.api.nvim_list_bufs()[1] then
+--             require('startup').display(true)
+--         end
+--     end
+-- })

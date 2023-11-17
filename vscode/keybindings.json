@@ -1,0 +1,148 @@
+[
+    {
+        "key": "shift+alt+`",
+        "command": "workbench.view.explorer",
+        "when": "viewContainer.workbench.view.explorer.enabled"
+    },
+    {
+        "key": "shift+cmd+e",
+        "command": "-workbench.view.explorer",
+        "when": "viewContainer.workbench.view.explorer.enabled"
+    },
+    {
+        "key": "cmd+n",
+        "command": "explorer.newFile"
+    },
+    {
+        "key": "shift+cmd+n",
+        "command": "explorer.newFolder"
+    },
+    {
+        "key": "shift+alt+cmd+n",
+        "command": "workbench.action.newWindow"
+    },
+    {
+        "key": "shift+cmd+n",
+        "command": "-workbench.action.newWindow"
+    },
+    {
+        "key": "ctrl+cmd+space",
+        "command": "editor.action.triggerParameterHints",
+        "when": "editorHasSignatureHelpProvider && editorTextFocus"
+    },
+    {
+        "key": "shift+cmd+space",
+        "command": "-editor.action.triggerParameterHints",
+        "when": "editorHasSignatureHelpProvider && editorTextFocus"
+    },
+    {
+        "key": "shift+cmd+d",
+        "command": "editor.action.selectHighlights",
+        "when": "editorFocus"
+    },
+    {
+        "key": "shift+cmd+l",
+        "command": "-editor.action.selectHighlights",
+        "when": "editorFocus"
+    },
+    {
+      "command": "vscode-neovim.compositeEscape1",
+      "key": "j",
+      "when": "neovim.mode == insert && editorTextFocus",
+      "args": "j"
+  }, 
+  {
+    "command": "vscode-neovim.compositeEscape2",
+    "key": "k",
+    "when": "neovim.mode == insert && editorTextFocus",
+    "args": "k"
+  },
+  {
+    "command": "vscode-neovim.send-blocking",
+    "key": "s",
+    "when": "neovim.mode == normal && editorTextFocus",
+    "args": "s"
+  },
+  {
+    "key": "space n",
+    "command": "workbench.files.action.focusFilesExplorer",
+    "when": "!sideBarVisible&&neovim.mode!=insert"
+  },
+  {
+    "key": "space n",
+    "command": "workbench.action.closeSidebar",
+    "when": "editorFocus&&sideBarVisible&&neovim.mode!=insert"
+  },
+  {
+    "key": "enter",
+    "command": "runCommands",
+    "when": "filesExplorerFocus && !explorerResourceIsFolder",
+    "args": {
+      "commands": [
+        "explorer.openAndPassFocus",
+        "workbench.action.closeSidebar"
+      ]
+    }
+  },
+  {
+    "key": "space n",
+    "command": "runCommands",
+    "when": "filesExplorerFocus&&neovim.mode!=insert",
+    "args": {
+      "commands": [
+        "workbench.action.focusLastEditorGroup", "workbench.action.closeSidebar"
+      ]
+    }
+  },
+  {
+    "key": "space f f",
+    "command": "workbench.action.quickOpen",
+    "when": "neovim.mode!=insert"
+  },
+  {
+    "key": "space f s",
+    "command": "actions.find",
+    "when": "neovim.mode!=insert"
+  },
+  {
+    "key": "space f a",
+    "command": "workbench.action.findInFiles",
+    "when": "neovim.mode!=insert"
+  },
+  {
+    "key": "escape",
+    "command": "workbench.action.closeSidebar",
+    "when": "sideBarFocus"
+  },
+  {
+    "key": "ctrl+h",
+    "command": "workbench.action.focusLeftGroup",
+    "when": "!sideBarFocus"
+  },
+  {
+    "key": "ctrl+l",
+    "command": "workbench.action.focusRightGroup",
+    "when": "!sideBarFocus"
+  },
+  {
+    "key": "ctrl+j",
+    "command": "workbench.action.focusBelowGroup",
+    "when": "!sideBarFocus"
+  },
+  {
+    "key": "ctrl+k",
+    "command": "workbench.action.focusAboveGroup",
+    "when": "!sideBarFocus"
+  },
+  {
+    "key": "space v",
+    "command": "workbench.action.splitEditorDown",
+    "when": "neovim.mode!=insert && editorFocus && !terminalFocus"
+  },
+  {
+    "key": "space h",
+    "command": "workbench.action.splitEditorRight",
+    "when": "neovim.mode!=insert && editorFocus && !terminalFocus"
+  }
+]
+
