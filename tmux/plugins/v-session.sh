@@ -19,5 +19,5 @@ while getopts 'dha:' OPTION; do
 done
 shift "$(($OPTIND -1))"
 
-nvim -S $selected_session 
+nvim -S $selected_session
 

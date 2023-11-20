@@ -24,7 +24,7 @@ tmux kill-session -t sessionname
 
 ### key bindings	
 
-Leader = C-t
+Leader = C-a
 
 | binding  | description        |
 |:---------|:-------------------|
