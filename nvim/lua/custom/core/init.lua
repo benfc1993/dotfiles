@@ -1,3 +1,3 @@
 require("custom.core.set")
-require("custom.core.packer")
+require("custom.core.lazy")
 require("custom.core.mappings")
