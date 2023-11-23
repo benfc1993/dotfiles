@@ -4,7 +4,7 @@ read -p 'Search >' search;
 
 search="${search// /+}"
 
-vivaldi "https://google.com/search?q=$search";
+python3 -m webbrowser -t "https://google.com/search?q=$search";
 
 exit 0;
 
