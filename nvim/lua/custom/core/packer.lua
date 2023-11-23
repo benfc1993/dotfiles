@@ -62,9 +62,18 @@ require('packer').startup(function(use)
             { 'L3MON4D3/LuaSnip' }, -- Required
         },
     }
+    use({
+        'rust-lang/rust.vim',
+        ft = 'rust',
+        init = function()
+            print('testing')
+            vim.g.rustfmt_autosave = 1
+        end
+    })
     use('neovim/nvim-lspconfig')
     use('jose-elias-alvarez/null-ls.nvim')
     use('MunifTanjim/prettier.nvim')
+    use('simrat39/rust-tools.nvim')
     use({ "akinsho/toggleterm.nvim", tag = '*' })
     use({
         'numToStr/Comment.nvim',
@@ -85,6 +94,7 @@ require('packer').startup(function(use)
         as = 'dracula',
     })
     use("bluz71/vim-nightfly-colors")
+    use { "catppuccin/nvim", as = "catppuccin" }
     use("ellisonleao/gruvbox.nvim")
 
     if bootstrap_packer then

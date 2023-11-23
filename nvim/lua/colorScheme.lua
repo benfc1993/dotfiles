@@ -1,1 +1,1 @@
-SelectedColorScheme = "gruvbox"
+SelectedColorScheme = "catppuccin"

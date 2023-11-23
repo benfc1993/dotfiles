@@ -9,31 +9,21 @@ local nvim_bufnr = vim.api.nvim_get_current_buf()
 vim.api.nvim_buf_delete(nvim_bufnr, { force = true })
 require('startup').display()
 
--- vim.api.nvim_create_autocmd("User", {
---     group = vim.api.nvim_create_augroup("PackerGroup", { clear = true }),
---     pattern = "PackerComplete",
---     callback = function()
---         vim.schedule(ColorMyPencils)
---         local packer_bufnr = vim.api.nvim_get_current_buf()
---         if not vim.api.nvim_list_bufs()[1] then
---             vim.api.nvim_create_buf(false, true)
---         end
---         vim.api.nvim_buf_delete(packer_bufnr, { force = true })
---     end
--- })
---
+vim.api.nvim_create_autocmd({ "ColorScheme" }, {
 
-vim.api.nvim_create_autocmd("ColorScheme", {
     group = vim.api.nvim_create_augroup("colorSchemeGroup", { clear = true }),
     callback = function()
         local match = vim.fn.expand('<amatch>')
         ColorMyPencils(match)
-        local file = io.open('lua/colorScheme.lua', 'w+')
+        local file = assert(io.open(os.getenv("HOME") .. [[/configs/nvim/lua/colorScheme.lua]], 'w+'))
         if file == nil then
-            file = io.open('lua/colorScheme.lua', 'w')
+            file = assert(io.open(os.getenv("HOME") .. [[/configs/nvim/lua/colorScheme.lua]], 'w+'))
         end
 
-        if file == nil then return "" end
+        if file == nil then
+            vim.print('No file')
+            return ""
+        end
         file:write('SelectedColorScheme = "' .. match .. '"')
         file:close()
     end
@@ -59,13 +49,3 @@ vim.api.nvim_create_autocmd({ 'BufWritePost' }, {
         end)
     end
 })
-
--- vim.api.nvim_create_autocmd({ 'BufUnload' }, {
---     group = vim.api.nvim_create_augroup("UnloadGroup", { clear = true }),
---     pattern = "*",
---     callback = function()
---         if not vim.api.nvim_list_bufs()[1] then
---             require('startup').display(true)
---         end
---     end
--- })
