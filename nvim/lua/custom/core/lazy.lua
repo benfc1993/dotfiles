@@ -35,17 +35,18 @@ require('lazy').setup({
         'VonHeikemen/lsp-zero.nvim',
         branch = 'v2.x',
     },
+
+    'nvim-treesitter/nvim-treesitter',
+    'theprimeagen/harpoon',
+    'mbbill/undotree',
     {
-        { 'nvim-treesitter/nvim-treesitter' },
-        'theprimeagen/harpoon',
-        'mbbill/undotree',
-        {
-            "kdheepak/lazygit.nvim",
-            -- optional for floating window border decoration
-            requires = {
-                "nvim-lua/plenary.nvim",
-            },
+        "kdheepak/lazygit.nvim",
+        -- optional for floating window border decoration
+        requires = {
+            "nvim-lua/plenary.nvim",
         },
+    },
+    {
         'rust-lang/rust.vim',
         ft = 'rust',
         init = function()
@@ -88,6 +89,21 @@ require('lazy').setup({
         dependencies = { 'nvim-tree/nvim-web-devicons' }
     },
     'tpope/vim-obsession',
+    {
+        "folke/noice.nvim",
+        event = "VeryLazy",
+        opts = {
+            -- add any options here
+        },
+        dependencies = {
+            -- if you lazy-load any plugin below, make sure to add proper `module="..."` entries
+            "MunifTanjim/nui.nvim",
+            -- OPTIONAL:
+            --   `nvim-notify` is only needed, if you want to use the notification view.
+            --   If not available, we use `mini` as the fallback
+            "rcarriga/nvim-notify",
+        }
+    },
     -- Themes
     {
         'Mofiqul/dracula.nvim',
