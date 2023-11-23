@@ -87,6 +87,9 @@ chmod a+x "$parent_path/tmux/plugins/keys/keys.sh"
 sudo ln -s "$parent_path/tmux/plugins/keys/keys.sh" /usr/local/bin/keys
 ln -s "$parent_path/tmux/plugins/keys/redox-layout.png" ~/.config/tmux/custom/redox-layout.png
 
+sudo ln -s "$parent_path/tmux/plugins/interactive-popup.sh" ~/.config/tmux/custom/interactive-popup.sh
+sudo ln -s "$parent_path/tmux/plugins/google-search.sh" ~/.config/tmux/custom/google-search.sh
+
 ln -s "$parent_path/tmux/zshalias" ~/.config/zshalias
 
 tmux source ~/.config/tmux/tmux.conf

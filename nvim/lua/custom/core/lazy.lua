@@ -75,6 +75,7 @@ require('lazy').setup({
     'jose-elias-alvarez/null-ls.nvim',
     'MunifTanjim/prettier.nvim',
     'simrat39/rust-tools.nvim',
+
     "akinsho/toggleterm.nvim",
     {
         'numToStr/Comment.nvim',
