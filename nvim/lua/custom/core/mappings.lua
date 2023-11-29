@@ -1,5 +1,5 @@
 vim.keymap.set("n", "<Space>", "<Nop>", { silent = true, remap = false })
-
+vim.keymap.set("n", "q", "<Nop>", { silent = true, remap = false })
 vim.g.mapleader = " "
 
 nmap("<leader>n", '<cmd>NvimTreeToggle<CR>', 'Toggle nvim tree')
@@ -20,10 +20,8 @@ nmap("<C-w>", "<cmd>bw<CR>", "Close buffer")
 imap("jk", "<cmd>stopinsert<CR>", "Stop insert Insert")
 imap("jkl", "<cmd>stopinsert<CR><cmd>w<CR>", "Stop insert and write Insert")
 
-vmap('jk', 'v', 'Exit visual mode')
 tmap("jk", "<cmd>stopinsert<CR>", "Exit insert Terminal")
 nmap('ss', "<cmd>w<CR>", 'Save from normal mode')
-vmap('jkl', 'v<cmd>w<CR>', 'Save from visual mode')
 
 vmap("J", ":m '>+1<CR>gv=gv")
 vmap("K", ":m '<-2<CR>gv=gv")
@@ -64,7 +62,3 @@ vmap("<leader>r", [["hy:%s/<C-r>h/<C-r>h/gI<left><left><left>]], "Replace select
 nmap("<leader>x", "<cmd>!chmod +x %<CR>", { silent = true })
 
 nmap("<leader>vpp", "<cmd>e ~/.config/nvim/lua/custom/packer.lua<CR>");
-
-nmap("<leader><leader>", function()
-    vim.cmd("so")
-end)
