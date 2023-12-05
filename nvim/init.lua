@@ -6,8 +6,12 @@ ColorMyPencils()
 vim.schedule(ColorMyPencils)
 local nvim_bufnr = vim.api.nvim_get_current_buf()
 
-vim.api.nvim_buf_delete(nvim_bufnr, { force = true })
-require('startup').display()
+local startBufSize = vim.api.nvim_buf_get_name(nvim_bufnr)
+
+if startBufSize == '' then
+    vim.api.nvim_buf_delete(nvim_bufnr, { force = true })
+    require('startup').display()
+end
 
 vim.api.nvim_create_autocmd({ "ColorScheme" }, {
 

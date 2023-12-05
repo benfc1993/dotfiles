@@ -1,6 +1,7 @@
 vim() {
     if [[ -f "${1}" ]]; then
-        nvim $1
+        cd "$(dirname "${1}")"
+        nvim "$(basename "${1}")"
     else
         cd "${1:-.}";
         nvim 
