@@ -1,3 +1,4 @@
+require("custom.plugin.bufferline")
 require("custom.plugin.colors")
 require("custom.plugin.harpoon")
 require("custom.plugin.lazygit")

@@ -46,6 +46,7 @@ require('lazy').setup({
             "nvim-lua/plenary.nvim",
         },
     },
+    'akinsho/bufferline.nvim',
     {
         'rust-lang/rust.vim',
         ft = 'rust',
