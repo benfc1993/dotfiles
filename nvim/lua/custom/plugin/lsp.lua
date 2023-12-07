@@ -1,18 +1,13 @@
----@diagnostic disable: missing-fields
 local lsp = require('lsp-zero').preset({
     manage_nvim_cmp = {
         set_extra_mappings = true,
         set_sources = 'recommended'
     }
 })
+
 lsp.on_attach(function(client, bufnr)
     lsp.default_keymaps({ buffer = bufnr })
     local opts = { buffer = bufnr, remap = false }
-
-    for _, v in pairs(client.config.filetypes)
-    do
-        require("custom.lsp").attach(v)
-    end
 
     local function on_list(options)
         vim.fn.setqflist({}, ' ', options)
