@@ -50,7 +50,6 @@ require('lazy').setup({
         'rust-lang/rust.vim',
         ft = 'rust',
         init = function()
-            print('testing')
             vim.g.rustfmt_autosave = 1
         end
     },
