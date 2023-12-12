@@ -33,13 +33,7 @@ vim.api.nvim_create_autocmd({ "ColorScheme" }, {
     end
 })
 
-vim.api.nvim_create_autocmd({ 'BufWritePre' }, {
-    group = vim.api.nvim_create_augroup("writePreGroup", { clear = true }),
-    pattern = "*",
-    callback = function()
-        vim.lsp.buf.format()
-    end
-})
+
 vim.api.nvim_create_autocmd({ 'BufWritePost' }, {
 
     group = vim.api.nvim_create_augroup("writePostGroup", { clear = true }),
