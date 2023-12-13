@@ -23,16 +23,28 @@ gwa()
 
 gwd()
 {
-    git worktree remove $1
+     if git rev-parse --git-dir > /dev/null 2>&1; then
+        
+        branch=$( git worktree list| sed -n -E 's/.*\(([^()]*)\).*|.*\[([^()]*)\].*/\1\2/p'| fzf-tmux -p)
+        if [[ ! -z "$branch" ]]; then
+            clean=$(echo "$branch" | cut -d ' ' -f1)
+            git worktree remove "$clean"
+        fi 
+    else
+       echo "Not in a git repo"
+    fi
+
 }
 
 gwc()
 {
     if git rev-parse --git-dir > /dev/null 2>&1; then
-        branch=$(git worktree list | fzf-tmux -p)
+        
+        branch=$( git worktree list| sed -n -E 's/.*\(([^()]*)\).*|.*\[([^()]*)\].*/\1\2/p'| fzf-tmux -p)
         if [[ ! -z "$branch" ]]; then
-            cd $(echo "$branch" | cut -d ' ' -f1)
-        fi
+        gitdir="$(git rev-parse --path-format=absolute --git-common-dir)/worktrees/$(echo "$branch" | cut -d ' ' -f1)/gitdir"
+        cd $(cat "$gitdir" | sed -n -E 's/(.*)\/.git/\1/p')
+        fi 
     else
        echo "Not in a git repo"
     fi
