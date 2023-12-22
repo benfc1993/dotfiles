@@ -52,7 +52,7 @@ require("nvim-tree").setup({
             max = vim.diagnostic.severity.ERROR
         }
     },
-    modified = {
-        enable = true
-    }
+    -- modified = {
+    --     enable = true
+    -- }
 })

@@ -22,7 +22,8 @@ require('telescope').setup({
             "target/",
             "build/",
             "gradle/",
-            "dist"
+            "dist",
+            "package-lock.json"
         }
     }
 })

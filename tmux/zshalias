@@ -39,11 +39,19 @@ gwd()
 gwc()
 {
     if git rev-parse --git-dir > /dev/null 2>&1; then
-        
-        branch=$( git worktree list| sed -n -E 's/.*\(([^()]*)\).*|.*\[([^()]*)\].*/\1\2/p'| fzf-tmux -p)
+        if [[ ! -z $1 ]]; then
+            branch="$1"
+        else
+            branch=$( git worktree list| sed -n -E 's/.*\(([^()]*)\).*|.*\[([^()]*)\].*/\1\2/p'| fzf-tmux -p)
+        fi
+
         if [[ ! -z "$branch" ]]; then
-        gitdir="$(git rev-parse --path-format=absolute --git-common-dir)/worktrees/$(echo "$branch" | cut -d ' ' -f1)/gitdir"
-        cd $(cat "$gitdir" | sed -n -E 's/(.*)\/.git/\1/p')
+        gitdir="$(git rev-parse --path-format=absolute --git-common-dir)/worktrees/$(echo "$branch" | cut -d ' ' -f1)"
+            if [[ -d "$gitdir" ]]; then
+                cd $(cat "$gitdir/gitdir" | sed -n -E 's/(.*)\/.git/\1/p')
+            else
+                echo "branch does not exist in this repo"
+            fi
         fi 
     else
        echo "Not in a git repo"

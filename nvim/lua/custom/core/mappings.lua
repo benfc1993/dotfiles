@@ -39,9 +39,11 @@ nmap("<CR>", ":nohl<cr>")
 vim.keymap.set("x", "<leader>p", [["_dP]])
 
 -- next greatest remap ever : asbjornHaland
-vim.keymap.set({ "n", "v" }, "<leader>y", [["+y]])
-nmap("<leader>Y", [["+Y]])
-nmap("<leader>p", [["+p]])
+-- vim.keymap.set({ "n", "v" }, "y", [["+y]])
+-- vim.keymap.set({ "n", "v" }, "p", [["+p]])
+-- vim.keymap.set({ "n", "v" }, "x", [["+p]])
+-- nmap("<leader>Y", [["+Y]])
+-- nmap("<leader>p", [["+p]])
 
 vim.keymap.set({ "n", "v" }, "<leader>d", [["_d]])
 

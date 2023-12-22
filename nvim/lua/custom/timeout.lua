@@ -1,15 +1,34 @@
-vim.g.timeoutWaitMins = 45
+vim.g.timeoutWaitMins = 60
 vim.g.timeoutMinBreakMins = 5
 
 local shouldRun = true
 local minBreakOver = false
+
+local WriteToFile = function()
+    local fileRead = io.open(os.getenv("HOME") .. "/configs/timeout.txt", "r")
+    if fileRead then
+        local nextFromFile = fileRead:read("*l")
+        io.close(fileRead)
+        if((nextFromFile - os.time()) * -1 < vim.g.timeoutMinBreakMins * 60) then
+            return
+        end
+    end
+    local time = os.time() + vim.g.timeoutWaitMins * 60
+    local file =  io.open(os.getenv('HOME') .. '/configs/timeout.txt', 'w')
+    if not file then return end
+    file:write(time)
+    io.close(file)
+end
 
 local endBreak = function(float)
     if not minBreakOver then
         return
     end
     vim.api.nvim_win_close(float, true)
-    if shouldRun then StartTimeOut() end
+    if shouldRun then
+        WriteToFile()
+            vim.defer_fn(StartTimeOut, 1000)
+    end
 end
 
 local showNotification = function()
@@ -18,7 +37,7 @@ local showNotification = function()
     local width = math.floor(gwidth * 0.5)
     local height = math.floor(gheight * 0.5)
 
-    -- minBreakOver = false
+    minBreakOver = false
 
     local buf = vim.api.nvim_create_buf(false, true)
     vim.api.nvim_buf_set_lines(buf, 1, 5, false,
@@ -73,9 +92,29 @@ end
 
 
 local loopTimer = vim.loop.new_timer()
+function ReadFromFile()
+    local file = io.open(os.getenv("HOME") .. "/configs/timeout.txt", "r")
+    if file then
+        local nextFromFile = file:read("*l")
+        if((nextFromFile - os.time()) * -1 < vim.g.timeoutMinBreakMins * 60) then
+            local next = (tonumber(nextFromFile) - os.time()) * 1000
+            file:close()
+            return next
+        end
+    end
+    return nil
+end
+
 StartTimeOut = function()
+    local next = vim.g.timeoutWaitMins * 60 * 1000
+    local timeFromFile = ReadFromFile()
+    if timeFromFile ~= nil then
+        next = timeFromFile
+    else
+        WriteToFile()
+    end
     shouldRun = true
-    loopTimer:start(math.floor(vim.g.timeoutWaitMins * 60 * 1000), 0, vim.schedule_wrap(function()
+    loopTimer:start(math.max(0,math.floor(next)), 0, vim.schedule_wrap(function()
         showNotification()
     end))
 end

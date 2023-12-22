@@ -34,3 +34,5 @@ vim.opt.timeoutlen = 300
 vim.opt.spelllang = 'en_gb'
 vim.opt.spellsuggest = 'best,5'
 vim.opt.spell = true
+
+vim.opt.clipboard = 'unnamedplus'
