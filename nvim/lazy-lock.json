@@ -4,6 +4,7 @@
   "bufferline.nvim": { "branch": "main", "commit": "ac788fbc493839c1e76daa8d119934b715fdb90e" },
   "cmp-buffer": { "branch": "main", "commit": "3022dbc9166796b644a841a02de8dd1cc1d311fa" },
   "cmp-nvim-lsp": { "branch": "main", "commit": "5af77f54de1b16c34b23cba810150689a3a90312" },
+  "cmp-nvim-lua": { "branch": "main", "commit": "f12408bdb54c39c23e67cab726264c10db33ada8" },
   "cmp-path": { "branch": "main", "commit": "91ff86cd9c29299a64f968ebb45846c485725f23" },
   "cmp_luasnip": { "branch": "master", "commit": "05a9ab28b53f71d1aece421ef32fee2cb857a843" },
   "dracula.nvim": { "branch": "main", "commit": "7200e64c589f899d29f8963aad7543856d1c2545" },
@@ -21,6 +22,7 @@
   "null-ls.nvim": { "branch": "main", "commit": "0010ea927ab7c09ef0ce9bf28c2b573fc302f5a7" },
   "nvim": { "branch": "main", "commit": "64dc309bc157779691be38bbfc5123584e0a4a85" },
   "nvim-cmp": { "branch": "main", "commit": "41d7633e4146dce1072de32cea31ee31b056a131" },
+  "nvim-lsp-file-operations": { "branch": "master", "commit": "8e7223e138590c1bd9d86d3de810e65939d8b12f" },
   "nvim-lspconfig": { "branch": "master", "commit": "bd405e45c5fb122c16af8f87fa2dd7ab1981b243" },
   "nvim-notify": { "branch": "master", "commit": "e4a2022f4fec2d5ebc79afa612f96d8b11c627b3" },
   "nvim-tree.lua": { "branch": "master", "commit": "141c0f97c35f274031294267808ada59bb5fb08e" },
@@ -36,5 +38,6 @@
   "toggleterm.nvim": { "branch": "main", "commit": "cbd041d91b90cd3c02df03fe6133208888f8e008" },
   "undotree": { "branch": "master", "commit": "36ff7abb6b60980338344982ad4cdf03f7961ecd" },
   "vim-nightfly-colors": { "branch": "master", "commit": "06ad2689ebd251a71c6caeb9fb47e231773c9b47" },
+  "vim-obsession": { "branch": "master", "commit": "fe9d3e1a9a50171e7d316a52e1e56d868e4c1fe5" },
   "vim-tmux-navigator": { "branch": "master", "commit": "7db70e08ea03b3e4d91f63713d76134512e28d7e" }
 }
