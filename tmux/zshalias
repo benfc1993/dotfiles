@@ -18,7 +18,14 @@ cmkd()
 alias gwl="git worktree list"
 gwa()
 {
-    git worktree add $1
+        gitdir="$(git rev-parse --path-format=absolute --git-common-dir)"
+            if [[ -d "$gitdir" ]]; then
+                cd "$gitdir"
+                git worktree add -b $1 "$gitdir/$1";
+                gwc $1
+            else
+               echo "Not in a git repo"
+            fi
 }
 
 gwd()
@@ -29,6 +36,7 @@ gwd()
         if [[ ! -z "$branch" ]]; then
             clean=$(echo "$branch" | cut -d ' ' -f1)
             git worktree remove "$clean"
+            git branch -D "$clean"
         fi 
     else
        echo "Not in a git repo"
