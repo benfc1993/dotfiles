@@ -58,3 +58,8 @@ gwc()
     fi
 
 }
+
+gwv()
+{
+    gwc && vim
+}
