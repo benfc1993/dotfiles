@@ -14,7 +14,7 @@ lsp.on_attach(function(client, bufnr)
         vim.api.nvim_command('cfirst')
     end
 
-    vim.keymap.set("n", "gd", function() vim.lsp.buf.definition({ reuse_win = true, on_list = on_list }) end, opts)
+    vim.keymap.set("n", "gd", function() vim.lsp.buf.definition() end, opts)
     vim.keymap.set("n", "<leader><CR>", function() vim.lsp.buf.hover() end, opts)
     vim.keymap.set("n", "<leader>vws", function() vim.lsp.buf.workspace_symbol('') end, opts)
     vim.keymap.set("n", "<leader>vf", function() vim.diagnostic.open_float() end, opts)
@@ -40,6 +40,8 @@ lspconfig.tsserver.setup({
     }
 
 })
+lspconfig.jdtls.setup({})
+lspconfig.groovyls.setup({})
 
 local opts = {
     -- rust-tools options
