@@ -1,1 +1,1 @@
-SelectedColorScheme = "catppuccin-mocha"
+SelectedColorScheme = "dracula"

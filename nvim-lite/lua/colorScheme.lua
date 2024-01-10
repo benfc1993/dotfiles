@@ -1,0 +1,3 @@
+SelectedColorScheme = "gruvbox"
+ColorMyPencils()
+

@@ -1,0 +1,4 @@
+nvim
+plugins
+builtin
+lualine
