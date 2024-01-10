@@ -74,6 +74,10 @@ local plugins = {
 	'hrsh7th/nvim-cmp',
 	'L3MON4D3/LuaSnip',
 	'saadparwaiz1/cmp_luasnip',
+
+	-- formatting
+    'jose-elias-alvarez/null-ls.nvim',
+
 	-- Aesthetics
 	-- lualine
 	{
