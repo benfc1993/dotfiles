@@ -3,6 +3,6 @@ local formatting = null_ls.builtins.formatting
 null_ls.setup({
 	debug = true,
 	sources = {
-		formatting.prettier
+		formatting.prettier,
 	}
 })

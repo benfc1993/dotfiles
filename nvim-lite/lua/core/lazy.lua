@@ -48,10 +48,11 @@ local plugins = {
 	},
 	-- treesitter
 	'nvim-treesitter/nvim-treesitter',
+	'nvim-treesitter/playground',
 	-- LSP
 
-	'williamboman/mason.nvim',                   -- Optional
-	'williamboman/mason-lspconfig.nvim',         -- Optional
+	'williamboman/mason.nvim',        -- Optional
+	'williamboman/mason-lspconfig.nvim', -- Optional
 	"neovim/nvim-lspconfig",
 
 	{
@@ -68,6 +69,7 @@ local plugins = {
 	-- cmp
 	'neovim/nvim-lspconfig',
 	'hrsh7th/cmp-nvim-lsp',
+	'hrsh7th/cmp-nvim-lua',
 	'hrsh7th/cmp-buffer',
 	'hrsh7th/cmp-path',
 	'hrsh7th/cmp-cmdline',
@@ -76,7 +78,7 @@ local plugins = {
 	'saadparwaiz1/cmp_luasnip',
 
 	-- formatting
-    'jose-elias-alvarez/null-ls.nvim',
+	'jose-elias-alvarez/null-ls.nvim',
 
 	-- Aesthetics
 	-- lualine

@@ -1,4 +1,5 @@
 require('plugins.cmp')
+require('plugins.language-tools')
 require('plugins.lualine')
 require('plugins.mason')
 require('plugins.null-ls')

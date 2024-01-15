@@ -25,6 +25,20 @@ local lsp_key_mappings = function(bufnr)
 	nmap("<leader>w", vim.diagnostic.goto_prev, '', opts)
 	nmap([[<C-_>]], vim.lsp.buf.code_action, '', opts)
 	nmap("<leader>h", vim.lsp.buf.signature_help, '', opts)
+	nmap("<F2>", vim.lsp.buf.rename, '', opts)
+end
+
+local lsp_formatting = function(client, bufnr)
+	if client.supports_method("textDocument/formatting") then
+		vim.api.nvim_clear_autocmds({ group = augroup, buffer = bufnr })
+		vim.api.nvim_create_autocmd("BufWritePre", {
+			group = augroup,
+			buffer = bufnr,
+			callback = function()
+				lsp_formatting(bufnr)
+			end,
+		})
+	end
 end
 
 require("mason-lspconfig").setup_handlers {
@@ -35,20 +49,19 @@ require("mason-lspconfig").setup_handlers {
 		require("lspconfig")[server_name].setup {
 			on_attach = function(client, bufnr)
 				lsp_key_mappings(bufnr)
-
-				if client.supports_method("textDocument/formatting") then
-					vim.api.nvim_clear_autocmds({ group = augroup, buffer = bufnr })
-					vim.api.nvim_create_autocmd("BufWritePre", {
-						group = augroup,
-						buffer = bufnr,
-						callback = function()
-							lsp_formatting(bufnr)
-						end,
-					})
-				end
+				lsp_formatting(client, bufnr)
 			end
 		}
 	end,
+	['tsserver'] = function()
+		require('lspconfig').tsserver.setup {
+			on_attach = function(client, bufnr)
+				lsp_key_mappings(bufnr)
+				lsp_formatting(client, bufnr)
+				nmap('<C-l>', require('plugins.language-tools.typescript').logRocket, '',
+					{ silent = true, buffer = bufnr })
+			end }
+	end
 	-- Next, you can provide a dedicated handler for specific servers.
 	-- For example, a handler override for the `rust_analyzer`:
 	-- ["rust_analyzer"] = function ()
