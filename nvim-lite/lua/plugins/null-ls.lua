@@ -4,5 +4,6 @@ null_ls.setup({
 	debug = true,
 	sources = {
 		formatting.prettier,
+		formatting.lua_format
 	}
 })

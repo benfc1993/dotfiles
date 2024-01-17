@@ -37,6 +37,14 @@ local plugins = {
 		branch = '0.1.x',
 		dependencies = { 'nvim-lua/plenary.nvim' }
 	},
+	-- Git
+	{
+		"kdheepak/lazygit.nvim",
+		-- optional for floating window border decoration
+		dependencies = {
+			"nvim-lua/plenary.nvim",
+		},
+	},
 
 	-- code edititng
 	-- auto commenting

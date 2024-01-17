@@ -69,5 +69,5 @@ gwc()
 
 gwv()
 {
-    gwc && vim
+    gwc $1 && vim
 }
