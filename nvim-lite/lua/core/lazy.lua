@@ -21,51 +21,48 @@ local plugins = {
 			"nvim-tree/nvim-web-devicons",
 		},
 		config = function()
-			require("nvim-tree").setup {}
+			require("nvim-tree").setup({})
 		end,
 	},
 	-- TmuxNavigation
 	{
-		'christoomey/vim-tmux-navigator',
+		"christoomey/vim-tmux-navigator",
 		config = function()
 			vim.g.tmux_navigator_no_mappings = 1
-		end
+		end,
 	},
 	-- Telescope
 	{
-		'nvim-telescope/telescope.nvim',
-		branch = '0.1.x',
-		dependencies = { 'nvim-lua/plenary.nvim' }
+		"nvim-telescope/telescope.nvim",
+		branch = "0.1.x",
+		dependencies = { "nvim-lua/plenary.nvim" },
 	},
-	-- Git
 	{
-		"kdheepak/lazygit.nvim",
-		-- optional for floating window border decoration
+		"folke/noice.nvim",
+		event = "VeryLazy",
 		dependencies = {
-			"nvim-lua/plenary.nvim",
+			"MunifTanjim/nui.nvim",
 		},
 	},
 
 	-- code edititng
 	-- auto commenting
 	{
-		'numToStr/Comment.nvim',
+		"numToStr/Comment.nvim",
 		config = function()
-			require('Comment').setup()
-		end
+			require("Comment").setup()
+		end,
 	},
 	-- treesitter
-	'nvim-treesitter/nvim-treesitter',
-	'nvim-treesitter/playground',
+	"nvim-treesitter/nvim-treesitter",
 	-- LSP
 
-	'williamboman/mason.nvim',        -- Optional
-	'williamboman/mason-lspconfig.nvim', -- Optional
+	"williamboman/mason.nvim", -- Optional
+	"williamboman/mason-lspconfig.nvim", -- Optional
 	"neovim/nvim-lspconfig",
 
 	{
 		"antosha417/nvim-lsp-file-operations",
-		lazy = true,
 		dependencies = {
 			"nvim-lua/plenary.nvim",
 			"nvim-tree/nvim-tree.lua",
@@ -75,41 +72,40 @@ local plugins = {
 		end,
 	},
 	-- cmp
-	'neovim/nvim-lspconfig',
-	'hrsh7th/cmp-nvim-lsp',
-	'hrsh7th/cmp-nvim-lua',
-	'hrsh7th/cmp-buffer',
-	'hrsh7th/cmp-path',
-	'hrsh7th/cmp-cmdline',
-	'hrsh7th/nvim-cmp',
-	'L3MON4D3/LuaSnip',
-	'saadparwaiz1/cmp_luasnip',
+	"neovim/nvim-lspconfig",
+	"hrsh7th/cmp-nvim-lsp",
+	"hrsh7th/cmp-nvim-lua",
+	"hrsh7th/cmp-buffer",
+	"hrsh7th/cmp-path",
+	"hrsh7th/cmp-cmdline",
+	"hrsh7th/nvim-cmp",
+	"L3MON4D3/LuaSnip",
+	"saadparwaiz1/cmp_luasnip",
 
 	-- formatting
-	'jose-elias-alvarez/null-ls.nvim',
+	"jose-elias-alvarez/null-ls.nvim",
 
 	-- Aesthetics
 	-- lualine
 	{
-		'nvim-lualine/lualine.nvim',
-		dependencies = { 'nvim-tree/nvim-web-devicons' }
+		"nvim-lualine/lualine.nvim",
+		dependencies = { "nvim-tree/nvim-web-devicons" },
 	},
 
 	--startup
 	{
 		"startup-nvim/startup.nvim",
-		requires = { "nvim-telescope/telescope.nvim", "nvim-lua/plenary.nvim" }
+		requires = { "nvim-telescope/telescope.nvim", "nvim-lua/plenary.nvim" },
 	},
 
 	-- Themes
 	{
-		'Mofiqul/dracula.nvim',
-		as = 'dracula',
+		"Mofiqul/dracula.nvim",
+		as = "dracula",
 	},
 	"bluz71/vim-nightfly-colors",
 	{ "catppuccin/nvim", as = "catppuccin" },
 	"ellisonleao/gruvbox.nvim",
-
 }
 
 require("lazy").setup(plugins)

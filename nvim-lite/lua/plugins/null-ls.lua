@@ -1,9 +1,10 @@
 local null_ls = require('null-ls')
 local formatting = null_ls.builtins.formatting
 null_ls.setup({
-	debug = true,
-	sources = {
-		formatting.prettier,
-		formatting.lua_format
-	}
+    debug = true,
+    sources = {
+        formatting.prettier,
+        formatting.lua_format,
+        formatting.stylua
+    }
 })
