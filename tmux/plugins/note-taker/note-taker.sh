@@ -66,7 +66,8 @@ selected_option=`printf "$options" | fzf-tmux -p -w 40% --layout reverse --heade
         ;;
     ol)
         file=$(cat ~/.note-taker/current.txt)
-        tmux split-window -hbf -p 30 "nvim \"${notes_dir}/${file}\"" exit 0
+        tmux split-window -hbf -p 30 "nvim \"${notes_dir}/${file}\"" 
+        exit 0
         ;;
     *)
         exit 0
