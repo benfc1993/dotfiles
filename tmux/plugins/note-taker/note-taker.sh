@@ -23,8 +23,8 @@ selected_option=`printf "$options" | fzf-tmux -p -w 40% --layout reverse --heade
         exit 0
       ;;
     l)
-        cd $note_taker_dir
-        file_name=`fd "" notes -e md | fzf-tmux -p -w 60% -h 80% --layout reverse --header "Current note: $(cat ~/.note-taker/current.txt)" --preview 'glow {}'`
+        cd $notes_dir
+        file_name=`fd "" . -e md | fzf-tmux -p -w 60% -h 80% --layout reverse --header "Current note: $(cat ~/.note-taker/current.txt)" --preview 'glow {}'`
         if [ -z $file_name ];
         then
             exit 0
@@ -39,34 +39,34 @@ selected_option=`printf "$options" | fzf-tmux -p -w 40% --layout reverse --heade
         ;;
     v)
         file=$(cat ~/.note-taker/current.txt)
-        tmux display-popup -h 90% -E "glow \"${note_taker_dir}/${file}\";read -p 'press ENTER to quit' t;"
+        tmux display-popup -h 90% -E "glow \"${notes_dir}/${file}\";read -p 'press ENTER to quit' t;"
         ;;
     d)
-        cd $note_taker_dir/notes 
-        file_name=`ls | fzf-tmux -p -w 60% -h 80% --layout reverse --header "Select note to delete" --preview 'glow {}'`
+        cd $notes_dir 
+        file_name=`fd "" . -e md | fzf-tmux -p -w 60% -h 80% --layout reverse --header "Select note to delete" --preview 'glow {}'`
         if [ -z $file_name ];
         then
             exit 0
         else
-            rm -rf $note_taker_dir/notes/$file_name
+            rm -rf $notes_dir/$file_name
             exit 0
         fi
         ;;
     e)
         file=$(cat ~/.note-taker/current.txt)
 
-        tmux display-popup -h 80% -E "nvim \"${note_taker_dir}/${file}\""
+        tmux display-popup -h 80% -E "nvim \"${notes_dir}/${file}\""
         exit 0
         ;;
     or)
 
         file=$(cat ~/.note-taker/current.txt)
-        tmux split-window -hf -p 31 "nvim \"${note_taker_dir}/${file}\""
+        tmux split-window -hf -p 31 "nvim \"${notes_dir}/${file}\""
         exit 0
         ;;
     ol)
         file=$(cat ~/.note-taker/current.txt)
-        tmux split-window -hbf -p 30 "nvim \"${note_taker_dir}/${file}\"" exit 0
+        tmux split-window -hbf -p 30 "nvim \"${notes_dir}/${file}\"" exit 0
         ;;
     *)
         exit 0

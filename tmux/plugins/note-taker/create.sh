@@ -4,14 +4,15 @@ echo "Create new note"
 echo ""
 read -p 'Note title:' noteName
 
-if test -f "~/.note-taker/$noteName.md"; then
+notes_dir=$(cat ~/.note-taker/notes_dir.txt)
+
+if test -f "${notes_dir}/${noteName}.md"; then
     exit 1
 fi
 
 cleaned="${noteName// /_}"
+mkdir -p "$(dirname "$notes_dir/$noteName")" && touch "${notes_dir}/${noteName}.md"
+echo "# $noteName" > "${notes_dir}/${noteName}.md"
+echo "" >> "${notes_dir}/${noteName}.md"
 
-touch ~/.note-taker/notes/$cleaned.md
-echo "# $noteName" > ~/.note-taker/notes/$cleaned.md
-echo "" >> ~/.note-taker/notes/$cleaned.md
-
-echo "$cleaned.md" > ~/.note-taker/current.txt
+echo "${noteName}.md" > ~/.note-taker/current.txt
