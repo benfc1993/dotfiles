@@ -21,7 +21,18 @@ gwa()
         gitdir="$(git rev-parse --path-format=absolute --git-common-dir)"
             if [[ -d "$gitdir" ]]; then
                 cd "$gitdir"
-                git worktree add -b $1 "$gitdir/$1";
+                if [[ -z $(grep -F "fetch =" config) ]]; then
+                    git config remote.origin.fetch "+refs/heads/*:refs/remotes/origin/*"
+                fi
+
+                if [[  -z $(git ls-remote --heads origin refs/heads/"$1") ]]; then
+                    echo "branch not found"
+                    git worktree add -b $1 "$gitdir/$1";
+                else
+                    echo "branch  found"
+                    git worktree add --track -b "$1" "$gitdir/$1" origin/"$1";
+                    # git branch -u refs/heads/"$1" "$1"
+                fi
                 gwc $1
             else
                echo "Not in a git repo"
@@ -35,7 +46,7 @@ gwd()
         branch=$( git worktree list| sed -n -E 's/.*\(([^()]*)\).*|.*\[([^()]*)\].*/\1\2/p'| fzf-tmux -p)
         if [[ ! -z "$branch" ]]; then
             clean=$(echo "$branch" | cut -d ' ' -f1)
-            git worktree remove "$clean"
+            git worktree remove "$clean" "$@"
             git branch -D "$clean"
         fi 
     else

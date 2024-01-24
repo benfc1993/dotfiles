@@ -1,5 +1,0 @@
-vim.api.nvim_create_user_command("StartSession", function()
-    vim.cmd('Obsession')
-    local name = vim.fn.input('Session name: ')
-    vim.cmd('Obsess ~/.vim/sessions/' .. name .. '.vim')
-end, {})

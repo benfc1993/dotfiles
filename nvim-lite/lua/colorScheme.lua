@@ -1,1 +1,0 @@
-SelectedColorScheme = "gruvbox"ColorMyPencils()
