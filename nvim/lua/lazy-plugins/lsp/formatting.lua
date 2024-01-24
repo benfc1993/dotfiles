@@ -19,6 +19,8 @@ return {
 				markdown = { "prettierd" },
 				graphql = { "prettierd" },
 				lua = { "stylua" },
+				sh = { "beautysh" },
+				zsh = { "beautysh" },
 			},
 			format_on_save = {
 				lsp_fallback = true,

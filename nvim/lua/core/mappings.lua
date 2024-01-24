@@ -35,8 +35,8 @@ nmap("<leader>vs", ":sp <CR> | :wincmd j <CR>", "split horizontally")
 
 nmap("<CR>", ":nohl<cr>", "remove current search highlights")
 
-nmap("<C-S-K>", "<cmd>cnext<CR>zz", "next in quickfix list")
-nmap("<C-S-J>", "<cmd>cprev<CR>zz", "prev in quickfix list")
+nmap("<leader>j", "<cmd>cnext<CR>zz", "next in quickfix list")
+nmap("<leader>k", "<cmd>cprev<CR>zz", "prev in quickfix list")
 
 nmap("<leader>/", function()
 	require("Comment.api").toggle.linewise.current()

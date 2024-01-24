@@ -22,6 +22,7 @@ vim.opt.scrolloff = 8 -- scroll offset before moving page
 
 vim.opt.spelllang = "en_gb"
 vim.opt.spellsuggest = "best,5"
+vim.opt.spelloptions = "camel"
 vim.opt.spell = true
 
 vim.opt.cursorline = true

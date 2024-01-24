@@ -13,6 +13,8 @@ return {
 				"vim",
 				"vimdoc",
 				"query",
+				"html",
+				"css",
 			},
 
 			-- Install parsers synchronously (only applied to `ensure_installed`)

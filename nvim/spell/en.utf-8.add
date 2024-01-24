@@ -2,3 +2,4 @@ nvim
 plugins
 builtin
 lualine
+vim/!

@@ -38,64 +38,50 @@ return {
 			vim.fn.sign_define(hl, { text = icon, texthl = hl, numhl = "" })
 		end
 
-		-- configure html server
-		lspconfig["html"].setup({
-			capabilities = capabilities,
-			on_attach = on_attach,
-		})
+		local servers = require("lazy-plugins.lsp.servers")
 
-		-- configure typescript server with plugin
-		lspconfig["tsserver"].setup({
-			capabilities = capabilities,
-			on_attach = function(client, bufnr)
-				nmap(
-					"<leader>l",
-					require("plugins.language-tools.typescript").logRocket,
-					"",
-					{ silent = true, buffer = bufnr }
-				)
-				on_attach(client, bufnr)
-			end,
-		})
+		local serverConfigs = {
+			tsserver = {
+				on_attach = function(client, bufnr)
+					nmap(
+						"<leader>l",
+						require("plugins.language-tools.typescript").logRocket,
+						"",
+						{ silent = true, buffer = bufnr }
+					)
+					on_attach(client, bufnr)
+				end,
+			},
+			graphql = {
 
-		-- configure css server
-		lspconfig["cssls"].setup({
-			capabilities = capabilities,
-			on_attach = on_attach,
-		})
-
-		-- configure graphql language server
-		lspconfig["graphql"].setup({
-			capabilities = capabilities,
-			on_attach = on_attach,
-			filetypes = { "graphql", "gql", "svelte", "typescriptreact", "javascriptreact" },
-		})
-		--
-		-- configure css server
-		lspconfig["bashls"].setup({
-			capabilities = capabilities,
-			on_attach = on_attach,
-		})
-
-		-- configure lua server (with special settings)
-		lspconfig["lua_ls"].setup({
-			capabilities = capabilities,
-			on_attach = on_attach,
-			settings = { -- custom settings for lua
-				Lua = {
-					-- make the language server recognize "vim" global
-					diagnostics = {
-						globals = { "vim" },
-					},
-					workspace = {
-						-- make language server aware of runtime files
-						library = {
-							[vim.fn.expand("$VIMRUNTIME/lua")] = true,
-							[vim.fn.stdpath("config") .. "/lua"] = true,
+				filetypes = { "graphql", "gql", "svelte", "typescriptreact", "javascriptreact" },
+			},
+			lua_ls = {
+				settings = { -- custom settings for lua
+					Lua = {
+						-- make the language server recognize "vim" global
+						diagnostics = {
+							globals = { "vim" },
+						},
+						workspace = {
+							-- make language server aware of runtime files
+							library = {
+								[vim.fn.expand("$VIMRUNTIME/lua")] = true,
+								[vim.fn.stdpath("config") .. "/lua"] = true,
+							},
 						},
 					},
 				},
 			},
-		})
+		}
+
+		for _, lsp in ipairs(servers) do
+			local config = {}
+			local lspConfig = serverConfigs[lsp] or {}
+
+			TableMerge(config, { capabilities = capabilities, on_attach = on_attach }, lspConfig)
+
+			lspconfig[lsp].setup(config)
+		end
 	end,
 }
