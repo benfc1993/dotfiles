@@ -85,7 +85,7 @@ gwv()
 
 gac()
 {
-    git add . && git commit -m '"$1"' && git push
+    git add . && git commit -m $1 && git push
 }
 
 alias nr="npm run"
