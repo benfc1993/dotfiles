@@ -4,10 +4,10 @@ vim() {
         nvim "$(basename "${1}")"
     else
         cd "${1:-.}";
-        nvim 
+        nvim
     fi
 }
-# alias vim=nvim_dir()
+
 cmkd()
 {
     mkdir -p -- "$1" &&
@@ -18,39 +18,39 @@ cmkd()
 alias gwl="git worktree list"
 gwa()
 {
-        gitdir="$(git rev-parse --path-format=absolute --git-common-dir)"
-            if [[ -d "$gitdir" ]]; then
-                cd "$gitdir"
-                if [[ -z $(grep -F "fetch =" config) ]]; then
-                    git config remote.origin.fetch "+refs/heads/*:refs/remotes/origin/*"
-                fi
+    gitdir="$(git rev-parse --path-format=absolute --git-common-dir)"
+    if [[ -d "$gitdir" ]]; then
+        cd "$gitdir"
+        if [[ -z $(grep -F "fetch =" config) ]]; then
+            git config remote.origin.fetch "+refs/heads/*:refs/remotes/origin/*"
+        fi
 
-                if [[  -z $(git ls-remote --heads origin refs/heads/"$1") ]]; then
-                    echo "branch not found"
-                    git worktree add -b $1 "$gitdir/$1";
-                else
-                    echo "branch  found"
-                    git worktree add --track -b "$1" "$gitdir/$1" origin/"$1";
-                    # git branch -u refs/heads/"$1" "$1"
-                fi
-                gwc $1
-            else
-               echo "Not in a git repo"
-            fi
+        if [[  -z $(git ls-remote --heads origin refs/heads/"$1") ]]; then
+            echo "branch not found"
+            git worktree add -b $1 "$gitdir/$1";
+        else
+            echo "branch  found"
+            git worktree add --track -b "$1" "$gitdir/$1" origin/"$1";
+            # git branch -u refs/heads/"$1" "$1"
+        fi
+        gwc $1
+    else
+        echo "Not in a git repo"
+    fi
 }
 
 gwd()
 {
-     if git rev-parse --git-dir > /dev/null 2>&1; then
-        
+    if git rev-parse --git-dir > /dev/null 2>&1; then
+
         branch=$( git worktree list| sed -n -E 's/.*\(([^()]*)\).*|.*\[([^()]*)\].*/\1\2/p'| fzf-tmux -p)
         if [[ ! -z "$branch" ]]; then
             clean=$(echo "$branch" | cut -d ' ' -f1)
             git worktree remove "$clean" "$@"
             git branch -D "$clean"
-        fi 
+        fi
     else
-       echo "Not in a git repo"
+        echo "Not in a git repo"
     fi
 
 }
@@ -65,15 +65,15 @@ gwc()
         fi
 
         if [[ ! -z "$branch" ]]; then
-        gitdir="$(git rev-parse --path-format=absolute --git-common-dir)/worktrees/$(echo "$branch" | cut -d ' ' -f1)"
+            gitdir="$(git rev-parse --path-format=absolute --git-common-dir)/worktrees/$(echo "$branch" | cut -d ' ' -f1)"
             if [[ -d "$gitdir" ]]; then
                 cd $(cat "$gitdir/gitdir" | sed -n -E 's/(.*)\/.git/\1/p')
             else
                 echo "branch does not exist in this repo"
             fi
-        fi 
+        fi
     else
-       echo "Not in a git repo"
+        echo "Not in a git repo"
     fi
 
 }
@@ -82,3 +82,10 @@ gwv()
 {
     gwc $1 && vim
 }
+
+gac()
+{
+    git add . && git commit -m '"$1"' && git push
+}
+
+alias nr="npm run"
