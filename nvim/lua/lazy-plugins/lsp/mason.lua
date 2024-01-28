@@ -34,7 +34,7 @@ return {
 				"prettierd", -- prettier formatter
 				"stylua", -- lua formatter
 				"eslint_d", -- js linter
-				"tsserver",
+				"js-debug-adapter",
 			},
 		})
 	end,

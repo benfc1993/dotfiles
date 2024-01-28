@@ -6,6 +6,7 @@ return {
 		{ "antosha417/nvim-lsp-file-operations", config = true },
 	},
 	config = function()
+		require("neodev").setup({})
 		-- import lspconfig plugin
 		local lspconfig = require("lspconfig")
 
@@ -61,6 +62,7 @@ return {
 					Lua = {
 						-- make the language server recognize "vim" global
 						diagnostics = {
+							disable = { "missing-fields" },
 							globals = { "vim" },
 						},
 						workspace = {

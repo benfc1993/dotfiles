@@ -152,4 +152,6 @@ M.StopTimeOut = function()
 	shouldRun = false
 end
 
+StopTimeOut = M.StopTimeOut
+
 return M
