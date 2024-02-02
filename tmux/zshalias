@@ -83,6 +83,13 @@ gwv()
     gwc $1 && vim
 }
 
+unalias gc
+
+gc()
+{
+    git commit -m $1 && git push
+}
+
 gac()
 {
     git add . && git commit -m $1 && git push

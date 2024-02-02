@@ -16,6 +16,9 @@ return {
 				enabled = false,
 			},
 			lsp = {
+				progress = {
+					enabled = false,
+				},
 				hover = {
 					enabled = false,
 				},
