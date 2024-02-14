@@ -12,6 +12,17 @@ return {
 			typescriptreact = { "eslint_d" },
 		}
 
+		local lsputil = require("lspconfig.util")
+
+		local root = lsputil.root_pattern("package.json")(vim.fn.expand("<abuf>"))
+
+		local hasConfig = lsputil.path.exists(lsputil.path.join(root, ".eslintrc.json"))
+			or lsputil.path.exists(lsputil.path.join(root, ".eslintrc.js"))
+
+		if not hasConfig then
+			return
+		end
+
 		local lint_augroup = vim.api.nvim_create_augroup("lint", { clear = true })
 
 		vim.api.nvim_create_autocmd({ "BufEnter", "BufWritePost", "InsertLeave" }, {

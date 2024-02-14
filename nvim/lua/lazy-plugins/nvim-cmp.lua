@@ -29,7 +29,7 @@ return {
 
 		cmp.setup({
 			completion = {
-				completeopt = "menu,menuone,preview,noselect",
+				completeopt = "menu,menuone,preview,noselect,noinsert",
 			},
 			snippet = { -- configure how nvim-cmp interacts with snippet engine
 				expand = function(args)
@@ -39,11 +39,11 @@ return {
 			mapping = cmp.mapping.preset.insert({
 				["<M-u>"] = cmp.mapping.scroll_docs(-4),
 				["<S-Tab>"] = cmp.mapping.select_prev_item(cmp_select),
-				["<Tab>"] = cmp.mapping.select_next_item(cmp_select),
+				-- ["<Tab>"] = cmp.mapping.select_next_item(cmp_select),
 				["<M-d>"] = cmp.mapping.scroll_docs(4),
-				["<Space><CR>"] = cmp.mapping.complete(),
+				["<Space><CR>"] = cmp.mapping.complete({ config = { preselect = "item" } }),
 				["<C-e>"] = cmp.mapping.abort(),
-				["<CR>"] = cmp.mapping.confirm({ select = true }), -- Accept currently selected item. Set `select` to `false` to only confirm explicitly selected items.
+				["<Tab>"] = cmp.mapping.confirm({ select = true }), -- Accept currently selected item. Set `select` to `false` to only confirm explicitly selected items.
 			}),
 			-- sources for autocompletion
 			sources = cmp.config.sources({
@@ -62,6 +62,18 @@ return {
 			window = {
 				completion = cmp.config.window.bordered(),
 				documentation = cmp.config.window.bordered(),
+			},
+			preselect = "item",
+			view = {
+				docs = {
+					auto_open = true,
+				},
+			},
+			experimental = {
+				ghost_text = true,
+			},
+			confirmation = {
+				default_behavior = "replace",
 			},
 		})
 	end,

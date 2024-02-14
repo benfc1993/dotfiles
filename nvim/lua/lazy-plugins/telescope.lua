@@ -29,6 +29,7 @@ return {
 				file_ignore_patterns = {
 					"node_modules/",
 					"target/",
+					".mvn/",
 					"build/",
 					"gradle/",
 					"dist",

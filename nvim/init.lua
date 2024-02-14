@@ -23,4 +23,4 @@ vim.api.nvim_create_autocmd({ "ColorScheme" }, {
 	end,
 })
 
-require("plugins.timeout").StartTimeOut()
+-- require("plugins.timeout").StartTimeOut()
