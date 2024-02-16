@@ -18,6 +18,7 @@ nmap("N", "Nzzzv", "keep cursor in center when prev search match")
 -- remap stop insert
 imap("jk", "<cmd>stopinsert<CR>", "Stop insert Insert")
 tmap("jk", "<cmd>stopinsert<CR>", "Exit insert Terminal")
+tmap("<Esc>", "<cmd>stopinsert<CR>", "Exit insert Terminal")
 
 -- mappings to write buffer
 imap("jkl", "<cmd>stopinsert<CR><cmd>w<CR>", "Stop insert and write Insert")
@@ -25,7 +26,10 @@ nmap("ss", "<cmd>w<CR>", "Save from normal mode")
 
 imap("<C-p>", '<C-r>"', "Paste in insert mode")
 
-nmap("<leader>q", "<cmd>bw<CR>", "Close buffer")
+nmap("<leader>q", "<cmd>bw!<CR>", "Close buffer")
+
+-- terminal
+nmap("<C-q>", "<cmd>10sp<CR><cmd>term<CR><cmd>startinsert<CR>", "Open a terminal")
 
 vmap("J", ":m '>+1<CR>gv=gv", "move selection down")
 vmap("K", ":m '<-2<CR>gv=gv", "move selection up")
@@ -51,3 +55,9 @@ nmap("<leader><S-Tab>", "<cmd>tabp<cr>", "[Tabs] Prev tab")
 nmap("<leader>kw", "<cmd>tabonly<cr>", "[Tabs] close other tabs")
 
 nmap("<C-g>", "<cmd>DiffviewOpen<cr>", "[Diff view] Open Diff view")
+
+-- window move remapping
+nmap("<C-w>h", "<C-w>H")
+nmap("<C-w>j", "<C-w>J")
+nmap("<C-w>k", "<C-w>K")
+nmap("<C-w>l", "<C-w>L")

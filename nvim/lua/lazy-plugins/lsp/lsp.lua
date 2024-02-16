@@ -7,26 +7,12 @@ return {
 	},
 	config = function()
 		require("neodev").setup({})
+		local on_attach = require("lazy-plugins.lsp.utils.on_attach").on_attach
 		-- import lspconfig plugin
 		local lspconfig = require("lspconfig")
 
 		-- import cmp-nvim-lsp plugin
 		local cmp_nvim_lsp = require("cmp_nvim_lsp")
-
-		local on_attach = function(client, bufnr)
-			local opts = { buffer = bufnr, remap = false }
-			nmap("gd", vim.lsp.buf.definition, "", opts)
-			nmap("gi", vim.lsp.buf.implementation, "", opts)
-			nmap("gt", vim.lsp.buf.type_definition, "", opts)
-			nmap("K", vim.lsp.buf.hover, "", opts)
-			nmap("<leader>vf", vim.diagnostic.open_float, "", opts)
-			nmap("<leader>e", vim.diagnostic.goto_next, "", opts)
-			nmap("<leader>w", vim.diagnostic.goto_prev, "", opts)
-			nmap([[<C-_>]], vim.lsp.buf.code_action, "", opts)
-			nmap("<leader>h", vim.lsp.buf.signature_help, "", opts)
-			nmap("<F2>", vim.lsp.buf.rename, "", opts)
-			nmap("<leader>rr", "<cmd>LspRestart<cr>", "", opts)
-		end
 
 		-- used to enable autocompletion (assign to every lsp server config)
 		local capabilities = cmp_nvim_lsp.default_capabilities()

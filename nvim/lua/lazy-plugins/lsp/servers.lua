@@ -1,2 +1,2 @@
-local servers = { "html", "cssls", "bashls", "tsserver", "graphql", "lua_ls", "jdtls" }
+local servers = { "html", "cssls", "bashls", "tsserver", "graphql", "lua_ls" }
 return servers
