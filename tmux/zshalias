@@ -88,6 +88,8 @@ gwv()
     gwc $1 && vim
 }
 
+unalias gcm
+
 gcm()
 {
     git commit -m $1 && git push
