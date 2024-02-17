@@ -23,6 +23,7 @@ return {
 				-- update_root = true,
 			},
 			view = {
+				preserve_window_proportions = true,
 				centralize_selection = true,
 				float = {
 					enable = false,

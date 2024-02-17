@@ -29,7 +29,7 @@ imap("<C-p>", '<C-r>"', "Paste in insert mode")
 nmap("<leader>q", "<cmd>bw!<CR>", "Close buffer")
 
 -- terminal
-nmap("<C-q>", "<cmd>10sp<CR><cmd>term<CR><cmd>startinsert<CR>", "Open a terminal")
+nmap("<C-q>", "<cmd>10sp<CR><cmd>noa<CR><cmd>term<CR><cmd>startinsert<CR>", "Open a terminal")
 
 vmap("J", ":m '>+1<CR>gv=gv", "move selection down")
 vmap("K", ":m '<-2<CR>gv=gv", "move selection up")

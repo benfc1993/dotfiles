@@ -61,6 +61,9 @@ return {
 					},
 				},
 			},
+			gdscript = {
+				filetypes = { "gdscript" },
+			},
 		}
 
 		for _, lsp in ipairs(servers) do
