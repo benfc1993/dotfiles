@@ -21,6 +21,7 @@ return {
 				lua = { "stylua" },
 				sh = { "beautysh" },
 				zsh = { "beautysh" },
+				gdscript = { "gdformat" },
 			},
 			format_on_save = {
 				lsp_fallback = true,

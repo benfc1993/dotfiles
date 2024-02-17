@@ -7,6 +7,7 @@ vim.lsp.start({
 	cmd = cmd,
 	root_dir = vim.fs.dirname(vim.fs.find({ "project.godot", ".git" }, { upward = true })[1]),
 	on_attach = function(client, bufnr)
+		require("lazy-plugins.lsp.utils.on_attach").on_attach(client, bufnr)
 		vim.api.nvim_command('echo serverstart("' .. pipe .. '")')
 	end,
 })

@@ -30,6 +30,12 @@ return {
 				}
 			end
 
+			dap.adapters.godot = {
+				type = "server",
+				host = "127.0.0.1",
+				port = 6006,
+			}
+
 			local js_based_languages = { "javascript", "javascriptreact", "typescriptreact", "typescript" }
 
 			for _, language in ipairs({ "javascript", "typescript" }) do
@@ -111,6 +117,16 @@ return {
 					sourceMaps = true,
 					cwd = vim.fn.getcwd(),
 					protocol = "inspector",
+				},
+			}
+
+			dap.configurations.gdscript = {
+				{
+					type = "godot",
+					request = "launch",
+					name = "Launch scene",
+					project = "${workspaceFolder}",
+					launch_scene = true,
 				},
 			}
 
