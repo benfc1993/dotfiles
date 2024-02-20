@@ -19,6 +19,7 @@ return {
 
 		local hasConfig = lsputil.path.exists(lsputil.path.join(root, ".eslintrc.json"))
 			or lsputil.path.exists(lsputil.path.join(root, ".eslintrc.js"))
+			or lsputil.path.exists(lsputil.path.join(root, ".eslintrc.cjs"))
 
 		if not hasConfig then
 			return
