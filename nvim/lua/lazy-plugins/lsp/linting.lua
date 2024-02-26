@@ -21,7 +21,7 @@ return {
 			or lsputil.path.exists(lsputil.path.join(root, ".eslintrc.js"))
 			or lsputil.path.exists(lsputil.path.join(root, ".eslintrc.cjs"))
 
-		if not hasConfig then
+		if lint.linters_by_ft[vim.bo.filetype] ~= nil or not hasConfig then
 			return
 		end
 

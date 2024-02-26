@@ -92,7 +92,9 @@ gwv()
     gwc $1 && vim
 }
 
-# unalias gcm
+if alias gcm >/dev/null 2>&1; then 
+    unalias gcm
+fi
 
 gcm()
 {
@@ -105,3 +107,13 @@ gac()
 }
 
 alias nr="npm run"
+
+alias vimg="nvim --listen 127.0.0.1:55432"
+
+ts(){
+    if hash bun 2>/dev/null; then
+        bunx tsx $@ 
+    else
+        npx tsx $@
+    fi
+}
