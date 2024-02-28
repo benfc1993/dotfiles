@@ -17,7 +17,7 @@ return {
 		nmap("<leader>fs", builtin.current_buffer_fuzzy_find, "[Telescope] find string in file")
 		nmap("<leader>fh", builtin.help_tags, "[Telescope] Search help")
 		nmap("<leader>fk", builtin.keymaps, "[telescope] Search key mappings")
-		nmap("<leader>ft", require("telescope").extensions.todo.todo, "[telescope] TODOs")
+		-- nmap("<leader>ft", require("telescope").extensions.todo.todo, "[telescope] TODOs")
 		nmap("<leader>th", function()
 			builtin.colorscheme({
 				enable_preview = true,
