@@ -25,7 +25,7 @@ return {
 			vim.fn.sign_define(hl, { text = icon, texthl = hl, numhl = "" })
 		end
 
-		local servers = require("lazy-plugins.lsp.servers")
+		local servers = require("lazy-plugins.lsp.utils.servers")
 
 		local serverConfigs = {
 			tsserver = {
@@ -67,12 +67,19 @@ return {
 		}
 
 		for _, lsp in ipairs(servers) do
+			if lsp.lsp == false then
+				goto continue
+			end
+
 			local config = {}
-			local lspConfig = serverConfigs[lsp] or {}
+			local server = lsp.name
+			local lspConfig = serverConfigs[server] or {}
 
 			TableMerge(config, { capabilities = capabilities, on_attach = on_attach }, lspConfig)
 
-			lspconfig[lsp].setup(config)
+			lspconfig[server].setup(config)
+
+			::continue::
 		end
 	end,
 }
