@@ -28,13 +28,13 @@ return {
 		require("telescope").setup({
 			defaults = {
 				file_ignore_patterns = {
-					"node_modules/",
-					"target/",
-					".mvn/",
-					"build/",
-					"gradle/",
-					"dist",
-					"package-lock.json",
+					"^node_modules",
+					"^target/",
+					"^.mvn/",
+					"^build/",
+					"^gradle/",
+					"^dist/",
+					"%package-lock.json",
 				},
 				path_display = { "smart" },
 			},
