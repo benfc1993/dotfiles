@@ -11,12 +11,13 @@ return {
 		local neotest = require("neotest")
 
 		neotest.setup({
+			discovery = {
+				enabled = false,
+			},
 			adapters = {
 				require("neotest-jest")({
-					-- jestCommand = require("neotest-jest.jest-util").getJestCommand(vim.fn.expand("%:p:h"))
-					-- 	.. " --watch",
 					jestConfigFile = "jest.config.ts",
-					-- jest_test_discovery = true,
+					jest_test_discovery = true,
 					env = { CI = true },
 					cwd = function()
 						vim.fn.getcwd()
@@ -24,13 +25,30 @@ return {
 				}),
 			},
 		})
-		nmap("<leader>t", neotest.run.run, "[NeoTest] run tests in file")
+		nmap("<leader>t", function()
+			neotest.run.stop()
+			neotest.run.run()
+		end, "[NeoTest] run tests in file")
 		nmap("<leader>tf", function()
+			neotest.run.stop()
 			neotest.run.run(vim.fn.expand("%"))
 		end, "[NeoTest] run all tests in file")
 		nmap("<leader>tt", function()
+			neotest.run.stop()
 			neotest.run.run(vim.fn.getcwd())
 		end, "[NeoTest] run all tests")
+		nmap("<leader>tl", function()
+			neotest.run.stop()
+			neotest.run.run_last()
+		end, "[NeoTest] run last test")
 		nmap("<leader>ts", "<cmd>Neotest summary<cr>", "[NeoTest] summary")
+		nmap("<leader>tw", function()
+			neotest.run.stop()
+			neotest.run.run({
+				vim.fn.getcwd(),
+				jestCommand = require("neotest-jest.jest-util").getJestCommand(vim.fn.expand("%:p:h")) .. " --watch",
+			})
+		end, "[NeoTest] watch")
+		nmap("<leader>td", neotest.run.stop, "[NeoTest] Stop process")
 	end,
 }

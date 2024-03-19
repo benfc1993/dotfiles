@@ -2,7 +2,7 @@
 
 parent_path=$( cd "$(dirname "${BASH_SOURCE[0]}")" ; pwd -P )
 if [[ "$OSTYPE" == "darwin"* ]]; then
-    if [[ ! $(which glow) ]]; then 
+    if [[ ! $(which glow) ]]; then
         brew install glow;
     fi
 
@@ -11,7 +11,7 @@ if [[ "$OSTYPE" == "darwin"* ]]; then
     fi
 
     if [[ ! $(which tmux) ]]; then
-      brew install tmux;
+        brew install tmux;
     fi
 
     if [[ ! -d ~/.tmux/plugins/tpm ]]; then
@@ -59,31 +59,30 @@ rm -rf ~/.config/tmux/custom
 mkdir ~/.config/tmux/custom
 
 # Plugins
-chmod a+u "$parent_path/tmux/plugins/fileSearch" 
-sudo ln -s "$parent_path/tmux/plugins/fileSearch" /usr/local/bin/fileSearch 
+sudo rm -rf /usr/local/bin/fileSearch
+chmod a+x "$parent_path/tmux/plugins/fileSearch"
+sudo ln -s "$parent_path/tmux/plugins/fileSearch" /usr/local/bin/fileSearch
 
-chmod +x "$parent_path/tmux/plugins/cheatsheet/cheatsheet.sh"
 ln -s "$parent_path/tmux/plugins/cheatsheet" ~/.config/tmux/custom/cheatsheet
 
-chmod a+u "$parent_path/tmux/plugins/v-session.sh"
+sudo rm -rf /usr/local/bin/v-session
 sudo ln -s "$parent_path/tmux/plugins/v-session.sh" /usr/local/bin/v-session
 
-chmod a+u "$parent_path/vimcd.sh" 
+sudo rm -rf /usr/local/bin/vimcd
 sudo ln -s "$parent_path/vimcd.sh" /usr/local/bin/vimcd
 
-chmod +x "$parent_path/tmux/plugins/project-builder/project-builder.sh"
 ln -s "$parent_path/tmux/plugins/project-builder" ~/.config/tmux/custom/project-builder
 
-mkdir -p ~/.note-taker/notes 
+mkdir -p ~/.note-taker/notes
 sudo ln -s "$parent_path/tmux/plugins/note-taker" ~/.config/tmux/custom/note-taker
 
-chmod a+u "$parent_path/tmux/plugins/cht.sh"
+sudo rm -rf /usr/local/bin/cht.sh
 sudo ln -s "$parent_path/tmux/plugins/cht.sh" /usr/local/bin/cht.sh
 
-chmod a+u "$parent_path/tmux/plugins/all-search.sh"
+sudo rm -rf /usr/local/bin/all-search
 sudo ln -s "$parent_path/tmux/plugins/all-search.sh" /usr/local/bin/all-search
 
-chmod a+x "$parent_path/tmux/plugins/keys/keys.sh"
+sudo rm -rf /usr/local/bin/keys
 sudo ln -s "$parent_path/tmux/plugins/keys/keys.sh" /usr/local/bin/keys
 ln -s "$parent_path/tmux/plugins/keys/redox-layout.png" ~/.config/tmux/custom/redox-layout.png
 

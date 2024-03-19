@@ -49,7 +49,7 @@ vmap("<leader>/", "<ESC><cmd>lua require('Comment.api').toggle.linewise(vim.fn.v
 
 -- Tabs
 nmap("<leader>tn", "<cmd>tabnew<cr><cmd>NvimTreeOpen<cr>", "[Tabs] New tab")
-nmap("<leader>tw", "<cmd>tabclose<cr>", "[Tabs] New tab")
+nmap("<leader>tq", "<cmd>tabclose<cr>", "[Tabs] Close tab")
 nmap("<leader><Tab>", "<cmd>tabn<cr>", "[Tabs] Next tab")
 nmap("<leader><S-Tab>", "<cmd>tabp<cr>", "[Tabs] Prev tab")
 nmap("<leader>kw", "<cmd>tabonly<cr>", "[Tabs] close other tabs")
@@ -61,3 +61,34 @@ nmap("<C-w>h", "<C-w>H")
 nmap("<C-w>j", "<C-w>J")
 nmap("<C-w>k", "<C-w>K")
 nmap("<C-w>l", "<C-w>L")
+nmap("gf", function()
+	local line = vim.fn.expand("<cfile>")
+
+	if line == nil then
+		return
+	end
+
+	if line:match("(http:)") ~= nil then
+		return
+	end
+
+	local path = line:match("([.%w]+/[%w/._-]+[.]%w+)")
+
+	local line_nr = line:match("[#:]+(%w+)")
+
+	if path == nil then
+		return
+	end
+	print(vim.fn.expand("%:p:h/") .. path)
+
+	if line_nr == nil then
+		vim.cmd(":e! %:p:h/" .. path)
+		return
+	end
+
+	line_nr = line_nr:gsub("%D+", "")
+
+	vim.cmd(":e! %:p:h/" .. path)
+	vim.cmd(":" .. line_nr)
+	-- ./set.lua
+end)

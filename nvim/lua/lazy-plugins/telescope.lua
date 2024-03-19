@@ -1,11 +1,13 @@
 return {
 	"nvim-telescope/telescope.nvim",
 	branch = "0.1.x",
-	dependencies = { "nvim-lua/plenary.nvim" },
+	event = "VeryLazy",
+	dependencies = { "nvim-lua/plenary.nvim", "folke/trouble.nvim" },
 	config = function()
 		local builtin = require("telescope.builtin")
 
 		local theme = require("telescope.themes")
+		local trouble = require("trouble")
 		nmap("<leader>ff", function()
 			builtin.find_files(theme.get_dropdown({ find_command = { "rg", "--files", "--hidden", "-g", "!.git" } }))
 		end, "Find files")
@@ -23,7 +25,7 @@ return {
 				enable_preview = true,
 			})
 		end, "Change Color Scheme")
-		nmap("gr", require("telescope.builtin").lsp_references, "[Telescope] Go To references")
+		-- nmap("gr", require("telescope.builtin").lsp_references, "[Telescope] Go To references")
 
 		require("telescope").setup({
 			defaults = {
@@ -37,6 +39,10 @@ return {
 					"%package-lock.json",
 				},
 				path_display = { "smart" },
+				mappings = {
+					i = { ["<c-q>"] = trouble.open_with_trouble },
+					n = { ["<c-q>"] = trouble.open_with_trouble },
+				},
 			},
 		})
 	end,

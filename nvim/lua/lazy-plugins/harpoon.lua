@@ -18,12 +18,12 @@ return {
 		nmap("<C-e>", function()
 			harpoon.ui:toggle_quick_menu(harpoon:list())
 		end, "[Harpoon] Add to list")
-		nmap("<C-i>", function()
-			harpoon:list():prev()
-		end, "[Harpoon] Add to list")
-		nmap("<C-o>", function()
-			harpoon:list():next()
-		end, "[Harpoon] Add to list")
+		-- nmap("<C-i>", function()
+		-- 	harpoon:list():prev()
+		-- end, "[Harpoon] Add to list")
+		-- nmap("<C-o>", function()
+		-- 	harpoon:list():next()
+		-- end, "[Harpoon] Add to list")
 
 		-- 	-- basic telescope configuration
 		-- 	local conf = require("telescope.config").values

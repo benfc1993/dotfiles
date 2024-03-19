@@ -1,4 +1,5 @@
-#! /bin/bash
+#!/bin/zsh
+# sleep 1
 #read -e -p "base path ~/" basePath
 #basePath=${basePath%/}
 
@@ -9,16 +10,16 @@
 
 language=$(ls ~/projects | fzf-tmux -p)
 
-if [[ -z "$language" ]]; 
-then 
-  exit 0
+if [[ -z "$language" ]];
+then
+    exit 0
 fi
 
 selected_name=$(ls ~/projects/$language | fzf-tmux -p )
 
-if [[ -z "$selected_name" ]]; 
-then 
-  exit 0
+if [[ -z "$selected_name" ]];
+then
+    exit 0
 fi
 
 selected_dir=~/projects/$language/$selected_name
