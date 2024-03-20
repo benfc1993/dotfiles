@@ -63,9 +63,6 @@ return {
 					max = vim.diagnostic.severity.ERROR,
 				},
 			},
-			modified = {
-				enable = true,
-			},
 		})
 		nmap("<leader>n", "<cmd>NvimTreeToggle<CR>", "[NvimTree]Toggle nvim tree")
 	end,
