@@ -52,19 +52,20 @@ return {
 			actions = {
 				open_file = {
 					quit_on_open = true,
+					resize_window = false,
 				},
 			},
-			--    diagnostics = {
-			--        enable = true,
-			--        show_on_dirs = true,
-			--        severity = {
-			--            min = vim.diagnostic.severity.WARN,
-			--            max = vim.diagnostic.severity.ERROR
-			--        }
-			--    },
-			-- modified = {
-			--     enable = true
-			-- }
+			diagnostics = {
+				enable = true,
+				show_on_dirs = true,
+				severity = {
+					min = vim.diagnostic.severity.WARN,
+					max = vim.diagnostic.severity.ERROR,
+				},
+			},
+			modified = {
+				enable = true,
+			},
 		})
 		nmap("<leader>n", "<cmd>NvimTreeToggle<CR>", "[NvimTree]Toggle nvim tree")
 	end,

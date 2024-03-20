@@ -41,35 +41,26 @@ return {
 			for _, language in ipairs({ "javascript", "typescript" }) do
 				dap.configurations[language] = {
 					{
-						type = "pwa-node",
+						type = "pwa-chrome",
+						name = "Launch Chrome to debug client",
 						request = "launch",
-						name = "Debug",
-						program = function()
-							local path = vim.fn.input({
-								prompt = "Path to entry point: ",
-								default = vim.fn.expand("%"),
-								completion = "file",
-							})
-							return (path and path ~= "") and path or dap.ABORT
-						end,
-						cwd = "${workspaceFolder}",
-						runtimeArgs = { "-r", "ts-node/register" },
+						url = "http://localhost:3000",
 						sourceMaps = true,
 						protocol = "inspector",
-						runtimeExecutable = "node",
-						args = { "${file}" },
-						skipFiles = { "<node_internals>/**", "node_modules/**" },
-						console = "integratedTerminal",
-						resolveSourceMapLocations = { "!**/node_modules/**" },
+						port = 9222,
+						webRoot = "${workspaceFolder}/src",
+						skipFiles = { "**/node_modules/**/*" },
 					},
 					{
 						type = "pwa-node",
 						request = "attach",
-						name = "Attach",
-						restart = true,
+						name = "Attach Program (pwa-node, select pid)",
 						sourceMaps = true,
 						cwd = vim.fn.getcwd(),
-						outDir = "${workspaceFolder}/lib",
+						port = function()
+							return vim.fn.input("Port:", 9222)
+						end,
+						skipFiles = { "<node_internals>/**", "node_modules/**" },
 					},
 				}
 			end
@@ -131,6 +122,7 @@ return {
 			}
 
 			nmap("<leader>d", "<cmd>DapToggleBreakpoint<cr>", "[DAP] Toggle breakpoint")
+			nmap("<leader>dc", dap.continue, "[DAP] Continue Debug")
 			nmap("<leader>da", function()
 				if vim.fn.filereadable(".vscode/launch.json") then
 					require("dap.ext.vscode").load_launchjs(nil, {
@@ -144,10 +136,14 @@ return {
 				dap.continue()
 			end, "[DAP] Run or Continue Debug")
 			nmap("<leader>ds", dap.step_over, "[DAP] Step over")
-			nmap("<leader>di", dap.step_into, "[DAP] Step over")
+			nmap("<leader>di", dap.step_into, "[DAP] Step into")
 			nmap("<leader>de", function()
 				require("dapui").close()
 				dap.terminate()
+			end, "[DAP] Run or Continue Debug")
+			nmap("<leader>dd", function()
+				require("dapui").close()
+				dap.terminate({ terminateDebuggee = false })
 			end, "[DAP] Run or Continue Debug")
 		end,
 	},
