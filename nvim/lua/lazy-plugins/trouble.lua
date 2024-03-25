@@ -4,7 +4,7 @@ return {
 	opts = {
 		position = "top",
 		auto_open = true,
-		auto_close = true,
+		auto_close = false,
 	},
 	config = function()
 		nmap("<leader>xx", "<cmd>TroubleToggle<cr>", { desc = "[Trouble] toggle" })

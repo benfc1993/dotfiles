@@ -1,3 +1,33 @@
+local configFile = "jest.config.ts"
+
+local set_config_file = function()
+	local pickers = require("telescope.pickers")
+	local finders = require("telescope.finders")
+	local conf = require("telescope.config").values
+	local actions = require("telescope.actions")
+	local action_state = require("telescope.actions.state")
+	pickers
+		.new({}, {
+			prompt_title = "config file",
+			finder = finders.new_oneshot_job({
+				"rg",
+				"--files",
+				"-g",
+				"jest.*config.*s",
+			}, {}),
+			sorter = conf.generic_sorter({}),
+			attach_mappings = function()
+				actions.select_default:replace(function(prompt_buf)
+					actions.close(prompt_buf)
+					local selection = action_state.get_selected_entry()
+					configFile = vim.fs.basename(vim.inspect(selection[1])):gsub('"', "")
+				end)
+				return true
+			end,
+		})
+		:find()
+end
+
 return {
 	"nvim-neotest/neotest",
 	dependencies = {
@@ -16,7 +46,14 @@ return {
 			},
 			adapters = {
 				require("neotest-jest")({
-					jestConfigFile = "jest.config.ts",
+					-- jestConfigFile = function()
+					-- 	-- TODO: use telescope to pick from config files
+					-- 	return vim.fn.input("jest config file: ")
+					-- end,
+					jestConfigFile = function()
+						print(configFile)
+						return configFile
+					end,
 					jest_test_discovery = true,
 					env = { CI = true },
 					cwd = function()
@@ -50,5 +87,6 @@ return {
 			})
 		end, "[NeoTest] watch")
 		nmap("<leader>td", neotest.run.stop, "[NeoTest] Stop process")
+		nmap("<leader>tc", set_config_file, "[NeoTest] set config file")
 	end,
 }

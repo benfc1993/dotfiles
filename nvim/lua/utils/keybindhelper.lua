@@ -11,7 +11,7 @@ local function options(opts, desc)
 	return default_opts
 end
 nmap = function(keys, func, desc, opts)
-	vim.keymap.set("n", keys, func, options(opts))
+	vim.keymap.set("n", keys, func, options(opts, desc))
 end
 
 nrmap = function(keys, func, desc)

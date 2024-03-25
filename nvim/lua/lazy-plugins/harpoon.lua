@@ -1,6 +1,7 @@
 return {
 	"ThePrimeagen/harpoon",
 	branch = "harpoon2",
+	name = "harpoon",
 
 	dependencies = { "nvim-lua/plenary.nvim", "nvim-telescope/telescope.nvim" },
 	event = { "BufReadPre", "BufNewFile" },
@@ -18,6 +19,12 @@ return {
 		nmap("<C-e>", function()
 			harpoon.ui:toggle_quick_menu(harpoon:list())
 		end, "[Harpoon] Add to list")
+		nmap("n", "<C-1>", function()
+			harpoon:list():prev()
+		end)
+		nmap("n", "<C-2>", function()
+			harpoon:list():next()
+		end)
 		-- nmap("<C-i>", function()
 		-- 	harpoon:list():prev()
 		-- end, "[Harpoon] Add to list")
