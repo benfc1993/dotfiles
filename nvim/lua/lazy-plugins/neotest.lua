@@ -46,12 +46,7 @@ return {
 			},
 			adapters = {
 				require("neotest-jest")({
-					-- jestConfigFile = function()
-					-- 	-- TODO: use telescope to pick from config files
-					-- 	return vim.fn.input("jest config file: ")
-					-- end,
 					jestConfigFile = function()
-						print(configFile)
 						return configFile
 					end,
 					jest_test_discovery = true,
