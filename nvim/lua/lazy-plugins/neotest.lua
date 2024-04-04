@@ -83,5 +83,6 @@ return {
 		end, "[NeoTest] watch")
 		nmap("<leader>td", neotest.run.stop, "[NeoTest] Stop process")
 		nmap("<leader>tc", set_config_file, "[NeoTest] set config file")
+		nmap("<leader>to", "<cmd>Neotest output<cr>", "[NeoTest] output")
 	end,
 }

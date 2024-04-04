@@ -6,5 +6,6 @@ local servers = {
 	{ name = "graphql", mason = true, lsp = true },
 	{ name = "lua_ls", mason = true, lsp = true },
 	{ name = "gdscript", mason = false, lsp = true },
+	{ name = "tailwindcss", mason = true, lsp = true },
 }
 return servers

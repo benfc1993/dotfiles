@@ -87,6 +87,14 @@ return {
 				filetypes = { "gdscript" },
 			},
 			inlay_hints = { enabled = true },
+			cssls = {
+				css = {
+					validate = true,
+					lint = {
+						unknownAtRules = "ignore",
+					},
+				},
+			},
 		}
 
 		for _, lsp in ipairs(servers) do

@@ -68,8 +68,8 @@ nmap("gf", function()
 		return
 	end
 
-	if line:match("(http:)") ~= nil then
-		return
+	if line:match("(http:)") ~= nil or line:match("(https:)") ~= nil then
+		vim.cmd("!open " .. line)
 	end
 
 	local path = line:match("([.%w]+/[%w/._-]+[.]%w+)")
@@ -91,4 +91,8 @@ nmap("gf", function()
 	vim.cmd(":e! %:p:h/" .. path)
 	vim.cmd(":" .. line_nr)
 	-- ./set.lua
+end)
+
+nmap("gx", function()
+	vim.cmd("!open " .. vim.fn.expand("<cfile>"))
 end)

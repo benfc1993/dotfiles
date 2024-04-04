@@ -92,7 +92,7 @@ gwv()
     gwc $1 && vim
 }
 
-if alias gcm >/dev/null 2>&1; then 
+if alias gcm >/dev/null 2>&1; then
     unalias gcm
 fi
 
@@ -112,8 +112,17 @@ alias vimg="nvim --listen 127.0.0.1:55432"
 
 ts(){
     if hash bun 2>/dev/null; then
-        bunx tsx $@ 
+        bunx tsx $@
     else
         npx tsx $@
+    fi
+}
+
+tsw(){
+
+    if hash bun 2>/dev/null; then
+        bunx tsx --watch $@
+    else
+        npx tsx --watch $@
     fi
 }
