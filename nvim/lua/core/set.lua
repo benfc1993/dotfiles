@@ -16,6 +16,7 @@ vim.opt.undofile = true
 
 vim.opt.hlsearch = true -- highlights search matches
 vim.opt.incsearch = true --
+vim.opt.cmdheight = 2
 
 vim.opt.termguicolors = true -- sets color matching for better themes
 
@@ -23,7 +24,7 @@ vim.opt.scrolloff = 8 -- scroll offset before moving page
 
 vim.opt.spelllang = "en_us"
 vim.opt.spellsuggest = "best,5"
--- vim.opt.spelloptions = "camel"
+vim.opt.spelloptions = "camel"
 vim.opt.spell = true
 
 vim.opt.cursorline = true

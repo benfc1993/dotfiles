@@ -14,15 +14,15 @@ return {
 		-- set keymaps
 
 		nmap("<leader>a", function()
-			harpoon:list():append()
+			harpoon:list():add()
 		end, "[Harpoon] Add to list")
 		nmap("<C-e>", function()
 			harpoon.ui:toggle_quick_menu(harpoon:list())
 		end, "[Harpoon] Add to list")
-		nmap("<C-1>", function()
+		nmap("<C-s>", function()
 			harpoon:list():prev()
 		end)
-		nmap("<C-2>", function()
+		nmap("<C-f>", function()
 			harpoon:list():next()
 		end)
 		-- nmap("<C-i>", function()

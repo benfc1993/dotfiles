@@ -61,6 +61,29 @@ nmap("<C-w>h", "<C-w>H")
 nmap("<C-w>j", "<C-w>J")
 nmap("<C-w>k", "<C-w>K")
 nmap("<C-w>l", "<C-w>L")
+
+-- delete keeping yank
+nrmap("d", '"_d', "Delete without yank")
+nrmap("dd", '"_dd', "Delete without yank")
+nrmap("D", '"_D', "Delete without yank")
+nrmap("c", '"_c', "Delete without yank")
+nrmap("cc", '"_S', "Delete without yank")
+nrmap("C", '"_C', "Delete without yank")
+nrmap("s", '"_s', "Delete without yank")
+nrmap("S", '"_S', "Delete without yank")
+nrmap("c", '"_c', "Delete without yank")
+
+vmap("d", '"_d', "Delete without yank")
+vmap("dd", '"_dd', "Delete without yank")
+vmap("cc", '"_S', "Delete without yank")
+vmap("C", '"_C', "Delete without yank")
+vmap("s", '"_s', "Delete without yank")
+vmap("S", '"_S', "Delete without yank")
+
+nrmap("x", '"_x', "Delete without yank")
+nrmap("X", '"_X', "Delete without yank")
+
+-- goto:
 nmap("gf", function()
 	local line = vim.fn.expand("<cfile>")
 
@@ -90,9 +113,7 @@ nmap("gf", function()
 
 	vim.cmd(":e! %:p:h/" .. path)
 	vim.cmd(":" .. line_nr)
-	-- ./set.lua
 end)
-
 nmap("gx", function()
 	vim.cmd("!open " .. vim.fn.expand("<cfile>"))
-end)
+end, "Go to external", { silent = true })

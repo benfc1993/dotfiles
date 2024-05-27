@@ -39,8 +39,8 @@ return {
 				},
 				path_display = { "smart" },
 				mappings = {
-					i = { ["<c-q>"] = trouble.open_with_trouble },
-					n = { ["<c-q>"] = trouble.open_with_trouble },
+					i = { ["<C-q>"] = trouble.open_with_trouble },
+					n = { ["<C-q>"] = trouble.open_with_trouble },
 				},
 			},
 		})

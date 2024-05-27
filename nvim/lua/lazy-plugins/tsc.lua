@@ -8,11 +8,10 @@ return {
 			auto_close_qflist = true,
 			auto_focus_qflist = false,
 			use_trouble_qflist = true,
-			-- config_path = function()
-			-- 	return vim.fn.input("config file path: ")
-			-- end,
+			run_as_monorepo = true,
 			flags = {
 				watch = true,
+				build = false,
 			},
 		})
 		nmap("<C-b>", "<cmd>TSCOpen<CR>", "[TSC] open")

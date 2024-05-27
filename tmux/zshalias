@@ -106,6 +106,16 @@ gac()
     git add . && git commit -m $1 && git push
 }
 
+gs()
+{
+    git stash $@
+}
+
+gsa()
+{
+    git stash apply $@
+}
+
 alias nr="npm run"
 
 alias vimg="nvim --listen 127.0.0.1:55432"

@@ -1,4 +1,5 @@
 #!/bin/zsh
+eval "$(/opt/homebrew/bin/brew shellenv)"
 # sleep 1
 #read -e -p "base path ~/" basePath
 #basePath=${basePath%/}
