@@ -30,6 +30,8 @@ nmap("<leader>q", "<cmd>bw!<CR>", "Close buffer")
 
 -- terminal
 nmap("<C-q>", "<cmd>10sp<CR><cmd>noa<CR><cmd>term<CR><cmd>startinsert<CR>", "Open a terminal")
+nmap("<M-q>", "<cmd>tabnew<CR><cmd>term<CR><cmd>startinsert<CR>", "Open a terminal in a new tab")
+tmap("<leader>q", "<cmd>bw!<CR>", "Close buffer")
 
 vmap("J", ":m '>+1<CR>gv=gv", "move selection down")
 vmap("K", ":m '<-2<CR>gv=gv", "move selection up")

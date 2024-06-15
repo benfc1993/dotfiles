@@ -1,13 +1,5 @@
 #!/bin/zsh
 eval "$(/opt/homebrew/bin/brew shellenv)"
-# sleep 1
-#read -e -p "base path ~/" basePath
-#basePath=${basePath%/}
-
-
-#if [ ! -d "$basePath" ]; then
-#  exit 0
-#fi
 
 language=$(ls ~/projects | fzf-tmux -p)
 
@@ -24,12 +16,15 @@ then
 fi
 
 selected_dir=~/projects/$language/$selected_name
-tmux_running=$(pgrep tmux)
 
-if [[ -z $TMUX ]] && -[[ -z $tmux_running ]]; then
-    tmux new-session -s $selected_name -c $selected_dir
-    exit 0
-fi
+tmux neww -c $selected_dir '/usr/local/bin/alacritty-startup && nvim'
 
-tmux neww -c $selected_dir -n $selected_dir -S 'nvim'
-
+# tmux_running=$(pgrep tmux)
+#
+# if [[ -z $TMUX ]] && -[[ -z $tmux_running ]]; then
+#     tmux new-session -s $selected_name -c $selected_dir
+#     exit 0
+# fi
+#
+# tmux neww -c $selected_dir -n $selected_dir -S 'nvim'
+#

@@ -7,7 +7,7 @@ return {
 		auto_close = false,
 	},
 	config = function()
-		nmap("<leader>xx", "<cmd>TroubleToggle<cr>", { desc = "[Trouble] toggle" })
-		nmap("gr", "<cmd>TroubleToggle lsp_references<cr>", { desc = "[Trouble] go to references" })
+		nmap("<leader>xx", "<cmd>TroubleToggle<cr>", "[Trouble] toggle")
+		nmap("gr", "<cmd>TroubleToggle lsp_references<cr>", "[Trouble] go to references")
 	end,
 }

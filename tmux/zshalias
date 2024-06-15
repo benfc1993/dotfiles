@@ -1,4 +1,5 @@
-vim() {
+vim()
+{
     if [[ -f "${1}" ]]; then
         cd "$(dirname "${1}")"
         nvim "$(basename "${1}")"
@@ -89,7 +90,7 @@ gwc()
 
 gwv()
 {
-    gwc $1 && vim
+    gwc $1 && nvim
 }
 
 if alias gcm >/dev/null 2>&1; then
