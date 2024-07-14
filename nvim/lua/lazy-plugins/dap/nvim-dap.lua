@@ -36,6 +36,12 @@ return {
 				port = 6006,
 			}
 
+			dap.adapters.cppdbg = {
+				id = "cppdbg",
+				type = "executable",
+				command = "/usr/local/cpptools/debugAdapters/bin/OpenDebugAD7",
+			}
+
 			local js_based_languages = { "javascript", "javascriptreact", "typescriptreact", "typescript" }
 
 			for _, language in ipairs({ "javascript", "typescript" }) do
@@ -118,6 +124,46 @@ return {
 					name = "Launch scene",
 					project = "${workspaceFolder}",
 					launch_scene = true,
+				},
+			}
+
+			dap.configurations.cpp = {
+				{
+					name = "Launch file",
+					type = "cppdbg",
+					request = "launch",
+					miDebuggerPath = "/usr/local/cpptools/debugAdapters/lldb-mi/bin/lldb-mi",
+					program = function()
+						return vim.fn.input("Path to executable: ", vim.fn.getcwd() .. "/", "file")
+					end,
+					cwd = "${workspaceFolder}",
+					stopAtEntry = true,
+					setupCommands = {
+						{
+							text = "-enable-pretty-printing",
+							description = "enable pretty printing",
+							ignoreFailures = false,
+						},
+					},
+				},
+				{
+					name = "Attach to gdbserver :1234",
+					type = "cppdbg",
+					request = "launch",
+					MIMode = "lldb",
+					miDebuggerServerAddress = "localhost:1234",
+					miDebuggerPath = "/usr/bin/lldb",
+					cwd = "${workspaceFolder}",
+					program = function()
+						return vim.fn.input("Path to executable: ", vim.fn.getcwd() .. "/", "file")
+					end,
+					setupCommands = {
+						{
+							text = "-enable-pretty-printing",
+							description = "enable pretty printing",
+							ignoreFailures = false,
+						},
+					},
 				},
 			}
 

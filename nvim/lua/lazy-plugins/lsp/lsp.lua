@@ -95,6 +95,11 @@ return {
 					},
 				},
 			},
+			clangd = {
+				init_options = {
+					fallbackFlags = { "--std=c++20" },
+				},
+			},
 		}
 
 		for _, lsp in ipairs(servers) do

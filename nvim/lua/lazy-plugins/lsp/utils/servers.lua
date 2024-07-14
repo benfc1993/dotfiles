@@ -7,5 +7,6 @@ local servers = {
 	{ name = "lua_ls", mason = true, lsp = true },
 	{ name = "gdscript", mason = false, lsp = true },
 	{ name = "tailwindcss", mason = true, lsp = true },
+	{ name = "clangd", mason = true, lsp = true },
 }
 return servers
