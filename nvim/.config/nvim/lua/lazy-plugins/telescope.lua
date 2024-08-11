@@ -24,9 +24,21 @@ return {
 				enable_preview = true,
 			})
 		end, "Change Color Scheme")
+
+		local open_with_trouble = require("trouble.sources.telescope").open
+		local add_to_trouble = require("trouble.sources.telescope").add
 		-- nmap("gr", require("telescope.builtin").lsp_references, "[Telescope] Go To references")
 
 		require("telescope").setup({
+			pickers = {
+				find_files = {
+					hidden = true,
+				},
+				grep_string = {
+					additionsal_args = { "--hidden" },
+				},
+				live_grep = { additional_args = { "--hidden" } },
+			},
 			defaults = {
 				file_ignore_patterns = {
 					"^node_modules",
@@ -39,8 +51,8 @@ return {
 				},
 				path_display = { "smart" },
 				mappings = {
-					i = { ["<C-q>"] = trouble.open_with_trouble },
-					n = { ["<C-q>"] = trouble.open_with_trouble },
+					i = { ["<C-q>"] = open_with_trouble },
+					n = { ["<C-q>"] = open_with_trouble },
 				},
 			},
 		})

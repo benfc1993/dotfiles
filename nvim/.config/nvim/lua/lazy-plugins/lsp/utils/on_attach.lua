@@ -2,7 +2,7 @@ local M = {}
 
 M.on_attach = function(_, bufnr)
 	local opts = { buffer = bufnr, remap = false }
-	nmap("gd", vim.lsp.buf.definition, "", opts)
+	nmap("gd", vim.lsp.buf.definition, "goto definition", opts)
 	nmap("gi", vim.lsp.buf.implementation, "", opts)
 	nmap("gt", vim.lsp.buf.type_definition, "", opts)
 	nmap("K", vim.lsp.buf.hover, "", opts)
