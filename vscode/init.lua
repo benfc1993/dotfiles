@@ -1,21 +1,21 @@
 local nmap = function(keys, func, desc)
-    vim.keymap.set('n', keys, func, { desc = desc })
+	vim.keymap.set("n", keys, func, { desc = desc })
 end
 
 local nrmap = function(keys, func, desc)
-    vim.keymap.set('n', keys, func, { desc = desc, remap = false })
+	vim.keymap.set("n", keys, func, { desc = desc, remap = false })
 end
 
 local vmap = function(keys, func, desc)
-    vim.keymap.set('v', keys, func, { desc = desc })
+	vim.keymap.set("v", keys, func, { desc = desc })
 end
 
 local imap = function(keys, func, desc)
-    vim.keymap.set('i', keys, func, { desc = desc })
+	vim.keymap.set("i", keys, func, { desc = desc })
 end
 
 local tmap = function(keys, func, desc)
-    vim.keymap.set('t', keys, func, { desc = desc })
+	vim.keymap.set("t", keys, func, { desc = desc })
 end
 vim.keymap.set("n", "<Space>", "<Nop>", { silent = true, remap = false })
 
@@ -24,8 +24,8 @@ vim.g.mapleader = " "
 -- -- nmap("<leader>n", '<cmd>NvimTreeToggle<CR>', 'Toggle nvim tree')
 -- vim.keymap.set('n', '<esc>', '<nop>', { silent = true, remap = false })
 -- vim.cmd("set buftype=''")
-nmap(';', ':')
-vmap(';', ':')
+nmap(";", ":")
+vmap(";", ":")
 --
 -- -- nmap("<C-h>", "<cmd>TmuxNavigateLeft<CR>")
 -- -- nmap("<C-j>", "<cmd>TmuxNavigateDown<CR>")
@@ -41,7 +41,7 @@ nmap("<C-w>", "<cmd>call VSCodeNotify('workbench.action.closeActiveEditor')<CR>"
 --
 -- vmap('jk', 'v', 'Exit visual mode')
 -- tmap("jk", "<cmd>stopinsert<CR>", "Exit insert Terminal")
-nmap('ss', "<cmd>call VSCodeNotify('workbench.action.files.save')<CR>", 'Save from normal mode')
+nmap("ss", "<cmd>call VSCodeNotify('workbench.action.files.save')<CR>", "Save from normal mode")
 -- vmap('jkl', 'v<cmd>w<CR>', 'Save from visual mode')
 --
 -- vmap("J", ":m '>+1<CR>gv=gv")
