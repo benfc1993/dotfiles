@@ -132,7 +132,9 @@ return {
 					name = "Launch file",
 					type = "cppdbg",
 					request = "launch",
-					miDebuggerPath = "/usr/local/cpptools/debugAdapters/lldb-mi/bin/lldb-mi",
+					miDebuggerPath = vim.fn.has("macunix") == 1
+							and "/usr/local/cpptools/debugAdapters/lldb-mi/bin/lldb-mi"
+						or "/usr/bin/gdb",
 					program = function()
 						return vim.fn.input("Path to executable: ", vim.fn.getcwd() .. "/", "file")
 					end,

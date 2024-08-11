@@ -1,0 +1,22 @@
+[shell] 
+program = '/home/benfc/.config/alacritty/startup.sh'
+
+[window]
+startup_mode = "Maximized"
+decorations_theme_variant = "Dark"
+opacity = 0.9
+blur = true
+decorations = "None"
+
+[font]
+normal.family = "JetBrainsMonoNL Nerd Font Mono"
+bold.family = "JetBrainsMonoNL Nerd Font Mono"
+italic.family = "JetBrainsMonoNL Nerd Font Mono"
+bold_italic.family = "JetBrainsMonoNL Nerd Font Mono"
+size = 13
+offset.y = 1
+
+[env]
+term = "xterm-256color"
+
+

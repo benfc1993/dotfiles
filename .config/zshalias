@@ -118,8 +118,14 @@ gsa()
 }
 
 alias nr="npm run"
+if alias vimg >/dev/null 2>&1; then
+    unalias vimg
+fi
 
-alias vimg="nvim --listen 127.0.0.1:55432"
+function vimg(){
+    local filename="${1:-.}" # Set filename to "." if no argument is passed
+    nvim --listen /tmp/godot.pipe "$filename"
+}
 
 ts(){
     if hash bun 2>/dev/null; then
