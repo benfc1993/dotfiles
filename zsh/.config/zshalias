@@ -71,7 +71,8 @@ gwc()
         if [[ ! -z $1 ]]; then
             branch="$1"
         else
-            branch=$( git worktree list | sed -r -e 's/(\w*) .*/\1/g' | sed -r -e 's/.*.git\/?(\w*)/\1/g' | sed -r '/^\s*$/d' | fzf-tmux -p)
+            common_dir="$(git rev-parse --path-format=absolute --git-common-dir)"
+            branch=$(git worktree list | sed -r -e "s|$common_dir||g" | sed -r -e 's|.*/||' | sed -r -e 's|(\w*) .*|\1|g' | sed -r '/^\s*$/d'| fzf-tmux -p)
         fi
 
         if [[ ! -z "$branch" ]]; then

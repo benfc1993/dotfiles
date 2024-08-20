@@ -28,27 +28,11 @@ return {
 		local servers = require("lazy-plugins.lsp.utils.servers")
 
 		local serverConfigs = {
-			tsserver = {
-				javascript = {
-					inlayHints = {
-						includeInlayEnumMemberValueHints = true,
-						includeInlayFunctionLikeReturnTypeHints = true,
-						includeInlayFunctionParameterTypeHints = true,
-						includeInlayParameterNameHints = "all",
-						includeInlayParameterNameHintsWhenArgumentMatchesName = true,
-						includeInlayPropertyDeclarationTypeHints = true,
-						includeInlayVariableTypeHints = true,
-					},
-				},
+			vtsls = {
 				typescript = {
 					inlayHints = {
-						includeInlayEnumMemberValueHints = true,
-						includeInlayFunctionLikeReturnTypeHints = true,
-						includeInlayFunctionParameterTypeHints = true,
-						includeInlayParameterNameHints = "all",
-						includeInlayParameterNameHintsWhenArgumentMatchesName = true,
-						includeInlayPropertyDeclarationTypeHints = true,
-						includeInlayVariableTypeHints = true,
+						parameterTypes = { enabled = true },
+						parameterNames = { enabled = "all" },
 					},
 				},
 				on_attach = function(client, bufnr)
@@ -58,6 +42,9 @@ return {
 						"",
 						{ silent = true, buffer = bufnr }
 					)
+					if client.server_capabilities.inlayHintProvider then
+						vim.lsp.inlay_hint.enable(true)
+					end
 					on_attach(client, bufnr)
 				end,
 			},
