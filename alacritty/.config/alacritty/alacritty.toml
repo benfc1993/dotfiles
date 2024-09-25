@@ -1,5 +1,5 @@
 [shell] 
-program = '/home/benfc/.config/alacritty/startup.sh'
+program = '/home/ben/.config/alacritty/startup.sh'
 
 [window]
 startup_mode = "Maximized"
@@ -9,11 +9,11 @@ blur = true
 decorations = "None"
 
 [font]
-normal.family = "JetBrainsMonoNL Nerd Font Mono"
-bold.family = "JetBrainsMonoNL Nerd Font Mono"
-italic.family = "JetBrainsMonoNL Nerd Font Mono"
-bold_italic.family = "JetBrainsMonoNL Nerd Font Mono"
-size = 13
+normal.family = "JetBrainsMono Nerd Font Mono"
+bold.family = "JetBrainsMono Nerd Font Mono"
+italic.family = "JetBrainsMono Nerd Font Mono"
+bold_italic.family = "JetBrainsMono Nerd Font Mono"
+size = 12
 offset.y = 1
 
 [env]

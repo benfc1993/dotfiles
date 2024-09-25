@@ -123,9 +123,10 @@ if alias vimg >/dev/null 2>&1; then
     unalias vimg
 fi
 
-function vimg(){
+function vimg()
+{
     local filename="${1:-.}" # Set filename to "." if no argument is passed
-    nvim --listen /tmp/godot.pipe "$filename"
+    nvim --listen /tmp/godot.pipe
 }
 
 ts(){
@@ -137,7 +138,6 @@ ts(){
 }
 
 tsw(){
-
     if hash bun 2>/dev/null; then
         bunx tsx --watch $@
     else
