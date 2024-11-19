@@ -1,6 +1,6 @@
 -- set leader
 vim.keymap.set("n", "<Space>", "<Nop>", { silent = true, remap = false })
-vim.keymap.set("n", "q", "<Nop>", { silent = true, remap = false })
+-- vim.keymap.set("n", "q", "<Nop>", { silent = true, remap = false })
 vim.g.mapleader = " "
 
 -- move
