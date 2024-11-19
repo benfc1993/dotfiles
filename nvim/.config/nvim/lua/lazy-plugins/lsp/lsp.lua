@@ -104,5 +104,55 @@ return {
 
 			::continue::
 		end
+		-- lspconfig["tsserver"].setup({
+		-- 	on_attach = function(client, bufnr)
+		-- 		local opts = { buffer = bufnr, remap = false }
+		-- 		nmap("K", vim.lsp.buf.hover, "", opts)
+		--
+		-- 		local disabledCapabilities = {
+		-- 			callHierarchyProvider = false,
+		-- 			codeActionProvider = false,
+		-- 			codeLensProvider = {
+		-- 				resolveProvider = false,
+		-- 			},
+		--
+		-- 			completionProvider = false,
+		-- 			definitionProvider = false,
+		-- 			documentFormattingProvider = false,
+		-- 			documentHighlightProvider = false,
+		-- 			documentRangeFormattingProvider = false,
+		-- 			documentSymbolProvider = false,
+		-- 			executeCommandProvider = {
+		-- 				commands = {},
+		-- 			},
+		-- 			foldingRangeProvider = false,
+		-- 			implementationProvider = false,
+		-- 			inlayHintProvider = false,
+		-- 			linkedEditingRangeProvider = false,
+		-- 			referencesProvider = false,
+		-- 			renameProvider = false,
+		-- 			selectionRangeProvider = false,
+		-- 			semanticTokensProvider = false,
+		-- 			signatureHelpProvider = false,
+		-- 			textDocumentSync = {
+		-- 				change = 2,
+		-- 				openClose = false,
+		-- 				save = {
+		-- 					includeText = false,
+		-- 				},
+		-- 				willSave = false,
+		-- 				willSaveWaitUntil = false,
+		-- 			},
+		-- 			typeDefinitionProvider = false,
+		-- 			workspace = {
+		-- 				fileOperations = {},
+		-- 			},
+		-- 			workspaceSymbolProvider = false,
+		-- 		}
+		-- 		for key, value in pairs(disabledCapabilities) do
+		-- 			client.server_capabilities[key] = value
+		-- 		end
+		-- 	end,
+		-- })
 	end,
 }

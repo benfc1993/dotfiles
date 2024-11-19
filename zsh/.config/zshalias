@@ -118,6 +118,11 @@ gsa()
     git stash apply $@
 }
 
+gb()
+{
+    git checkout -b $@
+}
+
 alias nr="npm run"
 if alias vimg >/dev/null 2>&1; then
     unalias vimg
