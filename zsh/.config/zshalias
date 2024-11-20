@@ -118,6 +118,10 @@ gsa()
     git stash apply $@
 }
 
+if alias gb >/dev/null 2>&1; then
+    unalias gb
+fi
+
 gb()
 {
     git checkout -b $@
