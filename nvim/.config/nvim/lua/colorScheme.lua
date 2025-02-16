@@ -1,1 +1,1 @@
-SelectedColorScheme = "gruvbox"ColorMyPencils()
+SelectedColorScheme = "tokyonight-night"ColorMyPencils()

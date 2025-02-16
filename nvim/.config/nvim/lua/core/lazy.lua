@@ -11,7 +11,7 @@ if not vim.loop.fs_stat(lazypath) then
 end
 vim.opt.rtp:prepend(lazypath)
 
-vim.opt.rtp:remove("/Users/ben.feldbergcollins/nvim/lib/nvim")
+-- vim.opt.rtp:remove("/Users/ben.feldbergcollins/nvim/lib/nvim")
 
 require("lazy").setup({
 	{ "nvim-neotest/nvim-nio" },

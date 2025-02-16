@@ -3,6 +3,9 @@
 mkdir -p ~/.config/tmux
 parent_path=$( cd "$(dirname "${BASH_SOURCE[0]}")" ; pwd -P )
 if [[ "$OSTYPE" == "darwin"* ]]; then
+    if [[ ! $(which stow) ]]; then
+        brew install stow;
+    fi
     if [[ ! $(which glow) ]]; then
         brew install glow;
     fi
@@ -24,6 +27,10 @@ if [[ "$OSTYPE" == "darwin"* ]]; then
     fi
 
 else
+    if [[ ! $(which stow) ]]; then
+        sudo apt update;
+        sudo apt install stow
+    fi
     if [[ ! $(which glow)  ]]; then
         echo "installing dependancies"
         sudo mkdir -p /etc/apt/keyrings
@@ -52,28 +59,23 @@ rm -rf ~/.config/tmux
 sudo rm -rf /usr/local/bin/fileSearch
 sudo rm -rf /usr/local/bin/vimcd
 
-ln -s "$parent_path/tmux/tmux.conf" ~/.config/tmux/tmux.conf
+stow tmux
 
 rm -rf ~/.config/tmux/custom
 mkdir ~/.config/tmux/custom
 
 # Plugins
 sudo rm -rf /usr/local/bin/fileSearch
-chmod a+x "$parent_path/plugins/tmux/fileSearch"
-sudo ln -s "$parent_path/plugins/tmux/fileSearch" /usr/local/bin/fileSearch
-
-ln -s "$parent_path/plugins/tmux/cheatsheet" ~/.config/tmux/custom/cheatsheet
+chmod a+x "$parent_path/tmux/plugins/tmux/fileSearch"
+sudo ln -s "$parent_path/tmux/plugins/tmux/fileSearch" /usr/local/bin/fileSearch
 
 sudo rm -rf /usr/local/bin/v-session
-sudo ln -s "$parent_path/plugins/tmux/v-session.sh" /usr/local/bin/v-session
+sudo ln -s "$parent_path/tmux/plugins/tmux/v-session.sh" /usr/local/bin/v-session
 
 sudo rm -rf /usr/local/bin/vimcd
 sudo ln -s "$parent_path/vimcd.sh" /usr/local/bin/vimcd
 
-ln -s "$parent_path/plugins/tmux/project-builder" ~/.config/tmux/custom/project-builder
-
 mkdir -p ~/.note-taker/notes
-sudo ln -s "$parent_path/plugins/tmux/note-taker" ~/.config/tmux/custom/note-taker
 
 sudo rm -rf /usr/local/bin/cht.sh
 sudo ln -s "$parent_path/plugins/tmux/cht.sh" /usr/local/bin/cht.sh
@@ -83,10 +85,6 @@ sudo ln -s "$parent_path/plugins/tmux/all-search.sh" /usr/local/bin/all-search
 
 sudo rm -rf /usr/local/bin/keys
 sudo ln -s "$parent_path/plugins/tmux/keys/keys.sh" /usr/local/bin/keys
-ln -s "$parent_path/plugins/tmux/keys/redox-layout.png" ~/.config/tmux/custom/redox-layout.png
-
-sudo ln -s "$parent_path/plugins/tmux/interactive-popup.sh" ~/.config/tmux/custom/interactive-popup.sh
-sudo ln -s "$parent_path/plugins/tmux/google-search.sh" ~/.config/tmux/custom/google-search.sh
 
 ln -s "$parent_path/.config/zshalias" ~/.config/zshalias
 
