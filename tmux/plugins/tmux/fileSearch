@@ -17,14 +17,5 @@ fi
 
 selected_dir=~/projects/$language/$selected_name
 
-tmux neww -c $selected_dir 'nvim'
+tmux neww -c $selected_dir
 
-# tmux_running=$(pgrep tmux)
-#
-# if [[ -z $TMUX ]] && -[[ -z $tmux_running ]]; then
-#     tmux new-session -s $selected_name -c $selected_dir
-#     exit 0
-# fi
-#
-# tmux neww -c $selected_dir -n $selected_dir -S 'nvim'
-#
