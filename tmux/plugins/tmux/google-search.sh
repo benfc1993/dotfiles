@@ -8,7 +8,7 @@ else
 
     search="${search// /+}"
 
-    python3 -m webbrowser -t "https://google.com/search?q=$search";
+    python3 -m webbrowser -t "https://google.com/search?q=$search" 
 fi
 
 exit 0;

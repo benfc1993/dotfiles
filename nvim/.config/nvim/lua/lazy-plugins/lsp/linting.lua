@@ -17,9 +17,13 @@ return {
 
 		local root = lsputil.root_pattern("package.json")(vim.fn.expand("<abuf>"))
 
-		local hasConfig = lsputil.path.exists(lsputil.path.join(root, ".eslintrc.json"))
-			or lsputil.path.exists(lsputil.path.join(root, ".eslintrc.js"))
-			or lsputil.path.exists(lsputil.path.join(root, ".eslintrc.cjs"))
+		if root == nil then
+			return
+		end
+
+		local hasConfig = vim.loop.fs_stat(table.concat({ root, ".eslintrc.json" }))
+			or vim.loop.fs_stat(table.concat({ root, ".eslintrc.js" }))
+			or vim.loop.fs_stat(table.concat({ root, ".eslintrc.cjs" }))
 
 		if lint.linters_by_ft[vim.bo.filetype] ~= nil or not hasConfig then
 			return

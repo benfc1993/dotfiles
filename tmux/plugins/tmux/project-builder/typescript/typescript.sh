@@ -17,9 +17,9 @@ cd $full_path
 
 npm init -y
 
-npm i -D typescript ts-node ts-node-dev jest ts-jest @types/jest @types/node esbuild
+yarn -D typescript ts-node ts-node-dev jest ts-jest @types/jest @types/node esbuild
 npx ts-jest config:init
-tsc --init
+npx tsc --init
 
 npx npm-add-script \
 -k "dev" \
