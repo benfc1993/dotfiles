@@ -10,10 +10,6 @@ local function options(opts, desc)
 	end
 	return default_opts
 end
-map = function(keys, func, desc, opts)
-	vim.keymap.set({"n","i","v","t"}, keys, func, options(opts, desc))
-end
-
 nmap = function(keys, func, desc, opts)
 	vim.keymap.set("n", keys, func, options(opts, desc))
 end

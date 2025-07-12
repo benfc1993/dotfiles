@@ -10,45 +10,9 @@ return {
 		vim.g.loaded_netrw = 1
 		vim.g.loaded_netrwPlugin = 1
 
-		-- set termguicolors to enable highlight groups
-		vim.opt.termguicolors = true
-
 		require("nvim-tree").setup({
 			sort_by = "case_sensitive",
-			-- hijack_unnamed_buffer_when_opening = true,
 			reload_on_bufenter = true,
-			-- respect_buf_cwd = true,
-			update_focused_file = {
-				enable = true,
-				-- update_root = true,
-			},
-			view = {
-				preserve_window_proportions = true,
-				centralize_selection = true,
-				float = {
-					enable = false,
-					open_win_config = {
-						width = vim.api.nvim_win_get_width(0) - 10,
-						height = vim.api.nvim_win_get_height(0) - 10,
-						row = 5,
-						col = 5,
-					},
-				},
-				width = {
-					min = 30,
-					max = -1,
-				},
-			},
-			renderer = {
-				group_empty = true,
-			},
-			filters = {
-				dotfiles = false,
-			},
-			git = {
-				enable = true,
-				ignore = false,
-			},
 			actions = {
 				open_file = {
 					quit_on_open = true,
@@ -64,6 +28,6 @@ return {
 				},
 			},
 		})
-		nmap("<leader>n", "<cmd>NvimTreeToggle<CR>", "[NvimTree]Toggle nvim tree")
+		map("<leader>n", "<cmd>NvimTreeToggle<CR>")
 	end,
 }

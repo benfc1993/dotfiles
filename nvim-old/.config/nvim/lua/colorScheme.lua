@@ -1,0 +1,2 @@
+SelectedColorScheme = "tokyonight-night"
+ColorMyPencils()

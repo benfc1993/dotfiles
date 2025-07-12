@@ -17,9 +17,10 @@ vim.api.nvim_create_autocmd({ "ColorScheme" }, {
 			vim.print("No file")
 			return ""
 		end
-		file:write('SelectedColorScheme = "' .. match .. '"\n')
+		file:write('SelectedColorScheme = "' .. match .. '"')
 		file:write("ColorMyPencils()")
 		file:close()
 	end,
 })
 
+-- require("plugins.timeout").StartTimeOut()

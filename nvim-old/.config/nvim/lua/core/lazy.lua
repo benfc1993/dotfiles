@@ -14,7 +14,10 @@ vim.opt.rtp:prepend(lazypath)
 -- vim.opt.rtp:remove("/Users/ben.feldbergcollins/nvim/lib/nvim")
 
 require("lazy").setup({
+	{ "nvim-neotest/nvim-nio" },
 	{ import = "lazy-plugins" },
+	{ import = "lazy-plugins.lsp" },
+	{ import = "lazy-plugins.dap" },
 }, {
 	performance = {
 		rtp = {
