@@ -16,6 +16,8 @@ return {
 		table.insert(vimgrep_arguments, "--glob")
 		table.insert(vimgrep_arguments, "!**/.git/*")
 
+		local open_with_trouble = require("trouble.sources.telescope").open
+
 		telescope.setup({
 			defaults = {
 				vimgrep_arguments = vimgrep_arguments,
@@ -40,6 +42,10 @@ return {
 				"%package-lock.json",
 			},
 			path_display = { "smart" },
+			mappings = {
+				i = { ["<C-q>"] = open_with_trouble },
+				n = { ["<C-q>"] = open_with_trouble },
+			},
 		})
 
 		nmap("<leader>ff", builtin.find_files, "[Telescope] find file")

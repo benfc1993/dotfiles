@@ -11,7 +11,7 @@ local function options(opts, desc)
 	return default_opts
 end
 map = function(keys, func, desc, opts)
-	vim.keymap.set({"n","i","v","t"}, keys, func, options(opts, desc))
+	vim.keymap.set({ "n", "i", "v", "t" }, keys, func, options(opts, desc))
 end
 
 nmap = function(keys, func, desc, opts)
@@ -28,6 +28,10 @@ end
 
 imap = function(keys, func, desc, opts)
 	vim.keymap.set("i", keys, func, options(opts, desc))
+end
+
+irmap = function(keys, func, desc)
+	vim.keymap.set("i", keys, func, { desc = desc, remap = false })
 end
 
 tmap = function(keys, func, desc, opts)

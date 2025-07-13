@@ -39,6 +39,11 @@ nmap("<C-w>j", "<C-w>J")
 nmap("<C-w>k", "<C-w>K")
 nmap("<C-w>l", "<C-w>L")
 
+-- terminal
+nmap("<C-q>", "<cmd>topleft 10sp<CR><cmd>noa<CR><cmd>term<CR><cmd>startinsert<CR>", "Open a terminal")
+nmap("<M-q>", "<cmd>tabnew<CR><cmd>term<CR><cmd>startinsert<CR>", "Open a terminal in a new tab")
+tmap("<leader>q", "<cmd>bw!<CR>", "Close buffer")
+
 -- spell check
 nmap("sg", "z=")
 
