@@ -13,6 +13,9 @@ vmap(";", ":")
 -- search centering
 nmap("n", "nzzzv", "keep cursor in center when next search match")
 nmap("N", "Nzzzv", "keep cursor in center when prev search match")
+-- move centering
+nmap("<C-d>", "<C-d>zz")
+nmap("<C-u>", "<C-u>zz")
 
 -- remap stop insert
 imap("jk", "<cmd>stopinsert<CR>", "Stop insert Insert")
