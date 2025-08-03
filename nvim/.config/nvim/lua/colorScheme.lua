@@ -1,1 +1,0 @@
-SelectedColorScheme = "tokyonight-night"ColorMyPencils()

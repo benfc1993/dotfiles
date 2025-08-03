@@ -1,26 +1,20 @@
-require("utils")
 require("core")
-require("colorScheme")
 
-vim.api.nvim_create_autocmd({ "ColorScheme" }, {
-
-	group = vim.api.nvim_create_augroup("colorSchemeGroup", { clear = true }),
-	callback = function()
-		local match = vim.fn.expand("<amatch>")
-		ColorMyPencils(match)
-		local file = assert(io.open(os.getenv("HOME") .. [[/.config/nvim/lua/colorScheme.lua]], "w+"))
-		if file == nil then
-			file = assert(io.open(os.getenv("HOME") .. [[/.config/nvim/lua/colorScheme.lua]], "w+"))
-		end
-
-		if file == nil then
-			vim.print("No file")
-			return ""
-		end
-		file:write('SelectedColorScheme = "' .. match .. '"')
-		file:write("ColorMyPencils()")
-		file:close()
-	end,
+vim.pack.add({
+	{ src = "https://github.com/neovim/nvim-lspconfig" },
+	{ src = "http://github.com/mason-org/mason.nvim" },
+	{ src = "https://github.com/sainnhe/everforest" },
+	{ src = "https://github.com/sainnhe/sonokai" },
+	{ src = "https://github.com/folke/tokyonight.nvim" },
+	{ src = "https://github.com/ellisonleao/gruvbox.nvim" },
+	{ src = "https://github.com/nvim-treesitter/nvim-treesitter" },
+	{ src = "https://github.com/echasnovski/mini.pick" },
+	{ src = "https://github.com/folke/lazydev.nvim" },
 })
 
--- require("plugins.timeout").StartTimeOut()
+require("mason").setup()
+require("nvim-treesitter").setup()
+require("mini.pick").setup()
+require("lazydev").setup({ ft = "lua" })
+
+vim.cmd("colorscheme sonokai")

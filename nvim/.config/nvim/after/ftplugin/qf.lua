@@ -1,0 +1,2 @@
+--vim.keymap.set("n", "<Down>", "<Down><CR><C-w>p", { buffer = 0, noremap = true })
+--vim.keymap.set("n", "<Up>", "<Up><CR><C-w>p", { buffer = 0, noremap = true })
