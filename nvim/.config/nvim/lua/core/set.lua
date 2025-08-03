@@ -13,11 +13,8 @@ vim.opt.spelloptions = "camel"
 vim.opt.spell = true
 
 vim.opt.cursorline = true
-
 vim.opt.updatetime = 0
-
 vim.opt.timeoutlen = 300
-
 vim.opt.clipboard = "unnamedplus" -- yank into machine clipboard
 
 vim.opt.shortmess = "aWFlot"
@@ -29,6 +26,11 @@ vim.o.wrap = false
 vim.o.tabstop = 4
 vim.opt.softtabstop = 4
 vim.opt.shiftwidth = 4
+
+vim.g.netrw_keepdir = 0
+vim.g.netrw_winsize = 30
+--vim.g.netrw_banner = 0
+vim.g.netrw_localcopydircmd = "cp -r"
 
 vim.g.mapleader = " "
 vim.o.signcolumn = "yes"

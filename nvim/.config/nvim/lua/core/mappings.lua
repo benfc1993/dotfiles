@@ -3,8 +3,28 @@ vim.keymap.set("i", "jkl", "<cmd>stopinsert<cr><cmd>w<cr>")
 vim.keymap.set("n", "ss", "<cmd>stopinsert<cr><cmd>w<cr>")
 
 vim.keymap.set({ "n", "v", "x" }, ";", ":")
+local M = {}
 
-vim.keymap.set("n", "<leader>n", "<cmd>Ex<cr>", { silent = true })
+M.netrw_open = false
+
+vim.keymap.set("n", "<leader>n", function()
+	if M.netrw_open then
+		M.netrw_open = false
+		return ":Lexplore<CR>"
+	end
+	M.netrw_open = true
+	return ":Lexplore %:p:h<CR>"
+end, { expr = true, silent = true })
+
+local netrw_group = vim.api.nvim_create_augroup("netrw_mapping", { clear = true })
+vim.api.nvim_create_autocmd("FileType", {
+	group = netrw_group,
+	pattern = "netrw",
+	callback = function(ev)
+		M.netrw_open = true
+		vim.keymap.set("n", "<leader>n", ":Lexplore<CR>", { silent = true, buffer = ev.buf })
+	end,
+})
 
 -- window navigation
 vim.keymap.set("n", "<C-h>", ":wincmd h<CR>", { silent = true })
@@ -33,7 +53,7 @@ vim.keymap.set("n", "sg", "z=")
 
 -- LSP
 
-vim.keymap.set("i", "<M-space>", "<C-x><C-o>", { desc = "open autocomplete" })
+vim.keymap.set("i", "<M-space>", vim.lsp.completion.get, { desc = "open autocomplete" })
 
 vim.keymap.set("i", "<Tab>", function()
 	if vim.fn.pumvisible() == 1 then
