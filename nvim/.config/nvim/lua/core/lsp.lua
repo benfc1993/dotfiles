@@ -1,5 +1,5 @@
 -- to setup a new server look at the example files https://github.com/neovim/nvim-lspconfig/tree/master/lsp
-vim.lsp.enable({ "lua_ls", "cssmodules_ls", "vtsls", "cssls" })
+vim.lsp.enable({ "lua_ls", "cssmodules_ls", "vtsls", "cssls", "tailwindcss", "graphql" })
 
 vim.diagnostic.config({
 	virtual_text = true,
@@ -27,9 +27,8 @@ vim.diagnostic.config({
 local M = {}
 
 M.on_attach = function(client, bufnr)
+	client.server_capabilities.semanticTokensProvider = nil
 	local opts = { buffer = bufnr, remap = false }
-
-	imap("<C-space>", vim.lsp.completion.get)
 
 	vim.keymap.set("i", "<Tab>", function()
 		return vim.fn.pumvisible() == 1 and "<c-y>" or "<Tab>"

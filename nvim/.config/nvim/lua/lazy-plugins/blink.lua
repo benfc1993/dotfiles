@@ -23,7 +23,8 @@ return {
 					},
 				},
 				keymap = {
-					["<Tab>"] = { "select_and_accept" },
+					["<Tab>"] = { "select_and_accept", "fallback" },
+					["<M-i>"] = { "show" },
 				},
 				cmdline = {
 					enabled = false,

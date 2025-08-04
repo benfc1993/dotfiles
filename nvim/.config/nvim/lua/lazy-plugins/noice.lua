@@ -1,5 +1,5 @@
 return {
-	"folke/noice.nvim",
+	--[[ "folke/noice.nvim",
 	event = "VeryLazy",
 	dependencies = {
 		-- if you lazy-load any plugin below, make sure to add proper `module="..."` entries
@@ -20,6 +20,9 @@ return {
 			notify = {
 				enabled = false,
 			},
+			picker = {
+				enabled = false,
+			},
 			lsp = {
 				progress = {
 					enabled = false,
@@ -35,5 +38,5 @@ return {
 				},
 			},
 		})
-	end,
+	end, ]]
 }

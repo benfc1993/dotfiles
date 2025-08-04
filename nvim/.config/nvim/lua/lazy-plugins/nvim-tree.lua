@@ -16,6 +16,33 @@ return {
 			update_focused_file = {
 				enable = true,
 			},
+			view = {
+				preserve_window_proportions = true,
+				centralize_selection = true,
+				float = {
+					enable = false,
+					open_win_config = {
+						width = vim.api.nvim_win_get_width(0) - 10,
+						height = vim.api.nvim_win_get_height(0) - 10,
+						row = 5,
+						col = 5,
+					},
+				},
+				width = {
+					min = 30,
+					max = -1,
+				},
+			},
+			renderer = {
+				group_empty = true,
+			},
+			filters = {
+				dotfiles = false,
+			},
+			git = {
+				enable = true,
+				ignore = false,
+			},
 			actions = {
 				open_file = {
 					quit_on_open = true,
@@ -31,6 +58,6 @@ return {
 				},
 			},
 		})
-		map("<leader>n", "<cmd>NvimTreeToggle<CR>")
+		nmap("<leader>n", "<cmd>NvimTreeToggle<CR>")
 	end,
 }

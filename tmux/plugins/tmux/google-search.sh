@@ -2,7 +2,9 @@
 
 read -p 'search | url >' search;
 
-if [[ "$search" =~ ^[a-zA-Z0-9\/]*\.[a-zA-Z0-9]*(\.[a-z]*)?$ ]]; then
+if [[ "$search" =~ ^https://.*$ ]]; then
+    python3 -m webbrowser -t "$search"
+elif [[ "$search" =~ ^[a-zA-Z0-9\/]*\.[a-zA-Z0-9]*(\.[a-z]*)?$ ]]; then
    python3 -m webbrowser -t "https://$search"    
 else
 

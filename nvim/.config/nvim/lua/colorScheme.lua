@@ -1,3 +1,2 @@
 SelectedColorScheme = "gruvbox"
 ColorMyPencils()
-

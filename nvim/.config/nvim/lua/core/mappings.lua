@@ -22,6 +22,10 @@ imap("jk", "<cmd>stopinsert<CR>", "Stop insert Insert")
 tmap("jk", "<cmd>stopinsert<CR>", "Exit insert Terminal")
 tmap("<Esc>", "<cmd>stopinsert<CR>", "Exit insert Terminal")
 
+--indenting
+vmap(">", ">gv", "indent stay in insert")
+vmap("<", "<gv", "indent stay in insert")
+
 -- mappings to write buffer
 imap("jkl", "<cmd>stopinsert<CR><cmd>w<CR>", "Stop insert and write Insert")
 nmap("ss", "<cmd>w<CR>", "Save from normal mode")
@@ -47,10 +51,26 @@ nmap("<C-q>", "<cmd>topleft 10sp<CR><cmd>noa<CR><cmd>term<CR><cmd>startinsert<CR
 nmap("<M-q>", "<cmd>tabnew<CR><cmd>term<CR><cmd>startinsert<CR>", "Open a terminal in a new tab")
 tmap("<leader>q", "<cmd>bw!<CR>", "Close buffer")
 
+-- tabs
+nmap("<leader>tn", "<cmd>tabnew<cr><cmd>NvimTreeOpen<cr>", "[Tabs] New tab")
+nmap("<leader>tq", "<cmd>tabclose<cr>", "[Tabs] Close tab")
+nmap("<leader>kw", "<cmd>tabonly<cr>", "[Tabs] close other tabs")
+nmap("<leader><Tab>", "<cmd>tabn<cr>", "[Tabs] Next tab")
+
 -- spell check
 nmap("sg", "z=")
 
 nmap("<CR>", ":nohl<cr>", "remove current search highlights")
+
+nmap("<C-g>", "<cmd>DiffviewOpen<cr>", "[Diff view] Open Diff view")
+
+-- surround
+vmap('"', ":'<,'>norm _i\"$a\"")
+vmap("'", ":'<,'>norm _i'$a'")
+vmap("{", ":'<,'>norm _i{$a}")
+vmap("(", ":norm _i($a)<cr>")
+vmap("[", ":'<,'>norm _i[$a]")
+vmap("<", ":'<,'>norm _i<$a>")
 
 -- delete keeping yank
 nrmap("d", '"_d', "Delete without yank")
@@ -72,6 +92,19 @@ vmap("S", '"_S', "Delete without yank")
 
 nrmap("x", '"_x', "Delete without yank")
 nrmap("X", '"_X', "Delete without yank")
+
+-- global marks
+local prefixes = "m'"
+local letters = "abcdefghijklmnopqrstuvwxyz"
+for i = 1, #prefixes do
+	local prefix = prefixes:sub(i, i)
+	for j = 1, #letters do
+		local lower_letter = letters:sub(j, j)
+		local upper_letter = string.upper(lower_letter)
+		nmap(prefix .. lower_letter, prefix .. upper_letter, "Mark " .. upper_letter)
+		vmap(prefix .. lower_letter, prefix .. upper_letter, "Mark " .. upper_letter)
+	end
+end
 
 -- goto:
 nmap("gf", function()

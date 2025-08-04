@@ -54,6 +54,8 @@ nmap("<leader>tn", "<cmd>tabnew<cr><cmd>NvimTreeOpen<cr>", "[Tabs] New tab")
 nmap("<leader>tq", "<cmd>tabclose<cr>", "[Tabs] Close tab")
 nmap("<leader><Tab>", "<cmd>tabn<cr>", "[Tabs] Next tab")
 nmap("<leader><S-Tab>", "<cmd>tabp<cr>", "[Tabs] Prev tab")
+nmap("<leader>tn", "<cmd>tabnew<cr><cmd>NvimTreeOpen<cr>", "[Tabs] New tab")
+nmap("<leader>tq", "<cmd>tabclose<cr>", "[Tabs] Close tab")
 nmap("<leader>kw", "<cmd>tabonly<cr>", "[Tabs] close other tabs")
 
 nmap("<C-g>", "<cmd>DiffviewOpen<cr>", "[Diff view] Open Diff view")
