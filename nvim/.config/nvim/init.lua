@@ -13,8 +13,15 @@ vim.pack.add({
 })
 
 require("mason").setup()
-require("nvim-treesitter").setup()
+require("nvim-treesitter.configs").setup({
+	ensure_installed = { "typescript", "lua" },
+	auto_install = true,
+	highlight = {
+		enable = true,
+		additional_vim_regex_highlighting = true,
+	},
+})
 require("mini.pick").setup()
 require("lazydev").setup({ ft = "lua" })
 
-vim.cmd("colorscheme sonokai")
+vim.cmd("colorscheme gruvbox")
