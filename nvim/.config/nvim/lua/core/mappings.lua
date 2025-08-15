@@ -1,30 +1,10 @@
 vim.keymap.set({ "i", "t" }, "jk", "<cmd>stopinsert<CR>")
 vim.keymap.set("i", "jkl", "<cmd>stopinsert<cr><cmd>w<cr>")
 vim.keymap.set("n", "ss", "<cmd>stopinsert<cr><cmd>w<cr>")
+vim.keymap.set("n", "nh", ":nohl<CR>")
 
 vim.keymap.set({ "n", "v", "x" }, ";", ":")
-local M = {}
-
-M.netrw_open = false
-
-vim.keymap.set("n", "<leader>n", function()
-	if M.netrw_open then
-		M.netrw_open = false
-		return ":Lexplore<CR>"
-	end
-	M.netrw_open = true
-	return ":Lexplore %:p:h<CR>"
-end, { expr = true, silent = true })
-
-local netrw_group = vim.api.nvim_create_augroup("netrw_mapping", { clear = true })
-vim.api.nvim_create_autocmd("FileType", {
-	group = netrw_group,
-	pattern = "netrw",
-	callback = function(ev)
-		M.netrw_open = true
-		vim.keymap.set("n", "<leader>n", ":Lexplore<CR>", { silent = true, buffer = ev.buf })
-	end,
-})
+vim.keymap.set("n", "<leader>n", "<cmd>NvimTreeToggle<CR>")
 
 -- window navigation
 vim.keymap.set("n", "<C-h>", ":wincmd h<CR>", { silent = true })
@@ -48,12 +28,23 @@ vim.keymap.set("n", "<C-u>", "<C-u>zz", { silent = true })
 -- terminal
 vim.keymap.set("n", "<C-q>", ":topleft 10split<CR> :term<CR>:startinsert<CR>", { silent = true })
 
-vim.keymap.set("n", "ns", "]sz=")
+-- spelling
+vim.keymap.set("n", "ns", "]s")
 vim.keymap.set("n", "sg", "z=")
+
+-- diffview
+vim.keymap.set("n", "<C-g>", ":DiffviewOpen<CR>")
+
+-- tabs
+vim.keymap.set("n", "<leader>tn", "<cmd>tabnew<cr><cmd>NvimTreeOpen<cr>", { desc = "[Tabs] New tab" })
+vim.keymap.set("n", "<leader>tq", "<cmd>tabclose<cr>", { desc = "[Tabs] Close tab" })
+vim.keymap.set("n", "<leader>kw", "<cmd>tabonly<cr>", { desc = "[Tabs] close other tabs" })
+vim.keymap.set("n", "<leader><Tab>", "<cmd>tabn<cr>", { desc = "[Tabs] Next tab" })
 
 -- LSP
 
 vim.keymap.set("i", "<M-space>", vim.lsp.completion.get, { desc = "open autocomplete" })
+vim.keymap.set({ "i", "n" }, [[<C-_>]], vim.lsp.buf.code_action)
 
 vim.keymap.set("i", "<Tab>", function()
 	if vim.fn.pumvisible() == 1 then
@@ -67,7 +58,7 @@ vim.keymap.set("n", "<leader>ff", "<cmd>Pick files<CR>")
 vim.keymap.set("n", "<leader>fa", "<cmd>Pick grep_live<CR>")
 
 vim.keymap.set("n", "<F2>", vim.lsp.buf.rename)
-vim.keymap.set("n", "gd", vim.lsp.buf.implementation)
+vim.keymap.set("n", "gd", vim.lsp.buf.definition)
 vim.keymap.set("n", "gr", vim.lsp.buf.references)
 vim.keymap.set("n", "<leader>w", function()
 	vim.diagnostic.jump({ count = -1, float = true })
@@ -75,6 +66,14 @@ end)
 vim.keymap.set("n", "<leader>e", function()
 	vim.diagnostic.jump({ count = 1, float = true })
 end)
+
+
+vim.keymap.set('n', 'lr', function()
+	local col = vim.api.nvim_win_get_cursor(0)[2]
+	local current_char = vim.api.nvim_get_current_line():sub(col+1,col+1)
+	local char = vim.fn.input("replace with: ")
+	return ":s/"..current_char.."/" .. char .. "/g<CR>:nohl<CR>"
+end, { expr = true })
 
 -- delete keeping yank
 vim.keymap.set("n", "d", '"_d', { desc = "Delete without yank", silent = true, remap = false })
