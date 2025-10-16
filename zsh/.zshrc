@@ -9,7 +9,7 @@ fi
 # export PATH=$HOME/bin:/usr/local/bin:$PATH
 
 # Path to your oh-my-zsh installation.
-export ZSH="/home/benfc/.oh-my-zsh"
+export ZSH="$HOME/.oh-my-zsh"
 
 # Set name of the theme to load --- if set to "random", it will
 # load a random theme each time oh-my-zsh is loaded, in which case,
@@ -123,6 +123,6 @@ export M2_HOME=/usr/local/apache-maven/apache-maven-3.9.3
 export M2=$M2_HOME/bin 
 export PATH=$M2:$PATH
 export EDITOR=code
-export TOOLKIT_PATH=/home/benfc/toolkit/search
+export TOOLKIT_PATH=$HOME/toolkit/search
 PATH="$HOME/.local/bin:$PATH"
 # eval "$(zoxide init --cmd cd zsh)"

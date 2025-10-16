@@ -1,5 +1,5 @@
 [shell] 
-program = '/home/benfc/.config/alacritty/startup.sh'
+program = "$HOME/.config/alacritty/startup.sh"
 
 [window]
 startup_mode = "Maximized"
