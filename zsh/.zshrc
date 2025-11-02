@@ -118,7 +118,7 @@ export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
 [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
 
-export PATH=$PATH:/opt/gradle/gradle-8.3/bin
+export PATH=$PATH:$HOME/go/bin
 export M2_HOME=/usr/local/apache-maven/apache-maven-3.9.3
 export M2=$M2_HOME/bin 
 export PATH=$M2:$PATH

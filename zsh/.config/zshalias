@@ -153,3 +153,5 @@ tsw(){
         npx tsx --watch $@
     fi
 }
+
+alias sp="sudo pacman -S"

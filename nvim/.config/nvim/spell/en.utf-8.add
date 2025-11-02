@@ -6,3 +6,5 @@ trpc
 ds
 bg
 zod
+fmt
+sqlite

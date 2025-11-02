@@ -195,7 +195,7 @@ vim.api.nvim_create_autocmd("LspAttach", {
 	end,
 })
 
-vim.lsp.enable({ "lua_ls", "vtsls", "cssls", "tailwindcss", "graphql", "bashls"})
+vim.lsp.enable({ "lua_ls", "vtsls", "cssls", "tailwindcss", "graphql", "bashls", "gopls", "htmx" })
 
 vim.diagnostic.config({
 	signs = {

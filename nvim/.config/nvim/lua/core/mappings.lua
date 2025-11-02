@@ -44,7 +44,7 @@ vim.keymap.set("n", "<leader><Tab>", "<cmd>tabn<cr>", { desc = "[Tabs] Next tab"
 -- LSP
 
 vim.keymap.set("i", "<M-space>", vim.lsp.completion.get, { desc = "open autocomplete" })
-vim.keymap.set({ "i", "n" }, [[<C-_>]], vim.lsp.buf.code_action)
+vim.keymap.set({ "i", "n" }, [[<C-/>]], vim.lsp.buf.code_action)
 
 vim.keymap.set("i", "<Tab>", function()
 	if vim.fn.pumvisible() == 1 then
@@ -70,9 +70,9 @@ end)
 
 vim.keymap.set('n', 'lr', function()
 	local col = vim.api.nvim_win_get_cursor(0)[2]
-	local current_char = vim.api.nvim_get_current_line():sub(col+1,col+1)
+	local current_char = vim.api.nvim_get_current_line():sub(col + 1, col + 1)
 	local char = vim.fn.input("replace with: ")
-	return ":s/"..current_char.."/" .. char .. "/g<CR>:nohl<CR>"
+	return ":s/" .. current_char .. "/" .. char .. "/g<CR>:nohl<CR>"
 end, { expr = true })
 
 -- delete keeping yank
